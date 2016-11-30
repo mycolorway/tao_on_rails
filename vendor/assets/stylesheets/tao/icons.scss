@@ -1,0 +1,27 @@
+@import 'base';
+
+@keyframes spin {
+  from { transform:rotate(0deg); }
+  to { transform:rotate(360deg); }
+}
+
+#tao-icons {
+  symbol {
+    .zhiren_icon,
+    .Main {
+      fill: inherit;
+    }
+  }
+}
+
+.icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  fill: $color-light-text;
+
+  &.spin {
+    animation: spin 1s infinite linear;
+  }
+}
