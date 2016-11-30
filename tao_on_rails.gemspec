@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Siyuan Liu, Terry Tai"]
   spec.email         = ["t@mycolorway.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{The missing frontend solucation for Rails project}
+  spec.description   = %q{The missing frontend solucation for Rails project}
+  spec.homepage      = "https://github.com/mycolorway/tao_on_rails"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
