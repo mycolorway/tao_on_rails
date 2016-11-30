@@ -1,6 +1,6 @@
 #= require turbolinks
 #= require jquery3
-#= require ./jquery_ujs
+#= require jquery_ujs
 #= require lodash
 #= require i18n
 
