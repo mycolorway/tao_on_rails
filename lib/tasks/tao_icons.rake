@@ -2,7 +2,7 @@ namespace :tao do
   namespace :svg_icons do
     desc 'generate svg icons.'
     task :generate => :environment do
-      File.open 'vendor/assets/javascripts/tao/icons.coffee', 'w' do |f|
+      File.open "#{TaoOnRails.root}/vendor/assets/javascripts/tao/icons.coffee", 'w' do |f|
         f.puts %{tao.iconsHtml = '''#{svg_html}'''}
       end
     end
@@ -14,7 +14,7 @@ namespace :tao do
     end
 
     def svg_files
-      @svg_files ||= Dir.glob(File.expand_path('app/assets/icons/*.svg')).uniq
+      @svg_files ||= Dir.glob(File.expand_path("#{::Rails.root}/app/assets/icons/*.svg")).uniq
     end
 
     def symbols
