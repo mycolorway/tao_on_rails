@@ -31,12 +31,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "rails", ">= 4.0.0"
-  spec.add_dependency "jquery-rails"
-  spec.add_dependency "lodash-rails"
-  spec.add_dependency "normalize-rails"
-  spec.add_dependency "turbolinks"
-  spec.add_dependency "i18n-js"
-  spec.add_dependency "gon"
+  spec.add_dependency "jquery-rails", ">= 4.2.0"
+  spec.add_dependency "lodash-rails", ">= 4.16.0"
+  spec.add_dependency "normalize-rails", ">= 4.1.0"
+  spec.add_dependency "turbolinks", "~> 5.0"
+  spec.add_dependency "i18n-js", "~> 3.0.0"
+  spec.add_dependency "gon", "~> 6.0"
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
