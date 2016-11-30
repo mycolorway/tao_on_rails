@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "lodash-rails", ">= 4.16.0"
   spec.add_dependency "normalize-rails", ">= 4.1.0"
   spec.add_dependency "turbolinks", "~> 5.0"
-  spec.add_dependency "i18n-js", "~> 3.0.0"
+  spec.add_dependency "i18n-js", "~> 3.0.0.rc14"
   spec.add_dependency "gon", "~> 6.0"
 
   spec.add_development_dependency "bundler", "~> 1.13"
