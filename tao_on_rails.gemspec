@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'tao_on_rails/version'
+require 'tao_on_rails/rails/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "tao_on_rails"
-  spec.version       = TaoOnRails::VERSION
+  spec.version       = TaoOnRails::Rails::VERSION
   spec.authors       = ["Siyuan Liu, Terry Tai"]
   spec.email         = ["t@mycolorway.com"]
 
