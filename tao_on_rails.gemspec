@@ -6,8 +6,8 @@ require 'tao_on_rails/rails/version'
 Gem::Specification.new do |spec|
   spec.name          = "tao_on_rails"
   spec.version       = TaoOnRails::Rails::VERSION
-  spec.authors       = ["Siyuan Liu, Terry Tai"]
-  spec.email         = ["t@mycolorway.com"]
+  spec.authors       = ["Siyuan Liu", "Terry Tai"]
+  spec.email         = ["farthinker@mycolorway.com", "t@mycolorway.com"]
 
   spec.summary       = %q{The missing frontend solucation for Rails project}
   spec.description   = %q{The missing frontend solucation for Rails project}
