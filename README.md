@@ -1,8 +1,11 @@
 # TaoOnRails
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/tao_on_rails`. To experiment with that code, run `bin/console` for an interactive prompt.
+Tao On Rails is the missing way to structure your frontend on [Ruby on Rails](http://rubyonrails.org/).
 
-TODO: Delete this and the text above, and describe your gem
+Tao On Rails is designed and developed by [Siyuan Liu](https://github.com/farthinker).
+
+It's originally built for [Zhiren project](https://zhirenhr.com/) and extracted to gem by [Terry Tai](https://twitter.com/poshboytl).
+
 
 ## Installation
 
