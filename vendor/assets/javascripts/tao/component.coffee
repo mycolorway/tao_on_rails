@@ -62,6 +62,18 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     attributeChangedCallback: (attrName, oldValue, newValue) ->
       @["#{_.camelCase attrName}Changed"]?(newValue, oldValue)
 
+    on: (args...) ->
+      $(@).on args...
+
+    off: (args...) ->
+      $(@).off args...
+
+    trigger: (args...) ->
+      $(@).triggerHandler(args...)
+
+    one: (args...) ->
+      $(@).one args...
+
     _init: ->
       # to be implemented
 
