@@ -1,4 +1,6 @@
 #= require lodash
+#= require custom-elements
+#= require native-shim
 
 components = {}
 
