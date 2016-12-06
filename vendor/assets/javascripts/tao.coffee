@@ -5,9 +5,9 @@
 #= require i18n
 
 #= require_self
-#= require_tree tao/application
-#= require_tree tao/page
-#= require_tree tao/helpers
-#= require_tree tao/icons
+#= require tao/application
+#= require tao/page
+#= require tao/helpers
+#= require tao/icons
 
 window.tao = {}
