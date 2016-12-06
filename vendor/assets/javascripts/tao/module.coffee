@@ -40,3 +40,5 @@ class TaoModule
 
   one: (args...) ->
     $(@).one args...
+
+window.TaoModule = TaoModule
