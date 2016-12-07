@@ -1,3 +1,4 @@
+//= require es6
 //= require native-shim
 
 'use strict';
