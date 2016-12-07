@@ -21,13 +21,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "rails", "~> 5.0"
   spec.add_runtime_dependency "jquery-rails", "~> 4.2"
   spec.add_runtime_dependency "lodash-rails", "~> 4.16"
   spec.add_runtime_dependency "normalize-rails", "~> 4.1"
-  spec.add_runtime_dependency "turbolinks", "~> 5.0"
-  spec.add_runtime_dependency "i18n-js", "~> 3.0.0.rc14"
-  spec.add_runtime_dependency "gon", "~> 6.0"
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
