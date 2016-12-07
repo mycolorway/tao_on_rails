@@ -1,3 +1,4 @@
+require 'turbolinks'
 require 'jquery-rails'
 require 'lodash-rails'
 require 'normalize-rails'
