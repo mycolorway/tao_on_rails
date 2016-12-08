@@ -53,17 +53,12 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     @observedAttributes: []
 
     connectedCallback: ->
-      console.log $.contains(document, @)
-      return unless $.contains(document, @)
       @_init()
-      @_initialized = true
 
     disconnectedCallback: ->
-      return unless @_initialized
       @_destroy()
 
     attributeChangedCallback: (attrName, oldValue, newValue) ->
-      return unless @_initialized
       @["#{_.camelCase attrName}Changed"]?(newValue, oldValue)
 
     on: (args...) ->

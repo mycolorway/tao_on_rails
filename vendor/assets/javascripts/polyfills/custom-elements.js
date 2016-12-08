@@ -453,7 +453,7 @@ var Deferred = void 0;
             // so might diverge from spec reaction ordering
             var addedNodes = /** @type {!NodeList<!Node>} */mutation.addedNodes;
             var removedNodes = /** @type {!NodeList<!Node>} */mutation.removedNodes;
-            this._removeNodes(removedNodes);
+            this._removeNodes(removedNodes, mutation.target);
             this._addNodes(addedNodes);
           }
         }
@@ -592,7 +592,7 @@ var Deferred = void 0;
 
     }, {
       key: '_removeNodes',
-      value: function _removeNodes(nodeList) {
+      value: function _removeNodes(nodeList, parentNode) {
         for (var i = 0; i < nodeList.length; i++) {
           var root = nodeList[i];
 
@@ -609,7 +609,7 @@ var Deferred = void 0;
           var walker = createTreeWalker(root);
           do {
             var node = walker.currentNode;
-            if (node[_upgradedProp] && node[_attachedProp]) {
+            if (node[_upgradedProp] && node[_attachedProp] && isConnected(parentNode)) {
               node[_attachedProp] = false;
               var definition = this._definitions.get(node.localName);
               if (definition && definition.disconnectedCallback) {
