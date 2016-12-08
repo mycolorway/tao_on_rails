@@ -6,7 +6,7 @@ class TaoApplication extends TaoModule
     @_initGon()
     @_initI18n()
     @_initUjs()
-    @_bind()
+    @_initTurbolinks()
 
   _initGon: ->
     $.extend @, window.gon
@@ -31,7 +31,7 @@ class TaoApplication extends TaoModule
   _initPage: ($page) ->
     window.currentPage = @currentPage = $page[0]
 
-  _bind: ->
+  _initTurbolinks: ->
     $(document).on 'turbolinks:before-visit', (e) =>
       if @currentPage.trigger('before-leave') == false
         e.preventDefault()

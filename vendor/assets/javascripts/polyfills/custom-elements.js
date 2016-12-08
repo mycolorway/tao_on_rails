@@ -1,6 +1,3 @@
-//= require es6
-//= require native-shim
-
 'use strict';
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -8,8 +5,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-//= require native-shim
 
 /**
  * @license
@@ -67,7 +62,6 @@ var Deferred = void 0;
   if (_customElements()) {
     _customElements().flush = function () {};
     if (!_customElements().forcePolyfill) {
-      nativeShim();
       return;
     }
   }
@@ -409,7 +403,7 @@ var Deferred = void 0;
     }, {
       key: '_observeRoot',
       value: function _observeRoot(root) {
-        // console.log('_observeRoot', root, root.baseURI);
+        //console.log('_observeRoot', root, root.baseURI);
         // console.assert(!root[_observerProp]);
         if (root[_observerProp] != null) {
           //console.warn(`Root ${root} is already observed`);
@@ -716,6 +710,7 @@ var Deferred = void 0;
 
   /** @const */
   var origHTMLElement = win.HTMLElement;
+  CustomElementRegistry.prototype['nativeHTMLElement'] = origHTMLElement;
   /**
    * @type {function(new: HTMLElement)}
    */
@@ -764,9 +759,7 @@ var Deferred = void 0;
     if (definition) {
       customElements._upgradeElement(element, definition, callConstructor);
     }
-    if (tagName.toLowerCase() !== 'html') {
-      customElements._observeRoot(element);
-    }
+    customElements._observeRoot(element);
     return element;
   };
   doc.createElement = function (tagName, options) {
