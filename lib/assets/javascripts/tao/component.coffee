@@ -8,8 +8,6 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
   class components[superClass] extends window[superClass]
 
-    @tag: '' # to be set by child class
-
     @extend: (obj) ->
       unless obj and typeof obj == 'object'
         throw new Error('TaoComponent.extend: param should be an object')
@@ -52,6 +50,12 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
           @removeAttribute attrName
       @observedAttributes.push(attrName) if observed
 
+    @tag: '' # to be set by child class
+
+    @register: (componentClass) ->
+      return unless componentClass.tag
+      customElements.define componentClass.tag, componentClass
+
     @observedAttributes: []
 
     connectedCallback: ->
@@ -85,6 +89,3 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
 window.TaoComponentBasedOn = TaoComponentBasedOn
 window.TaoComponent = TaoComponentBasedOn 'HTMLElement'
-window.TaoComponent.register = (componentClass) ->
-  return unless componentClass.tag
-  customElements.define componentClass.tag, componentClass
