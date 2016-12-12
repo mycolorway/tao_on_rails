@@ -40,11 +40,15 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
     @property: (name, options = {}) ->
       attrName = _.kebabCase(name)
-      @get name, -> @getAttribute attrName
+      @get name, ->
+        if @hasAttribute attrName
+          @getAttribute(attrName) || true
+        else
+          false
       @set name, (val) ->
         if val == true
           @setAttribute attrName, ''
-        else if val == false
+        else if val != false
           @setAttribute attrName, val
         else
           @removeAttribute attrName
@@ -60,6 +64,7 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
     connectedCallback: ->
       @connected = true
+      @classList.add 'tao-component'
       @_init()
 
     disconnectedCallback: ->
@@ -84,8 +89,11 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     _init: ->
       # to be implemented
 
-    _destory: ->
+    _destroy: ->
       # to be implemented
+
+    prepareCache: ->
+      # called before turbolinks cache pages
 
 window.TaoComponentBasedOn = TaoComponentBasedOn
 window.TaoComponent = TaoComponentBasedOn 'HTMLElement'
