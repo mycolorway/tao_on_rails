@@ -1,4 +1,4 @@
-# Tao
+# Tao on Rails
 
 [Ruby on Rails](http://rubyonrails.org/) lacks a recommended way to structure your frontend code for many years. Tao on Rails is the framework to fill the gap which will modularize your page with the new [Custom Elements v1](https://developers.google.com/web/fundamentals/getting-started/primers/customelements) API.
 
