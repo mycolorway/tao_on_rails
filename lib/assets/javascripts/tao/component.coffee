@@ -38,7 +38,7 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
         set: setMethod
         configurable: true
 
-    @property: (name, observed) ->
+    @property: (name, options = {}) ->
       attrName = _.kebabCase(name)
       @get name, -> @getAttribute attrName
       @set name, (val) ->
@@ -48,7 +48,7 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
           @setAttribute attrName, val
         else
           @removeAttribute attrName
-      @observedAttributes.push(attrName) if observed
+      @observedAttributes.push(attrName) if options.observe
 
     @tag: '' # to be set by child class
 
@@ -67,7 +67,7 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
       @_destroy()
 
     attributeChangedCallback: (attrName, oldValue, newValue) ->
-      @["#{_.camelCase attrName}Changed"]?(newValue, oldValue)
+      @["_#{_.camelCase attrName}Changed"]?(newValue, oldValue)
 
     on: (args...) ->
       $(@).on args...
