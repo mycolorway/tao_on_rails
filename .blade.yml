@@ -1,7 +1,7 @@
 load_paths:
   - lib/assets/javascripts
   - lib/assets/stylesheets
-  - spec/javascripts/
+  - test/javascripts/
   - turbolinks-source: lib/assets/javascripts
   - jquery-rails: vendor/assets/javascripts
   - lodash-rails: vendor/assets/javascripts
@@ -10,4 +10,4 @@ load_paths:
 logical_paths:
   - tao.css
   - tao.js
-  - test.js
+  - tao_test.js
