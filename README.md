@@ -1,11 +1,6 @@
-# TaoOnRails
+# Why Tao?
 
-Tao On Rails is the missing way to structure your frontend on [Ruby on Rails](http://rubyonrails.org/).
-
-Tao On Rails is designed and developed by [Siyuan Liu](https://github.com/farthinker).
-
-It's originally built for [Zhiren project](https://zhirenhr.com/) and extracted to gem by [Terry Tai](https://twitter.com/poshboytl).
-
+[Ruby on Rails](http://rubyonrails.org/) lacks a recommended way to structure your frontend code for many year. Tao on Rails is the one to fill the gap which will modularize your page with the new [Custom Elements v1](https://developers.google.com/web/fundamentals/getting-started/primers/customelements) API.
 
 ## Installation
 
@@ -25,13 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+TODO: Write usage instructions here.
 
 ## Contributing
 
@@ -41,4 +30,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
