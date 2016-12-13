@@ -46,8 +46,8 @@ class TaoApplication extends TaoModule
       @trigger 'page-visit', [e.originalEvent?.data.url]
 
     .on 'turbolinks:before-cache', (e) =>
-      @currentPage.trigger 'before-cache'
       @trigger 'before-page-cache', [@currentPage]
+      @currentPage.prepareCache?()
       window.currentPage = @currentPage = null
 
     .on 'turbolinks:request-end', (e) =>
