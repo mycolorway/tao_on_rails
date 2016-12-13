@@ -33,6 +33,7 @@ namespace :tao do
       .gsub(/id=/,'class=')
       .gsub(/<svg.+?>/, %Q{<svg id="icon-#{name}" #{dimensions(content)}>})
       .gsub(/svg/,'symbol')
+      .gsub(/\sfill=".+?"/,'')
       .gsub(/\n/, '') # Remove endlines
       .gsub(/\s{2,}/, ' ') # Remove whitespace
       .gsub(/>\s+</, '><') # Remove whitespace between tags
