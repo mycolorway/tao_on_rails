@@ -41,15 +41,7 @@ namespace :tao do
 
   def dimensions(content)
     dimension = content.scan(/<svg.+(viewBox=["'](.+?)["'])/).flatten
-    viewbox = dimension.first
-    #coords = dimension.last.split(' ')
-
-    #width = coords[2].to_i - coords[0].to_i
-    #height = coords[3].to_i - coords[1].to_i
-    #hack android svg
-    width = '100%'
-    height = '100%'
-    %Q{#{viewbox} width="#{width}" height="#{height}"}
+    %Q{#{dimension.first} width="100%" height="100%"}
   end
 
 end
