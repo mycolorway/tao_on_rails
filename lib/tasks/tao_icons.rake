@@ -2,9 +2,10 @@ namespace :tao do
 
   desc 'generate svg icons.'
   task :generate_icons => :environment do
-    Dir.mkdir "#{Rails.root}/vendor/assets/javascripts/tao"
+    dir_name = "#{Rails.root}/vendor/assets/javascripts/tao"
+    Dir.mkdir(dir_name) unless File.exists?(dir_name)
 
-    File.open "#{Rails.root}/vendor/assets/javascripts/tao/icons.coffee", 'w' do |f|
+    File.open "#{dir_name}/icons.coffee", 'w' do |f|
       f.puts %{tao.iconsHtml = '''#{svg_html}'''}
     end
   end
