@@ -38,21 +38,28 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
         set: setMethod
         configurable: true
 
-    @property: (name, options = {}) ->
-      attrName = _.kebabCase(name)
-      @get name, ->
-        if @hasAttribute attrName
-          @getAttribute(attrName) || true
-        else
-          false
-      @set name, (val) ->
-        if val == true
-          @setAttribute attrName, ''
-        else if val != false
-          @setAttribute attrName, val
-        else
-          @removeAttribute attrName
-      @observedAttributes.push(attrName) if options.observe
+    @property: (names..., options = {}) ->
+      unless typeof options == 'object'
+        names.push(options)
+        options = {}
+
+      names.forEach (name) =>
+        attrName = _.kebabCase(name)
+        @get name, ->
+          if @hasAttribute attrName
+            @getAttribute(attrName) || true
+          else if options.default
+            options.default
+          else
+            false
+        @set name, (val) ->
+          if val == true
+            @setAttribute attrName, ''
+          else if val != false
+            @setAttribute attrName, val
+          else
+            @removeAttribute attrName
+        @observedAttributes.push(attrName) if options.observe
 
     @tag: '' # to be set by child class
 
