@@ -47,7 +47,8 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
         attrName = _.kebabCase(name)
         @get name, ->
           if @hasAttribute attrName
-            @getAttribute(attrName) || true
+            val = @getAttribute(attrName)
+            if val == 'false' then false else (val || true)
           else if options.default
             options.default
           else
@@ -57,6 +58,8 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
             @setAttribute attrName, ''
           else if val != false
             @setAttribute attrName, val
+          else if options.default == true
+            @setAttribute attrName, 'false'
           else
             @removeAttribute attrName
         @observedAttributes.push(attrName) if options.observe
@@ -68,6 +71,14 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
       customElements.define componentClass.tag, componentClass
 
     @observedAttributes: []
+
+    constructor: ->
+      _instance = super
+      @_initShadowRoot()
+      _instance
+
+    _initShadowRoot: ->
+      @shadowRoot = @attachShadow(mode: 'open')
 
     connectedCallback: ->
       @connected = true

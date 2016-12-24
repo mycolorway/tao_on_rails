@@ -42,17 +42,15 @@ var Deferred = void 0;
 (function () {
   'use strict';
 
-  var doc = document;
-  var win = window;
-
   /**
    * Gets 'customElement' from window so that it could be modified after
    * the polyfill loads.
    * @function
    * @return {CustomElementRegistry}
    */
+
   var _customElements = function _customElements() {
-    return win['customElements'];
+    return window['customElements'];
   };
 
   var _observerProp = '__$CE_observer';
@@ -93,7 +91,7 @@ var Deferred = void 0;
     // IE 11 requires the third and fourth arguments be present. If the third
     // arg is null, it applies the default behaviour. However IE also requires
     // the fourth argument be present even though the other browsers ignore it.
-    return doc.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, null, false);
+    return document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, null, false);
   }
 
   /**
@@ -371,9 +369,9 @@ var Deferred = void 0;
           var onReady = function onReady() {
             _this2._upgradeScheduled = false;
             if (!_this2._mainDocumentObserver) {
-              _this2._mainDocumentObserver = _this2._observeRoot(doc);
+              _this2._mainDocumentObserver = _this2._observeRoot(document);
             }
-            _this2._addNodes(doc.childNodes);
+            _this2._addNodes(document.childNodes);
           };
           if (window['HTMLImports']) {
             window['HTMLImports']['whenReady'](onReady);
@@ -709,7 +707,7 @@ var Deferred = void 0;
   // patch window.HTMLElement
 
   /** @const */
-  var origHTMLElement = win.HTMLElement;
+  var origHTMLElement = window.HTMLElement;
   CustomElementRegistry.prototype['nativeHTMLElement'] = origHTMLElement;
   /**
    * @type {function(new: HTMLElement)}
@@ -726,21 +724,24 @@ var Deferred = void 0;
     if (this.constructor) {
       // Find the tagname of the constructor and create a new element with it
       var tagName = customElements._constructors.get(this.constructor);
-      return _createElement(doc, tagName, undefined, false);
+      return _createElement(document, tagName, undefined, false);
     }
     throw new Error('Unknown constructor. Did you call customElements.define()?');
   };
-  win.HTMLElement = newHTMLElement;
-  win.HTMLElement.prototype = Object.create(origHTMLElement.prototype, {
-    constructor: { value: win.HTMLElement, configurable: true, writable: true }
-  });
+  window.HTMLElement = newHTMLElement;
+  // By setting the patched HTMLElement's prototype property to the native
+  // HTMLElement's prototype we make sure that:
+  //     document.createElement('a') instanceof HTMLElement
+  // works because instanceof uses HTMLElement.prototype, which is on the
+  // ptototype chain of built-in elements.
+  window.HTMLElement.prototype = origHTMLElement.prototype;
 
   // patch doc.createElement
   // TODO(justinfagnani): why is the cast neccessary?
   // Can we fix the Closure DOM externs?
-  var _origCreateElement =
+  var _nativeCreateElement =
   /** @type {function(this:Document, string, (Object|undefined)=): !HTMLElement}}*/
-  doc.createElement;
+  document.createElement;
 
   /**
    * Creates a new element and upgrades it if it's a custom element.
@@ -754,7 +755,7 @@ var Deferred = void 0;
    */
   function _createElement(doc, tagName, options, callConstructor) {
     var customElements = _customElements();
-    var element = options ? _origCreateElement.call(doc, tagName, options) : _origCreateElement.call(doc, tagName);
+    var element = options ? _nativeCreateElement.call(doc, tagName, options) : _nativeCreateElement.call(doc, tagName);
     var definition = customElements._definitions.get(tagName.toLowerCase());
     if (definition) {
       customElements._upgradeElement(element, definition, callConstructor);
@@ -762,35 +763,35 @@ var Deferred = void 0;
     customElements._observeRoot(element);
     return element;
   };
-  doc.createElement = function (tagName, options) {
-    return _createElement(doc, tagName, options, true);
+  document.createElement = function (tagName, options) {
+    return _createElement(document, tagName, options, true);
   };
 
-  // patch doc.createElementNS
+  // patch document.createElementNS
 
   var HTMLNS = 'http://www.w3.org/1999/xhtml';
 
   /** @type {function(this:Document,string,string):Element} */
-  var _origCreateElementNS = doc.createElementNS;
-  doc.createElementNS =
+  var _nativeCreateElementNS = document.createElementNS;
+  document.createElementNS =
   /** @type {function(this:Document,(string|null),string):!Element} */
   function (namespaceURI, qualifiedName) {
-    if (namespaceURI === 'http://www.w3.org/1999/xhtml') {
-      return doc.createElement(qualifiedName);
+    if (namespaceURI === HTMLNS) {
+      return document.createElement(qualifiedName);
     } else {
-      return _origCreateElementNS.call(doc, namespaceURI, qualifiedName);
+      return _nativeCreateElementNS.call(document, namespaceURI, qualifiedName);
     }
   };
 
   // patch Element.attachShadow
 
   /** @type {function({closed: boolean})} */
-  var _origAttachShadow = Element.prototype['attachShadow'];
-  if (_origAttachShadow) {
+  var _nativeAttachShadow = Element.prototype['attachShadow'];
+  if (_nativeAttachShadow) {
     Object.defineProperty(Element.prototype, 'attachShadow', {
       value: function value(options) {
         /** @type {!Node} */
-        var root = _origAttachShadow.call(this, options);
+        var root = _nativeAttachShadow.call(this, options);
         /** @type {CustomElementRegistry} */
         var customElements = _customElements();
         customElements._observeRoot(root);
@@ -799,11 +800,11 @@ var Deferred = void 0;
     });
   }
 
-  // patch doc.importNode
+  // patch document.importNode
 
-  var rawImportNode = doc.importNode;
-  doc.importNode = function (node, deep) {
-    var clone = /** @type{!Node} */rawImportNode.call(doc, node, deep);
+  var _nativeImportNode = document.importNode;
+  document.importNode = function (node, deep) {
+    var clone = /** @type{!Node} */_nativeImportNode.call(document, node, deep);
     var customElements = _customElements();
     var nodes = isElement(clone) ? [clone] : clone.childNodes;
     /** @type {CustomElementRegistry} */_customElements()._addNodes(nodes);
@@ -812,13 +813,13 @@ var Deferred = void 0;
 
   // patch Element.setAttribute & removeAttribute
 
-  var _origSetAttribute = Element.prototype.setAttribute;
+  var _nativeSetAttribute = Element.prototype.setAttribute;
   Element.prototype['setAttribute'] = function (name, value) {
-    changeAttribute(this, name, value, _origSetAttribute);
+    changeAttribute(this, name, value, _nativeSetAttribute);
   };
-  var _origRemoveAttribute = Element.prototype.removeAttribute;
+  var _nativeRemoveAttribute = Element.prototype.removeAttribute;
   Element.prototype['removeAttribute'] = function (name) {
-    changeAttribute(this, name, null, _origRemoveAttribute);
+    changeAttribute(this, name, null, _nativeRemoveAttribute);
   };
 
   function changeAttribute(element, name, value, operation) {
