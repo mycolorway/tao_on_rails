@@ -16,6 +16,20 @@ module 'TaoComponent',
 
     TaoComponent.register @TestComponent
 
+    class ChildComponent extends @TestComponent
+
+      @tag: 'child-component'
+
+      _initShadowRoot: ->
+        super
+        @shadowRoot.innerHTML = '''
+          <p>showdow dom</p>
+          <slot></slot>
+        '''
+
+    TaoComponent.register ChildComponent
+
+
   beforeEach: ->
     @component = $('<test-component>').appendTo('body')[0]
 
@@ -48,3 +62,16 @@ module 'TaoComponent',
     @component.active = false
     assert.equal @component.active, false
     assert.equal @component.getAttribute('active'), 'false'
+
+  test 'has shadow root', (assert) ->
+    $child = $('''
+      <child-component>
+        <p>content</p>
+      </child-component>
+    ''').appendTo 'body'
+
+    assert.equal $child[0].shadowRoot.innerHTML, '''
+      <p>showdow dom</p>
+      <slot></slot>
+    '''
+    $child.remove()
