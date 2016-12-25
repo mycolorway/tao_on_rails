@@ -4,16 +4,16 @@ module 'TaoModule',
 
   before: ->
     class @ParentModule extends TaoModule
-      @property 'x', observe: true, default: 1
-      @property 'y', observe: true, default: 2
+      @property 'x', default: 1
+      @property 'y', default: 2
 
       _xChanged: ->
         @trigger 'xChanged'
 
 
     class @ChildModule extends @ParentModule
-      @property 'x', observe: true, default: 3
-      @property 'z', observe: true, default: 0
+      @property 'x', default: 3
+      @property 'z', default: 0
 
 , ->
 

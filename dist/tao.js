@@ -27746,8 +27746,6 @@ return jQuery;
       return this;
     };
 
-    TaoModule.prototype._properties = {};
-
     TaoModule.get = function(propertyName, getMethod) {
       return Object.defineProperty(this.prototype, propertyName, {
         get: getMethod,
@@ -27795,9 +27793,12 @@ return jQuery;
       if (options == null) {
         options = {};
       }
-      for (key in options) {
-        val = options[key];
-        this[key] = val;
+      this._properties = {};
+      if (typeof options === 'object') {
+        for (key in options) {
+          val = options[key];
+          this[key] = val;
+        }
       }
       this._init();
     }
