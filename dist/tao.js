@@ -30954,20 +30954,14 @@ var Deferred = void 0;
 
       _Class.observedAttributes = [];
 
-      _Class.prototype._initShadowRoot = function() {
-        return this.shadowRoot = this.attachShadow({
-          mode: 'open'
-        });
-      };
-
       _Class.prototype.connectedCallback = function() {
-        this.connected = true;
-        this._connect();
         if (!this.initialized) {
           this.classList.add('tao-component');
           this._init();
-          return this.initialized = true;
+          this.initialized = true;
         }
+        this.connected = true;
+        return this._connect();
       };
 
       _Class.prototype.disconnectedCallback = function() {

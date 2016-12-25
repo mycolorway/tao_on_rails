@@ -72,18 +72,14 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
     @observedAttributes: []
 
-
-    _initShadowRoot: ->
-      @shadowRoot = @attachShadow(mode: 'open')
-
     connectedCallback: ->
-      @connected = true
-      @_connect()
-
       unless @initialized
         @classList.add 'tao-component'
         @_init()
         @initialized = true
+
+      @connected = true
+      @_connect()
 
     disconnectedCallback: ->
       @connected = false
