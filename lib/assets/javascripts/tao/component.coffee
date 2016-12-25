@@ -72,22 +72,22 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
     @observedAttributes: []
 
-    constructor: ->
-      _instance = super
-      @_initShadowRoot()
-      _instance
 
     _initShadowRoot: ->
       @shadowRoot = @attachShadow(mode: 'open')
 
     connectedCallback: ->
       @connected = true
-      @classList.add 'tao-component'
-      @_init()
+      @_connect()
+
+      unless @initialized
+        @classList.add 'tao-component'
+        @_init()
+        @initialized = true
 
     disconnectedCallback: ->
       @connected = false
-      @_destroy()
+      @_disconnect()
 
     attributeChangedCallback: (attrName, oldValue, newValue) ->
       @["_#{_.camelCase attrName}Changed"]?(newValue, oldValue)
@@ -107,7 +107,10 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     _init: ->
       # to be implemented
 
-    _destroy: ->
+    _connect: ->
+      # to be implemented
+
+    _disconnect: ->
       # to be implemented
 
     prepareCache: ->

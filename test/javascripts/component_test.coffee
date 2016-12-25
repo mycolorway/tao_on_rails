@@ -11,24 +11,19 @@ module 'TaoComponent',
 
       @property 'active', default: true
 
+      _init: ->
+        @trigger 'initialized'
+
+      _connect: ->
+        @trigger 'connected'
+
+      _disconnect: ->
+        @trigger 'disconnected'
+
       _nameChanged: ->
         @trigger 'nameChanged'
 
     TaoComponent.register @TestComponent
-
-    class ChildComponent extends @TestComponent
-
-      @tag: 'child-component'
-
-      _initShadowRoot: ->
-        super
-        @shadowRoot.innerHTML = '''
-          <p>showdow dom</p>
-          <slot></slot>
-        '''
-
-    TaoComponent.register ChildComponent
-
 
   beforeEach: ->
     @component = $('<test-component>').appendTo('body')[0]
@@ -42,18 +37,18 @@ module 'TaoComponent',
     assert.ok @TestComponent.prototype instanceof HTMLElement
 
   test 'has observed properties', (assert) ->
-    nameChanged = false
+    nameChangedCount = 0
     @component.on 'nameChanged', ->
-      nameChanged = true
+      nameChangedCount++
 
     assert.equal @component.name, false
     assert.equal @component.hasAttribute('name'), false
-    assert.equal nameChanged, false
+    assert.equal nameChangedCount, 0
 
     @component.name = 'farthinker'
     assert.equal @component.name, 'farthinker'
     assert.equal @component.getAttribute('name'), 'farthinker'
-    assert.equal nameChanged, true
+    assert.equal nameChangedCount, 1
 
   test 'has properties with default value', (assert) ->
     assert.equal @component.active, true
@@ -63,15 +58,43 @@ module 'TaoComponent',
     assert.equal @component.active, false
     assert.equal @component.getAttribute('active'), 'false'
 
-  test 'has shadow root', (assert) ->
-    $child = $('''
-      <child-component>
-        <p>content</p>
-      </child-component>
-    ''').appendTo 'body'
+  test 'call _init and _connect method when connected to DOM', (assert) ->
+    done = assert.async()
+    component = document.createElement('test-component')
+    assert.notOk component.initialized
+    assert.notOk component.connected
 
-    assert.equal $child[0].shadowRoot.innerHTML, '''
-      <p>showdow dom</p>
-      <slot></slot>
-    '''
-    $child.remove()
+    initializeCount = 0
+    connectCount = 0
+    disconnectCount = 0
+    component.on 'initialized', ->
+      initializeCount++
+    .on 'connected', ->
+      connectCount++
+    .on 'disconnected', ->
+      disconnectCount++
+
+    $(component).appendTo 'body'
+    setTimeout ->
+      assert.ok component.initialized
+      assert.ok component.connected
+      assert.equal initializeCount, 1
+      assert.equal connectCount, 1
+      assert.equal disconnectCount, 0
+
+      $(component).detach()
+      setTimeout ->
+        assert.ok component.initialized
+        assert.notOk component.connected
+        assert.equal initializeCount, 1
+        assert.equal connectCount, 1
+        assert.equal disconnectCount, 1
+
+        $(component).appendTo 'body'
+        setTimeout ->
+          assert.ok component.initialized
+          assert.ok component.connected
+          assert.equal initializeCount, 1
+          assert.equal connectCount, 2
+          assert.equal disconnectCount, 1
+          done()
