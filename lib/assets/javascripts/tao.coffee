@@ -10,4 +10,4 @@
 #= require tao/helpers
 #= require tao/icons
 
-window.tao = {}
+window.Tao = {}
