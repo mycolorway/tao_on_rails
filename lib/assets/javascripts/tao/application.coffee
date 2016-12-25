@@ -26,7 +26,7 @@ class TaoApplication extends TaoModule
   _initIcons: ($page) ->
     $icons = $page.siblings('#tao-icons')
     unless $icons.length > 0
-      $page[0].insertAdjacentHTML('beforebegin', tao.iconsHtml || '')
+      $page[0].insertAdjacentHTML('beforebegin', Tao.iconsHtml || '')
 
   _initPage: ($page) ->
     window.currentPage = @currentPage = $page[0]
