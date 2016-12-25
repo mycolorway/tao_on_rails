@@ -27833,7 +27833,7 @@ return jQuery;
       var $icons;
       $icons = $page.siblings('#tao-icons');
       if (!($icons.length > 0)) {
-        return $page[0].insertAdjacentHTML('beforebegin', tao.iconsHtml || '');
+        return $page[0].insertAdjacentHTML('beforebegin', Tao.iconsHtml || '');
       }
     };
 
@@ -31055,7 +31055,7 @@ var Deferred = void 0;
 
 }).call(this);
 (function() {
-  window.Tao.helpers = {
+  Tao.helpers = {
     reflow: function(el) {
       return $(el)[0].offsetHeight;
     },

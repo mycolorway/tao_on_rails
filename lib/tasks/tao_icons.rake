@@ -6,7 +6,7 @@ namespace :tao do
     Dir.mkdir(dir_name) unless File.exists?(dir_name)
 
     File.open "#{dir_name}/icons.coffee", 'w' do |f|
-      f.puts %{tao.iconsHtml = '''#{svg_html}'''}
+      f.puts %{Tao.iconsHtml = '''#{svg_html}'''}
     end
   end
 
