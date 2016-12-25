@@ -27746,14 +27746,61 @@ return jQuery;
       return this;
     };
 
-    function TaoModule(opts) {
-      this._setOptions(opts);
+    TaoModule.prototype._properties = {};
+
+    TaoModule.get = function(propertyName, getMethod) {
+      return Object.defineProperty(this.prototype, propertyName, {
+        get: getMethod,
+        configurable: true
+      });
+    };
+
+    TaoModule.set = function(propertyName, setMethod) {
+      return Object.defineProperty(this.prototype, propertyName, {
+        set: setMethod,
+        configurable: true
+      });
+    };
+
+    TaoModule.property = function() {
+      var i, names, options;
+      names = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), options = arguments[i++];
+      if (options == null) {
+        options = {};
+      }
+      if (typeof options !== 'object') {
+        names.push(options);
+        options = {};
+      }
+      return names.forEach((function(_this) {
+        return function(name) {
+          _this.get(name, function() {
+            var ref;
+            return (ref = this._properties[name]) != null ? ref : options["default"];
+          });
+          return _this.set(name, function(val) {
+            var name1;
+            if (this._properties[name] === val) {
+              return;
+            }
+            this._properties[name] = val;
+            return typeof this[name1 = "_" + name + "Changed"] === "function" ? this[name1]() : void 0;
+          });
+        };
+      })(this));
+    };
+
+    function TaoModule(options) {
+      var key, val;
+      if (options == null) {
+        options = {};
+      }
+      for (key in options) {
+        val = options[key];
+        this[key] = val;
+      }
       this._init();
     }
-
-    TaoModule.prototype._setOptions = function(opts) {
-      return this.opts = $.extend({}, TaoModule.opts, opts);
-    };
 
     TaoModule.prototype._init = function() {};
 
@@ -30969,9 +31016,9 @@ var Deferred = void 0;
         return this._disconnect();
       };
 
-      _Class.prototype.attributeChangedCallback = function(attrName, oldValue, newValue) {
+      _Class.prototype.attributeChangedCallback = function(attrName) {
         var name1;
-        return typeof this[name1 = "_" + (_.camelCase(attrName)) + "Changed"] === "function" ? this[name1](newValue, oldValue) : void 0;
+        return typeof this[name1 = "_" + (_.camelCase(attrName)) + "Changed"] === "function" ? this[name1]() : void 0;
       };
 
       _Class.prototype.on = function() {

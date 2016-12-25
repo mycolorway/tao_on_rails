@@ -85,8 +85,8 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
       @connected = false
       @_disconnect()
 
-    attributeChangedCallback: (attrName, oldValue, newValue) ->
-      @["_#{_.camelCase attrName}Changed"]?(newValue, oldValue)
+    attributeChangedCallback: (attrName) ->
+      @["_#{_.camelCase attrName}Changed"]?()
 
     on: (args...) ->
       $(@).on args...

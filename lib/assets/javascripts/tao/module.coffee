@@ -20,14 +20,39 @@ class TaoModule
     obj.included?.call(@)
     @
 
-  constructor: (opts) ->
-    @_setOptions opts
+  @get: (propertyName, getMethod) ->
+    Object.defineProperty @prototype, propertyName,
+      get: getMethod
+      configurable: true
+
+  @set: (propertyName, setMethod) ->
+    Object.defineProperty @prototype, propertyName,
+      set: setMethod
+      configurable: true
+
+  @property: (names..., options = {}) ->
+    unless typeof options == 'object'
+      names.push(options)
+      options = {}
+
+    names.forEach (name) =>
+      @get name, ->
+        @_properties[name] ? options.default
+      @set name, (val) ->
+        return if @_properties[name] == val
+        @_properties[name] = val
+        @["_#{name}Changed"]?()
+
+  constructor: (options = {}) ->
+    @_properties = {}
+    
+    if typeof options == 'object'
+      @[key] = val for key, val of options
+
     @_init()
 
-  _setOptions: (opts) ->
-    @opts = $.extend {}, TaoModule.opts, opts
-
   _init: ->
+    # to be implemented
 
   on: (args...) ->
     $(@).on args...
