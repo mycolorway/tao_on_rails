@@ -72,6 +72,9 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
     @observedAttributes: []
 
+    @get 'jq', ->
+      $(@)
+
     connectedCallback: ->
       unless @initialized
         @classList.add 'tao-component'

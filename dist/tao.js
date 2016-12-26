@@ -31002,6 +31002,10 @@ var Deferred = void 0;
 
       _Class.observedAttributes = [];
 
+      _Class.get('jq', function() {
+        return $(this);
+      });
+
       _Class.prototype.connectedCallback = function() {
         if (!this.initialized) {
           this.classList.add('tao-component');

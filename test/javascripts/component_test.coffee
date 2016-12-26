@@ -26,10 +26,10 @@ module 'TaoComponent',
     TaoComponent.register @TestComponent
 
   beforeEach: ->
-    @component = $('<test-component>').appendTo('body')[0]
+    @component = $('<test-component>').appendTo('body').get(0)
 
   afterEach: ->
-    $(@component).off().remove()
+    @component.jq.off().remove()
 
 , ->
 
@@ -98,3 +98,7 @@ module 'TaoComponent',
           assert.equal connectCount, 2
           assert.equal disconnectCount, 1
           done()
+
+  test 'jq property returns jquery object', (assert) ->
+    assert.ok @component.jq.jquery
+    assert.equal @component.jq.get(0), @component
