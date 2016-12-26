@@ -18,3 +18,23 @@ build:
     - tao.js
     - tao.css
   path: dist
+
+plugins:
+  sauce_labs:
+    tunnel_timeout: 120
+    browsers:
+      Google Chrome:
+        os: Mac, Windows
+        version: -2
+      Firefox:
+        os: Mac, Windows
+        version: -2
+      Safari:
+        platform: Mac
+        version: -3
+      Microsoft Edge:
+        version: -2
+      iPhone:
+        version: [9.3]
+      Motorola Droid 4 Emulator:
+        version: [5.1, 4.4]

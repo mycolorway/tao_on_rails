@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "blade", "~> 0.7.0"
+  spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.6.2"
 end
