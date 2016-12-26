@@ -92,16 +92,16 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
       @["_#{_.camelCase attrName}Changed"]?()
 
     on: (args...) ->
-      $(@).on args...
+      @jq.on args...
 
     off: (args...) ->
-      $(@).off args...
+      @jq.off args...
 
     trigger: (args...) ->
-      $(@).triggerHandler(args...)
+      @jq.triggerHandler(args...)
 
     one: (args...) ->
-      $(@).one args...
+      @jq.one args...
 
     _init: ->
       # to be implemented

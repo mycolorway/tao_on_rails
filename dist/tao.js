@@ -31029,25 +31029,25 @@ var Deferred = void 0;
       _Class.prototype.on = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-        return (ref = $(this)).on.apply(ref, args);
+        return (ref = this.jq).on.apply(ref, args);
       };
 
       _Class.prototype.off = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-        return (ref = $(this)).off.apply(ref, args);
+        return (ref = this.jq).off.apply(ref, args);
       };
 
       _Class.prototype.trigger = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-        return (ref = $(this)).triggerHandler.apply(ref, args);
+        return (ref = this.jq).triggerHandler.apply(ref, args);
       };
 
       _Class.prototype.one = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-        return (ref = $(this)).one.apply(ref, args);
+        return (ref = this.jq).one.apply(ref, args);
       };
 
       _Class.prototype._init = function() {};
