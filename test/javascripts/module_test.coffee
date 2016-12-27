@@ -4,16 +4,16 @@ module 'TaoModule',
 
   before: ->
     class @ParentModule extends TaoModule
-      @property 'x', default: 1
-      @property 'y', default: 2
+      @attribute 'x', default: 1
+      @attribute 'y', default: 2
 
       _xChanged: ->
         @trigger 'xChanged'
 
 
     class @ChildModule extends @ParentModule
-      @property 'x', default: 3
-      @property 'z', default: 0
+      @attribute 'x', default: 3
+      @attribute 'z', default: 0
 
 , ->
 
@@ -26,7 +26,7 @@ module 'TaoModule',
     assert.equal parentInstance.x, 3
     assert.equal childInstance.x, 4
 
-  test 'property inheritance', (assert) ->
+  test 'attribute inheritance', (assert) ->
     parentInstance = new @ParentModule()
     childInstance = new @ChildModule()
 
@@ -36,7 +36,7 @@ module 'TaoModule',
     assert.equal childInstance.y, 2
     assert.equal childInstance.z, 0
 
-  test 'property changed hook', (assert) ->
+  test 'attribute changed hook', (assert) ->
     parentInstance = new @ParentModule()
 
     xChangedCount = 0

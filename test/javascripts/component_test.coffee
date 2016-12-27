@@ -7,9 +7,9 @@ module 'TaoComponent',
 
       @tag: 'test-component'
 
-      @property 'name', 'age', observe: true
+      @attribute 'name', 'age', observe: true
 
-      @property 'active', default: true
+      @attribute 'active', default: true
 
       _init: ->
         @trigger 'initialized'
@@ -36,7 +36,7 @@ module 'TaoComponent',
   test 'inherits from HTMLElement', (assert) ->
     assert.ok @TestComponent.prototype instanceof HTMLElement
 
-  test 'has observed properties', (assert) ->
+  test 'has observed attributes', (assert) ->
     nameChangedCount = 0
     @component.on 'nameChanged', ->
       nameChangedCount++
@@ -50,7 +50,7 @@ module 'TaoComponent',
     assert.equal @component.getAttribute('name'), 'farthinker'
     assert.equal nameChangedCount, 1
 
-  test 'has properties with default value', (assert) ->
+  test 'has attributes with default value', (assert) ->
     assert.equal @component.active, true
     assert.equal @component.hasAttribute('active'), false
 
@@ -99,6 +99,6 @@ module 'TaoComponent',
           assert.equal disconnectCount, 1
           done()
 
-  test 'jq property returns jquery object', (assert) ->
+  test 'jq attribute returns jquery object', (assert) ->
     assert.ok @component.jq.jquery
     assert.equal @component.jq.get(0), @component

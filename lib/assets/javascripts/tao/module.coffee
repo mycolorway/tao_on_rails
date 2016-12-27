@@ -20,32 +20,32 @@ class TaoModule
     obj.included?.call(@)
     @
 
-  @get: (propertyName, getMethod) ->
-    Object.defineProperty @prototype, propertyName,
+  @get: (attributeName, getMethod) ->
+    Object.defineProperty @prototype, attributeName,
       get: getMethod
       configurable: true
 
-  @set: (propertyName, setMethod) ->
-    Object.defineProperty @prototype, propertyName,
+  @set: (attributeName, setMethod) ->
+    Object.defineProperty @prototype, attributeName,
       set: setMethod
       configurable: true
 
-  @property: (names..., options = {}) ->
+  @attribute: (names..., options = {}) ->
     unless typeof options == 'object'
       names.push(options)
       options = {}
 
     names.forEach (name) =>
       @get name, ->
-        @_properties[name] ? options.default
+        @_attributes[name] ? options.default
       @set name, (val) ->
-        return if @_properties[name] == val
-        @_properties[name] = val
+        return if @_attributes[name] == val
+        @_attributes[name] = val
         @["_#{name}Changed"]?()
 
   constructor: (options = {}) ->
-    @_properties = {}
-    
+    @_attributes = {}
+
     if typeof options == 'object'
       @[key] = val for key, val of options
 

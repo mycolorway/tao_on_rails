@@ -27746,21 +27746,21 @@ return jQuery;
       return this;
     };
 
-    TaoModule.get = function(propertyName, getMethod) {
-      return Object.defineProperty(this.prototype, propertyName, {
+    TaoModule.get = function(attributeName, getMethod) {
+      return Object.defineProperty(this.prototype, attributeName, {
         get: getMethod,
         configurable: true
       });
     };
 
-    TaoModule.set = function(propertyName, setMethod) {
-      return Object.defineProperty(this.prototype, propertyName, {
+    TaoModule.set = function(attributeName, setMethod) {
+      return Object.defineProperty(this.prototype, attributeName, {
         set: setMethod,
         configurable: true
       });
     };
 
-    TaoModule.property = function() {
+    TaoModule.attribute = function() {
       var i, names, options;
       names = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), options = arguments[i++];
       if (options == null) {
@@ -27774,14 +27774,14 @@ return jQuery;
         return function(name) {
           _this.get(name, function() {
             var ref;
-            return (ref = this._properties[name]) != null ? ref : options["default"];
+            return (ref = this._attributes[name]) != null ? ref : options["default"];
           });
           return _this.set(name, function(val) {
             var name1;
-            if (this._properties[name] === val) {
+            if (this._attributes[name] === val) {
               return;
             }
-            this._properties[name] = val;
+            this._attributes[name] = val;
             return typeof this[name1 = "_" + name + "Changed"] === "function" ? this[name1]() : void 0;
           });
         };
@@ -27793,7 +27793,7 @@ return jQuery;
       if (options == null) {
         options = {};
       }
-      this._properties = {};
+      this._attributes = {};
       if (typeof options === 'object') {
         for (key in options) {
           val = options[key];
@@ -27874,7 +27874,9 @@ return jQuery;
     };
 
     TaoApplication.prototype._initI18n = function() {
-      return typeof I18n !== "undefined" && I18n !== null ? I18n.locale = this.locale : void 0;
+      if (I18n && this.locale) {
+        return I18n.locale = this.locale;
+      }
     };
 
     TaoApplication.prototype._initIcons = function($page) {
@@ -27930,12 +27932,12 @@ return jQuery;
         };
       })(this)).on('turbolinks:render', (function(_this) {
         return function(e) {
-          return _this.trigger('page-render', [$('body > .page')]);
+          return _this.trigger('page-render', [$('body > .tao-page')]);
         };
       })(this)).on('turbolinks:load', (function(_this) {
         return function(e) {
           var $page;
-          $page = $('body > .page');
+          $page = $('body > .tao-page');
           if (!($page.length > 0)) {
             return;
           }
@@ -30930,21 +30932,21 @@ var Deferred = void 0;
         return this;
       };
 
-      _Class.get = function(propertyName, getMethod) {
-        return Object.defineProperty(this.prototype, propertyName, {
+      _Class.get = function(attributeName, getMethod) {
+        return Object.defineProperty(this.prototype, attributeName, {
           get: getMethod,
           configurable: true
         });
       };
 
-      _Class.set = function(propertyName, setMethod) {
-        return Object.defineProperty(this.prototype, propertyName, {
+      _Class.set = function(attributeName, setMethod) {
+        return Object.defineProperty(this.prototype, attributeName, {
           set: setMethod,
           configurable: true
         });
       };
 
-      _Class.property = function() {
+      _Class.attribute = function() {
         var i, names, options;
         names = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), options = arguments[i++];
         if (options == null) {
@@ -31080,7 +31082,7 @@ var Deferred = void 0;
       return TaoPage.__super__.constructor.apply(this, arguments);
     }
 
-    TaoPage.property('layout');
+    TaoPage.attribute('layout');
 
     TaoPage.prototype.prepareCache = function() {
       return $(this).find('.tao-component').each((function(_this) {

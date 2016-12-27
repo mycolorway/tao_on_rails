@@ -2,7 +2,7 @@
 
 class TaoPage extends TaoComponent
 
-  @property 'layout'
+  @attribute 'layout'
 
   prepareCache: ->
     $(@).find('.tao-component').each (i, el) =>

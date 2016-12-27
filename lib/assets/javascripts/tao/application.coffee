@@ -21,7 +21,7 @@ class TaoApplication extends TaoModule
       $(@).removeClass 'disabled'
 
   _initI18n: ->
-    I18n?.locale = @locale
+    I18n.locale = @locale if I18n && @locale
 
   _initIcons: ($page) ->
     $icons = $page.siblings('#tao-icons')
@@ -57,10 +57,10 @@ class TaoApplication extends TaoModule
       @trigger 'before-page-render', [$ e.originalEvent?.data.newBody]
 
     .on 'turbolinks:render', (e) =>
-      @trigger 'page-render', [$('body > .page')]
+      @trigger 'page-render', [$('body > .tao-page')]
 
     .on 'turbolinks:load', (e) =>
-      $page = $ 'body > .page'
+      $page = $ 'body > .tao-page'
       return unless $page.length > 0
       @_initIcons $page
       @_initPage $page
