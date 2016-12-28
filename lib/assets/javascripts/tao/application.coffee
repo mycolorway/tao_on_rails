@@ -9,6 +9,7 @@ class TaoApplication extends TaoModule
     @_initTurbolinks()
 
   _initGon: ->
+    return unless window.gon
     $.extend @, window.gon
     window.gon = null
 
@@ -62,6 +63,7 @@ class TaoApplication extends TaoModule
     .on 'turbolinks:load', (e) =>
       $page = $ 'body > .tao-page'
       return unless $page.length > 0
+      @_initGon()
       @_initIcons $page
       @_initPage $page
       @trigger 'page-load', [@currentPage]

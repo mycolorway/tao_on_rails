@@ -27856,6 +27856,9 @@ return jQuery;
     };
 
     TaoApplication.prototype._initGon = function() {
+      if (!window.gon) {
+        return;
+      }
       $.extend(this, window.gon);
       return window.gon = null;
     };
@@ -27941,6 +27944,7 @@ return jQuery;
           if (!($page.length > 0)) {
             return;
           }
+          _this._initGon();
           _this._initIcons($page);
           _this._initPage($page);
           return _this.trigger('page-load', [_this.currentPage]);
