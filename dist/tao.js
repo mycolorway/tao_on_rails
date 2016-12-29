@@ -27897,12 +27897,12 @@ return jQuery;
     TaoApplication.prototype._initTurbolinks = function() {
       return $(document).on('turbolinks:before-visit', (function(_this) {
         return function(e) {
-          var ref;
-          if (_this.currentPage.trigger('before-leave') === false) {
+          var ref, ref1;
+          if (((ref = _this.currentPage) != null ? ref.trigger('before-leave') : void 0) === false) {
             e.preventDefault();
             return;
           }
-          return _this.trigger('before-page-visit', [(ref = e.originalEvent) != null ? ref.data.url : void 0]);
+          return _this.trigger('before-page-visit', [(ref1 = e.originalEvent) != null ? ref1.data.url : void 0]);
         };
       })(this)).on('turbolinks:request-start', (function(_this) {
         return function(e) {
@@ -27916,10 +27916,12 @@ return jQuery;
         };
       })(this)).on('turbolinks:before-cache', (function(_this) {
         return function(e) {
-          var base;
+          var ref;
           _this.trigger('before-page-cache', [_this.currentPage]);
-          if (typeof (base = _this.currentPage).prepareCache === "function") {
-            base.prepareCache();
+          if ((ref = _this.currentPage) != null) {
+            if (typeof ref.prepareCache === "function") {
+              ref.prepareCache();
+            }
           }
           return window.currentPage = _this.currentPage = null;
         };

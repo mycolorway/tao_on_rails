@@ -34,7 +34,7 @@ class TaoApplication extends TaoModule
 
   _initTurbolinks: ->
     $(document).on 'turbolinks:before-visit', (e) =>
-      if @currentPage.trigger('before-leave') == false
+      if @currentPage?.trigger('before-leave') == false
         e.preventDefault()
         return
 
@@ -48,7 +48,7 @@ class TaoApplication extends TaoModule
 
     .on 'turbolinks:before-cache', (e) =>
       @trigger 'before-page-cache', [@currentPage]
-      @currentPage.prepareCache?()
+      @currentPage?.prepareCache?()
       window.currentPage = @currentPage = null
 
     .on 'turbolinks:request-end', (e) =>
