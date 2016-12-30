@@ -1,5 +1,7 @@
 class TaoModule
 
+  id = 0
+
   @extend: (obj) ->
     unless obj and typeof obj == 'object'
       throw new Error('TaoModule.extend: param should be an object')
@@ -44,6 +46,7 @@ class TaoModule
         @["_#{name}Changed"]?()
 
   constructor: (options = {}) ->
+    @id = ++id
     @_attributes = {}
 
     if typeof options == 'object'

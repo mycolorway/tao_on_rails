@@ -57,3 +57,13 @@ module 'TaoModule',
     parentInstance.x = 3
     assert.equal parentInstance.x, 3
     assert.equal xChangedCount, 2
+
+  test 'self-increased module id', (assert) ->
+    instance1 = new @ParentModule()
+    assert.equal instance1.id, 1
+
+    instance2 = new @ParentModule()
+    assert.equal instance2.id, 2
+
+    instance3 = new @ChildModule()
+    assert.equal instance3.id, 3

@@ -25,15 +25,13 @@ plugins:
     browsers:
       Google Chrome:
         os: Mac, Windows
-        version: -2
+        version: -1
       Firefox:
         os: Mac, Windows
-        version: -2
+        version: -1
       Safari:
         platform: Mac
-        version: -3
-      Microsoft Edge:
-        version: -2
+        version: -1
       iPhone:
         version: [9.3]
       Motorola Droid 4 Emulator:
