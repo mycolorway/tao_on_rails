@@ -22,7 +22,7 @@ class TaoApplication extends TaoModule
       $(@).removeClass 'disabled'
 
   _initI18n: ->
-    I18n.locale = @locale if I18n && @locale
+    I18n.locale = @locale if window.I18n && @locale
 
   _initIcons: ($page) ->
     $icons = $page.siblings('#tao-icons')
