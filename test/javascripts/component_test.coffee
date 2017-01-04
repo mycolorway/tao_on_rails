@@ -14,10 +14,10 @@ module 'TaoComponent',
       _init: ->
         @trigger 'initialized'
 
-      _connect: ->
+      _connected: ->
         @trigger 'connected'
 
-      _disconnect: ->
+      _disconnected: ->
         @trigger 'disconnected'
 
       _nameChanged: ->
@@ -74,30 +74,33 @@ module 'TaoComponent',
     .on 'disconnected', ->
       disconnectCount++
 
-    $(component).appendTo 'body'
-    setTimeout ->
+    component.one 'connected', ->
       assert.ok component.initialized
       assert.ok component.connected
       assert.equal initializeCount, 1
       assert.equal connectCount, 1
       assert.equal disconnectCount, 0
 
-      $(component).detach()
-      setTimeout ->
+      component.one 'disconnected', ->
         assert.ok component.initialized
         assert.notOk component.connected
         assert.equal initializeCount, 1
         assert.equal connectCount, 1
         assert.equal disconnectCount, 1
 
-        $(component).appendTo 'body'
-        setTimeout ->
+        component.one 'connected', ->
           assert.ok component.initialized
           assert.ok component.connected
           assert.equal initializeCount, 1
           assert.equal connectCount, 2
           assert.equal disconnectCount, 1
           done()
+
+        component.jq.appendTo 'body'
+
+      component.jq.detach()
+
+    component.jq.appendTo 'body'
 
   test 'jq attribute returns jquery object', (assert) ->
     assert.ok @component.jq.jquery

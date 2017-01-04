@@ -8,6 +8,8 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
 
   class components[superClass] extends window[superClass]
 
+    count = 0
+
     @extend: (obj) ->
       unless obj and typeof obj == 'object'
         throw new Error('TaoComponent.extend: param should be an object')
@@ -75,21 +77,48 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     @get 'jq', ->
       $(@)
 
-    connectedCallback: ->
-      unless @initialized
-        @classList.add 'tao-component'
-        @_init()
-        @initialized = true
+    @attribute 'taoId'
 
-      @connected = true
-      @_connect()
+    constructor: ->
+      instance = window[superClass].apply(@, arguments)
+      @_created()
+      instance
+
+    connectedCallback: ->
+      $ =>
+        unless @initialized
+          @taoId = ++count
+          @_init()
+          @initialized = true
+
+        @connected = true
+        @_connected()
 
     disconnectedCallback: ->
-      @connected = false
-      @_disconnect()
+      $ =>
+        @connected = false
+        @_disconnected()
 
-    attributeChangedCallback: (attrName) ->
-      @["_#{_.camelCase attrName}Changed"]?()
+    attributeChangedCallback: (name) ->
+      @_attributeChanged name
+
+    _created: ->
+      # called when the element was created
+
+    _init: ->
+      # called when the element was connected to dom for the first time
+
+    _connected: ->
+      # called when the element was connected to dom
+
+    _disconnected: ->
+      # called when the element was disconnected from dom
+
+    _attributeChanged: (name) ->
+      @["_#{_.camelCase name}Changed"]?()
+
+    beforeCache: ->
+      # called before turbolinks cache pages
 
     on: (args...) ->
       @jq.on args...
@@ -103,17 +132,6 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     one: (args...) ->
       @jq.one args...
 
-    _init: ->
-      # to be implemented
-
-    _connect: ->
-      # to be implemented
-
-    _disconnect: ->
-      # to be implemented
-
-    prepareCache: ->
-      # called before turbolinks cache pages
 
 window.TaoComponentBasedOn = TaoComponentBasedOn
 window.TaoComponent = TaoComponentBasedOn 'HTMLElement'
