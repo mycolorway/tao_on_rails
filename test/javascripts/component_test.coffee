@@ -34,7 +34,7 @@ module 'TaoComponent',
 , ->
 
   test 'inherits from HTMLElement', (assert) ->
-    assert.ok @TestComponent.prototype instanceof HTMLElement
+    assert.ok @component instanceof HTMLElement
 
   test 'has observed attributes', (assert) ->
     nameChangedCount = 0

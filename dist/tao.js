@@ -30944,27 +30944,41 @@ var Deferred = void 0;
 }).call(this);
 (function() {
   var TaoComponentBasedOn, components,
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty,
     slice = [].slice;
 
   components = {};
 
-  TaoComponentBasedOn = function(superClass) {
-    if (superClass == null) {
-      superClass = 'HTMLElement';
+  TaoComponentBasedOn = function(superClassName) {
+    var ComponentClass;
+    if (superClassName == null) {
+      superClassName = 'HTMLElement';
     }
-    if (components[superClass]) {
-      return components[superClass];
+    if (components[superClassName]) {
+      return components[superClassName];
     }
-    return components[superClass] = (function(superClass1) {
-      var count;
+    ComponentClass = (function() {
+      var count, superClass;
 
-      extend(_Class, superClass1);
+      superClass = window[superClassName];
+
+      ComponentClass.prototype = Object.create(superClass.prototype, {
+        constructor: {
+          value: ComponentClass,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      });
+
+      if (Object.setPrototypeOf != null) {
+        Object.setPrototypeOf(ComponentClass, superClass);
+      } else {
+        ComponentClass.__proto__ = superClass;
+      }
 
       count = 0;
 
-      _Class.extend = function(obj) {
+      ComponentClass.extend = function(obj) {
         var key, ref, val;
         if (!(obj && typeof obj === 'object')) {
           throw new Error('TaoComponent.extend: param should be an object');
@@ -30981,7 +30995,7 @@ var Deferred = void 0;
         return this;
       };
 
-      _Class.include = function(obj) {
+      ComponentClass.include = function(obj) {
         var key, ref, val;
         if (!(obj && typeof obj === 'object')) {
           throw new Error('TaoComponent.include: param should be an object');
@@ -30998,21 +31012,21 @@ var Deferred = void 0;
         return this;
       };
 
-      _Class.get = function(attributeName, getMethod) {
+      ComponentClass.get = function(attributeName, getMethod) {
         return Object.defineProperty(this.prototype, attributeName, {
           get: getMethod,
           configurable: true
         });
       };
 
-      _Class.set = function(attributeName, setMethod) {
+      ComponentClass.set = function(attributeName, setMethod) {
         return Object.defineProperty(this.prototype, attributeName, {
           set: setMethod,
           configurable: true
         });
       };
 
-      _Class.attribute = function() {
+      ComponentClass.attribute = function() {
         var i, names, options;
         names = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), options = arguments[i++];
         if (options == null) {
@@ -31059,29 +31073,29 @@ var Deferred = void 0;
         })(this));
       };
 
-      _Class.tag = '';
+      ComponentClass.tag = '';
 
-      _Class.register = function(componentClass) {
+      ComponentClass.register = function(componentClass) {
         if (!componentClass.tag) {
           return;
         }
         return customElements.define(componentClass.tag, componentClass);
       };
 
-      _Class.observedAttributes = [];
+      ComponentClass.observedAttributes = [];
 
-      _Class.get('jq', function() {
+      ComponentClass.get('jq', function() {
         return $(this);
       });
 
-      _Class.attribute('taoId');
+      ComponentClass.attribute('taoId');
 
-      function _Class() {
-        window[superClass].apply(this, arguments);
+      function ComponentClass() {
+        superClass.apply(this, arguments);
         this._created();
       }
 
-      _Class.prototype.connectedCallback = function() {
+      ComponentClass.prototype.connectedCallback = function() {
         return $((function(_this) {
           return function() {
             if (!_this.initialized) {
@@ -31095,7 +31109,7 @@ var Deferred = void 0;
         })(this));
       };
 
-      _Class.prototype.disconnectedCallback = function() {
+      ComponentClass.prototype.disconnectedCallback = function() {
         return $((function(_this) {
           return function() {
             _this.connected = false;
@@ -31104,52 +31118,53 @@ var Deferred = void 0;
         })(this));
       };
 
-      _Class.prototype.attributeChangedCallback = function(name) {
+      ComponentClass.prototype.attributeChangedCallback = function(name) {
         return this._attributeChanged(name);
       };
 
-      _Class.prototype._created = function() {};
+      ComponentClass.prototype._created = function() {};
 
-      _Class.prototype._init = function() {};
+      ComponentClass.prototype._init = function() {};
 
-      _Class.prototype._connected = function() {};
+      ComponentClass.prototype._connected = function() {};
 
-      _Class.prototype._disconnected = function() {};
+      ComponentClass.prototype._disconnected = function() {};
 
-      _Class.prototype._attributeChanged = function(name) {
+      ComponentClass.prototype._attributeChanged = function(name) {
         var name1;
         return typeof this[name1 = "_" + (_.camelCase(name)) + "Changed"] === "function" ? this[name1]() : void 0;
       };
 
-      _Class.prototype.beforeCache = function() {};
+      ComponentClass.prototype.beforeCache = function() {};
 
-      _Class.prototype.on = function() {
+      ComponentClass.prototype.on = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
         return (ref = this.jq).on.apply(ref, args);
       };
 
-      _Class.prototype.off = function() {
+      ComponentClass.prototype.off = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
         return (ref = this.jq).off.apply(ref, args);
       };
 
-      _Class.prototype.trigger = function() {
+      ComponentClass.prototype.trigger = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
         return (ref = this.jq).triggerHandler.apply(ref, args);
       };
 
-      _Class.prototype.one = function() {
+      ComponentClass.prototype.one = function() {
         var args, ref;
         args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
         return (ref = this.jq).one.apply(ref, args);
       };
 
-      return _Class;
+      return ComponentClass;
 
-    })(window[superClass]);
+    })();
+    return components[superClassName] = ComponentClass;
   };
 
   window.TaoComponentBasedOn = TaoComponentBasedOn;

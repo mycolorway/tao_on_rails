@@ -3,10 +3,26 @@
 
 components = {}
 
-TaoComponentBasedOn = (superClass = 'HTMLElement') ->
-  return components[superClass] if components[superClass]
+TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
+  return components[superClassName] if components[superClassName]
 
-  class components[superClass] extends window[superClass]
+  class ComponentClass
+
+    # coffee's inheritance code is not compatible with custom elements
+    superClass = window[superClassName]
+
+    @prototype = Object.create superClass.prototype,
+      constructor:
+        value: @
+        enumerable: false
+        writable: true
+        configurable: true
+
+    if Object.setPrototypeOf?
+      Object.setPrototypeOf @, superClass
+    else
+      @__proto__ = superClass
+
 
     count = 0
 
@@ -80,7 +96,7 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     @attribute 'taoId'
 
     constructor: ->
-      window[superClass].apply @, arguments
+      superClass.apply @, arguments
       @_created()
 
     connectedCallback: ->
@@ -131,6 +147,7 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     one: (args...) ->
       @jq.one args...
 
+  components[superClassName] = ComponentClass
 
 window.TaoComponentBasedOn = TaoComponentBasedOn
 window.TaoComponent = TaoComponentBasedOn 'HTMLElement'
