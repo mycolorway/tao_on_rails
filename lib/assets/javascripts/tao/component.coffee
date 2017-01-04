@@ -80,9 +80,8 @@ TaoComponentBasedOn = (superClass = 'HTMLElement') ->
     @attribute 'taoId'
 
     constructor: ->
-      instance = window[superClass].apply(@, arguments)
+      window[superClass].apply @, arguments
       @_created()
-      instance
 
     connectedCallback: ->
       $ =>
