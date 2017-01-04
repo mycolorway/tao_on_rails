@@ -4,9 +4,9 @@ class TaoPage extends TaoComponent
 
   @attribute 'layout'
 
-  prepareCache: ->
-    $(@).find('.tao-component').each (i, el) =>
-      el.prepareCache?()
+  beforeCache: ->
+    @jp.find('[tao-id]').each (i, el) =>
+      el.beforeCache?()
       null
 
 window.TaoPage = TaoPage

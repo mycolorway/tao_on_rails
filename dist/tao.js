@@ -27924,8 +27924,8 @@ return jQuery;
           var ref;
           _this.trigger('before-page-cache', [_this.currentPage]);
           if ((ref = _this.currentPage) != null) {
-            if (typeof ref.prepareCache === "function") {
-              ref.prepareCache();
+            if (typeof ref.beforeCache === "function") {
+              ref.beforeCache();
             }
           }
           return window.currentPage = _this.currentPage = null;
@@ -29974,17 +29974,15 @@ var Deferred = void 0;
 (function () {
   'use strict';
 
-  var doc = document;
-  var win = window;
-
   /**
    * Gets 'customElement' from window so that it could be modified after
    * the polyfill loads.
    * @function
    * @return {CustomElementRegistry}
    */
+
   var _customElements = function _customElements() {
-    return win['customElements'];
+    return window['customElements'];
   };
 
   var _observerProp = '__$CE_observer';
@@ -30025,7 +30023,7 @@ var Deferred = void 0;
     // IE 11 requires the third and fourth arguments be present. If the third
     // arg is null, it applies the default behaviour. However IE also requires
     // the fourth argument be present even though the other browsers ignore it.
-    return doc.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, null, false);
+    return document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, null, false);
   }
 
   /**
@@ -30303,9 +30301,9 @@ var Deferred = void 0;
           var onReady = function onReady() {
             _this2._upgradeScheduled = false;
             if (!_this2._mainDocumentObserver) {
-              _this2._mainDocumentObserver = _this2._observeRoot(doc);
+              _this2._mainDocumentObserver = _this2._observeRoot(document);
             }
-            _this2._addNodes(doc.childNodes);
+            _this2._addNodes(document.childNodes);
           };
           if (window['HTMLImports']) {
             window['HTMLImports']['whenReady'](onReady);
@@ -30641,7 +30639,7 @@ var Deferred = void 0;
   // patch window.HTMLElement
 
   /** @const */
-  var origHTMLElement = win.HTMLElement;
+  var origHTMLElement = window.HTMLElement;
   CustomElementRegistry.prototype['nativeHTMLElement'] = origHTMLElement;
   /**
    * @type {function(new: HTMLElement)}
@@ -30658,21 +30656,24 @@ var Deferred = void 0;
     if (this.constructor) {
       // Find the tagname of the constructor and create a new element with it
       var tagName = customElements._constructors.get(this.constructor);
-      return _createElement(doc, tagName, undefined, false);
+      return _createElement(document, tagName, undefined, false);
     }
     throw new Error('Unknown constructor. Did you call customElements.define()?');
   };
-  win.HTMLElement = newHTMLElement;
-  win.HTMLElement.prototype = Object.create(origHTMLElement.prototype, {
-    constructor: { value: win.HTMLElement, configurable: true, writable: true }
-  });
+  window.HTMLElement = newHTMLElement;
+  // By setting the patched HTMLElement's prototype property to the native
+  // HTMLElement's prototype we make sure that:
+  //     document.createElement('a') instanceof HTMLElement
+  // works because instanceof uses HTMLElement.prototype, which is on the
+  // ptototype chain of built-in elements.
+  window.HTMLElement.prototype = origHTMLElement.prototype;
 
   // patch doc.createElement
   // TODO(justinfagnani): why is the cast neccessary?
   // Can we fix the Closure DOM externs?
-  var _origCreateElement =
+  var _nativeCreateElement =
   /** @type {function(this:Document, string, (Object|undefined)=): !HTMLElement}}*/
-  doc.createElement;
+  document.createElement;
 
   /**
    * Creates a new element and upgrades it if it's a custom element.
@@ -30686,7 +30687,7 @@ var Deferred = void 0;
    */
   function _createElement(doc, tagName, options, callConstructor) {
     var customElements = _customElements();
-    var element = options ? _origCreateElement.call(doc, tagName, options) : _origCreateElement.call(doc, tagName);
+    var element = options ? _nativeCreateElement.call(doc, tagName, options) : _nativeCreateElement.call(doc, tagName);
     var definition = customElements._definitions.get(tagName.toLowerCase());
     if (definition) {
       customElements._upgradeElement(element, definition, callConstructor);
@@ -30694,35 +30695,35 @@ var Deferred = void 0;
     customElements._observeRoot(element);
     return element;
   };
-  doc.createElement = function (tagName, options) {
-    return _createElement(doc, tagName, options, true);
+  document.createElement = function (tagName, options) {
+    return _createElement(document, tagName, options, true);
   };
 
-  // patch doc.createElementNS
+  // patch document.createElementNS
 
   var HTMLNS = 'http://www.w3.org/1999/xhtml';
 
   /** @type {function(this:Document,string,string):Element} */
-  var _origCreateElementNS = doc.createElementNS;
-  doc.createElementNS =
+  var _nativeCreateElementNS = document.createElementNS;
+  document.createElementNS =
   /** @type {function(this:Document,(string|null),string):!Element} */
   function (namespaceURI, qualifiedName) {
-    if (namespaceURI === 'http://www.w3.org/1999/xhtml') {
-      return doc.createElement(qualifiedName);
+    if (namespaceURI === HTMLNS) {
+      return document.createElement(qualifiedName);
     } else {
-      return _origCreateElementNS.call(doc, namespaceURI, qualifiedName);
+      return _nativeCreateElementNS.call(document, namespaceURI, qualifiedName);
     }
   };
 
   // patch Element.attachShadow
 
   /** @type {function({closed: boolean})} */
-  var _origAttachShadow = Element.prototype['attachShadow'];
-  if (_origAttachShadow) {
+  var _nativeAttachShadow = Element.prototype['attachShadow'];
+  if (_nativeAttachShadow) {
     Object.defineProperty(Element.prototype, 'attachShadow', {
       value: function value(options) {
         /** @type {!Node} */
-        var root = _origAttachShadow.call(this, options);
+        var root = _nativeAttachShadow.call(this, options);
         /** @type {CustomElementRegistry} */
         var customElements = _customElements();
         customElements._observeRoot(root);
@@ -30731,11 +30732,11 @@ var Deferred = void 0;
     });
   }
 
-  // patch doc.importNode
+  // patch document.importNode
 
-  var rawImportNode = doc.importNode;
-  doc.importNode = function (node, deep) {
-    var clone = /** @type{!Node} */rawImportNode.call(doc, node, deep);
+  var _nativeImportNode = document.importNode;
+  document.importNode = function (node, deep) {
+    var clone = /** @type{!Node} */_nativeImportNode.call(document, node, deep);
     var customElements = _customElements();
     var nodes = isElement(clone) ? [clone] : clone.childNodes;
     /** @type {CustomElementRegistry} */_customElements()._addNodes(nodes);
@@ -30744,13 +30745,13 @@ var Deferred = void 0;
 
   // patch Element.setAttribute & removeAttribute
 
-  var _origSetAttribute = Element.prototype.setAttribute;
+  var _nativeSetAttribute = Element.prototype.setAttribute;
   Element.prototype['setAttribute'] = function (name, value) {
-    changeAttribute(this, name, value, _origSetAttribute);
+    changeAttribute(this, name, value, _nativeSetAttribute);
   };
-  var _origRemoveAttribute = Element.prototype.removeAttribute;
+  var _nativeRemoveAttribute = Element.prototype.removeAttribute;
   Element.prototype['removeAttribute'] = function (name) {
-    changeAttribute(this, name, null, _origRemoveAttribute);
+    changeAttribute(this, name, null, _nativeRemoveAttribute);
   };
 
   function changeAttribute(element, name, value, operation) {
@@ -30787,102 +30788,10 @@ var Deferred = void 0;
 })();
 (function() {
   if (window.customElements && !customElements.polyfilled) {
-    eval('(() => {\n  \'use strict\';\n\n  const NativeHTMLElement = window.HTMLElement;\n  const nativeDefine = window.customElements.define;\n  const nativeGet = window.customElements.get;\n\n  /**\n   * Map of user-provided constructors to tag names.\n   *\n   * @type {Map<Function, string>}\n   */\n  const tagnameByConstructor = new Map();\n\n  /**\n   * Map of tag anmes to user-provided constructors.\n   *\n   * @type {Map<string, Function>}\n   */\n  const constructorByTagname = new Map();\n\n\n  /**\n   * Whether the constructors are being called by a browser process, ie parsing\n   * or createElement.\n   */\n  let browserConstruction = false;\n\n  /**\n   * Whether the constructors are being called by a user-space process, ie\n   * calling an element constructor.\n   */\n  let userConstruction = false;\n\n  window.HTMLElement = function() {\n    if (!browserConstruction) {\n      const tagname = tagnameByConstructor.get(this.constructor);\n      const fakeClass = nativeGet.call(window.customElements, tagname);\n\n      // Make sure that the fake constructor doesn\'t call back to this constructor\n      userConstruction = true;\n      const instance = new (fakeClass)();\n      return instance;\n    }\n    // Else do nothing. This will be reached by ES5-style classes doing\n    // HTMLElement.call() during initialization\n    browserConstruction = false;\n  };\n\n  window.HTMLElement.prototype = Object.create(NativeHTMLElement.prototype);\n  window.HTMLElement.prototype.constructor = window.HTMLElement;\n\n  window.customElements.define = (tagname, elementClass) => {\n    const elementProto = elementClass.prototype;\n    const StandInElement = class extends NativeHTMLElement {\n      constructor() {\n        // Call the native HTMLElement constructor, this gives us the\n        // under-construction instance as `this`:\n        super();\n\n        // The prototype will be wrong up because the browser used our fake\n        // class, so fix it:\n        Object.setPrototypeOf(this, elementProto);\n\n        if (!userConstruction) {\n          // Make sure that user-defined constructor bottom\'s out to a do-nothing\n          // HTMLElement() call\n          browserConstruction = true;\n          // Call the user-defined constructor on our instance:\n          elementClass.call(this);\n        }\n        userConstruction = false;\n      }\n    };\n    const standInProto = StandInElement.prototype;\n    StandInElement.observedAttributes = elementClass.observedAttributes;\n    standInProto.connectedCallback = elementProto.connectedCallback;\n    standInProto.disconnectedCallback = elementProto.disconnectedCallback;\n    standInProto.attributeChangedCallback = elementProto.attributeChangedCallback;\n    standInProto.adoptedCallback = elementProto.adoptedCallback;\n\n    tagnameByConstructor.set(elementClass, tagname);\n    constructorByTagname.set(tagname, elementClass);\n    nativeDefine.call(window.customElements, tagname, StandInElement);\n  };\n\n  window.customElements.get = (tagname) => constructorByTagname.get(tagname);\n\n})();');
+    eval('(() => {\n  \'use strict\';\n\n  const NativeHTMLElement = window.HTMLElement;\n  const nativeDefine = window.customElements.define;\n  const nativeGet = window.customElements.get;\n\n  /**\n   * Map of user-provided constructors to tag names.\n   *\n   * @type {Map<Function, string>}\n   */\n  const tagnameByConstructor = new Map();\n\n  /**\n   * Map of tag names to user-provided constructors.\n   *\n   * @type {Map<string, Function>}\n   */\n  const constructorByTagname = new Map();\n\n\n  /**\n   * Whether the constructors are being called by a browser process, ie parsing\n   * or createElement.\n   */\n  let browserConstruction = false;\n\n  /**\n   * Whether the constructors are being called by a user-space process, ie\n   * calling an element constructor.\n   */\n  let userConstruction = false;\n\n  window.HTMLElement = function() {\n    if (!browserConstruction) {\n      const tagname = tagnameByConstructor.get(this.constructor);\n      const fakeClass = nativeGet.call(window.customElements, tagname);\n\n      // Make sure that the fake constructor doesn\'t call back to this constructor\n      userConstruction = true;\n      const instance = new (fakeClass)();\n      return instance;\n    }\n    // Else do nothing. This will be reached by ES5-style classes doing\n    // HTMLElement.call() during initialization\n    browserConstruction = false;\n  };\n  // By setting the patched HTMLElement\'s prototype property to the native\n  // HTMLElement\'s prototype we make sure that:\n  //     document.createElement(\'a\') instanceof HTMLElement\n  // works because instanceof uses HTMLElement.prototype, which is on the\n  // ptototype chain of built-in elements.\n  window.HTMLElement.prototype = NativeHTMLElement.prototype;\n\n  window.customElements.define = (tagname, elementClass) => {\n    const elementProto = elementClass.prototype;\n    const StandInElement = class extends NativeHTMLElement {\n      constructor() {\n        // Call the native HTMLElement constructor, this gives us the\n        // under-construction instance as `this`:\n        super();\n\n        // The prototype will be wrong up because the browser used our fake\n        // class, so fix it:\n        Object.setPrototypeOf(this, elementProto);\n\n        if (!userConstruction) {\n          // Make sure that user-defined constructor bottom\'s out to a do-nothing\n          // HTMLElement() call\n          browserConstruction = true;\n          // Call the user-defined constructor on our instance:\n          elementClass.call(this);\n        }\n        userConstruction = false;\n      }\n    };\n    const standInProto = StandInElement.prototype;\n    StandInElement.observedAttributes = elementClass.observedAttributes;\n    standInProto.connectedCallback = elementProto.connectedCallback;\n    standInProto.disconnectedCallback = elementProto.disconnectedCallback;\n    standInProto.attributeChangedCallback = elementProto.attributeChangedCallback;\n    standInProto.adoptedCallback = elementProto.adoptedCallback;\n\n    tagnameByConstructor.set(elementClass, tagname);\n    constructorByTagname.set(tagname, elementClass);\n    nativeDefine.call(window.customElements, tagname, StandInElement);\n  };\n\n  window.customElements.get = (tagname) => constructorByTagname.get(tagname);\n\n})();');
   }
 
 }).call(this);
-/**
- * @license
- * Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-
-(function() {
-  'use strict';
-
-  // patch all built-in subclasses of HTMLElement to inherit from the new HTMLElement
-  // See https://html.spec.whatwg.org/multipage/indices.html#element-interfaces
-
-  /** @const */
-  var htmlElementSubclasses = [
-  	'Button',
-  	'Canvas',
-  	'Data',
-  	'Head',
-  	'Mod',
-  	'TableCell',
-  	'TableCol',
-    'Anchor',
-    'Area',
-    'Base',
-    'Body',
-    'BR',
-    'DataList',
-    'Details',
-    'Dialog',
-    'Div',
-    'DList',
-    'Embed',
-    'FieldSet',
-    'Form',
-    'Heading',
-    'HR',
-    'Html',
-    'IFrame',
-    'Image',
-    'Input',
-    'Keygen',
-    'Label',
-    'Legend',
-    'LI',
-    'Link',
-    'Map',
-    'Media',
-    'Menu',
-    'MenuItem',
-    'Meta',
-    'Meter',
-    'Object',
-    'OList',
-    'OptGroup',
-    'Option',
-    'Output',
-    'Paragraph',
-    'Param',
-    'Picture',
-    'Pre',
-    'Progress',
-    'Quote',
-    'Script',
-    'Select',
-    'Slot',
-    'Source',
-    'Span',
-    'Style',
-    'TableCaption',
-    'Table',
-    'TableRow',
-    'TableSection',
-    'Template',
-    'TextArea',
-    'Time',
-    'Title',
-    'Track',
-    'UList',
-    'Unknown',
-  ];
-
-  for (var i = 0; i < htmlElementSubclasses.length; i++) {
-    var ctor = window['HTML' + htmlElementSubclasses[i] + 'Element'];
-    if (ctor) {
-      ctor.prototype.__proto__ = window.HTMLElement.prototype;
-    }
-  }
-})();
 (function() {
 
 
@@ -30903,11 +30812,11 @@ var Deferred = void 0;
       return components[superClass];
     }
     return components[superClass] = (function(superClass1) {
+      var count;
+
       extend(_Class, superClass1);
 
-      function _Class() {
-        return _Class.__super__.constructor.apply(this, arguments);
-      }
+      count = 0;
 
       _Class.extend = function(obj) {
         var key, ref, val;
@@ -31019,25 +30928,56 @@ var Deferred = void 0;
         return $(this);
       });
 
+      _Class.attribute('taoId');
+
+      function _Class() {
+        var instance;
+        instance = window[superClass].apply(this, arguments);
+        this._created();
+        instance;
+      }
+
       _Class.prototype.connectedCallback = function() {
-        if (!this.initialized) {
-          this.classList.add('tao-component');
-          this._init();
-          this.initialized = true;
-        }
-        this.connected = true;
-        return this._connect();
+        return $((function(_this) {
+          return function() {
+            if (!_this.initialized) {
+              _this.taoId = ++count;
+              _this._init();
+              _this.initialized = true;
+            }
+            _this.connected = true;
+            return _this._connected();
+          };
+        })(this));
       };
 
       _Class.prototype.disconnectedCallback = function() {
-        this.connected = false;
-        return this._disconnect();
+        return $((function(_this) {
+          return function() {
+            _this.connected = false;
+            return _this._disconnected();
+          };
+        })(this));
       };
 
-      _Class.prototype.attributeChangedCallback = function(attrName) {
-        var name1;
-        return typeof this[name1 = "_" + (_.camelCase(attrName)) + "Changed"] === "function" ? this[name1]() : void 0;
+      _Class.prototype.attributeChangedCallback = function(name) {
+        return this._attributeChanged(name);
       };
+
+      _Class.prototype._created = function() {};
+
+      _Class.prototype._init = function() {};
+
+      _Class.prototype._connected = function() {};
+
+      _Class.prototype._disconnected = function() {};
+
+      _Class.prototype._attributeChanged = function(name) {
+        var name1;
+        return typeof this[name1 = "_" + (_.camelCase(name)) + "Changed"] === "function" ? this[name1]() : void 0;
+      };
+
+      _Class.prototype.beforeCache = function() {};
 
       _Class.prototype.on = function() {
         var args, ref;
@@ -31063,14 +31003,6 @@ var Deferred = void 0;
         return (ref = this.jq).one.apply(ref, args);
       };
 
-      _Class.prototype._init = function() {};
-
-      _Class.prototype._connect = function() {};
-
-      _Class.prototype._disconnect = function() {};
-
-      _Class.prototype.prepareCache = function() {};
-
       return _Class;
 
     })(window[superClass]);
@@ -31095,11 +31027,11 @@ var Deferred = void 0;
 
     TaoPage.attribute('layout');
 
-    TaoPage.prototype.prepareCache = function() {
-      return $(this).find('.tao-component').each((function(_this) {
+    TaoPage.prototype.beforeCache = function() {
+      return this.jp.find('[tao-id]').each((function(_this) {
         return function(i, el) {
-          if (typeof el.prepareCache === "function") {
-            el.prepareCache();
+          if (typeof el.beforeCache === "function") {
+            el.beforeCache();
           }
           return null;
         };
