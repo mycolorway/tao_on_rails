@@ -1,0 +1,15 @@
+Description:
+    Generate sass files for tao page.
+
+Example:
+    `rails generate tao:sass home new`
+
+    Create coffee file:
+        app/assets/stylesheets/home/new.coffee
+
+
+    `rails generate tao:sass home index --variants=default phone`
+
+    Create coffee files:
+        app/assets/stylesheets/default/home/index.coffee
+        app/assets/stylesheets/phone/home/index.coffee

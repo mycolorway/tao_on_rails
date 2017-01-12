@@ -1,0 +1,9 @@
+Description:
+    Generate view files for tao page
+
+Example:
+    rails generate tao:view options/grant new create
+
+    This will create:
+        app/views/options/grants/new.html.erb
+        app/views/options/grants/create.js.coffee

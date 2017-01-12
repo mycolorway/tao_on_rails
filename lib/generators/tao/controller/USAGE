@@ -1,0 +1,8 @@
+Description:
+    Generate controller files
+
+Example:
+    `rails generate tao:controller home index`
+
+    Create file:
+        app/controllers/home_controller.rb

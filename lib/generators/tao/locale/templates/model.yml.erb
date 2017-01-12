@@ -1,0 +1,7 @@
+<%= locale %>:
+  activerecord:
+    models:
+      <%= template_namespace = class_path.map(&:pluralize).join('/') %>/<%= template_name = singular_name.singularize %>: <%= template_name.capitalize %>
+    attributes:
+      <%= template_namespace %>/<%= template_name %>:
+        # attributes
