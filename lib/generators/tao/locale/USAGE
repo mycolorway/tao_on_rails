@@ -2,7 +2,7 @@ Description:
     Generate locale files
 
 Example:
-    `rails generate tao:locale namespace/resource --locales=zh-CN en`
+    `rails generate tao:locale namespace/resource zh-CN en`
 
     Create files:
         config/locales/models/namespace/resource/zh-CN.yml

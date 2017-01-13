@@ -2,6 +2,7 @@ module Tao
   module Generators
     class AppGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __FILE__)
+
       class_option :variants, type: :array, default: [], desc: "Generate files for different variants"
 
       def create_assets_files
@@ -37,5 +38,3 @@ module Tao
     end
   end
 end
-
-# readme
