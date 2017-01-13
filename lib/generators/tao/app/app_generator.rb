@@ -1,6 +1,6 @@
 module Tao
   module Generators
-    class AppGenerator < Rails::Generators::NamedBase
+    class AppGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __FILE__)
 
       class_option :variants, type: :array, default: [], desc: "Generate files for different variants"
@@ -28,11 +28,6 @@ module Tao
       def create_controlller_files
         template 'home_controller.rb.erb', 'app/controllers/home_controller.rb'
         route "root to: 'home#index'"
-      end
-
-      def create_readme
-        remove_file 'README.md'
-        template 'README.md.erb', 'README.md'
       end
 
     end
