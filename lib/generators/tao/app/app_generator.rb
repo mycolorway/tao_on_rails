@@ -1,6 +1,6 @@
 module Tao
   module Generators
-    class AppGenerator < Rails::Generators::Base
+    class AppGenerator < Rails::Generators::NamedBase
       source_root File.expand_path('../templates', __FILE__)
 
       class_option :variants, type: :array, default: [], desc: "Generate files for different variants"
