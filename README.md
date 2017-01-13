@@ -2,25 +2,24 @@
 
 [Ruby on Rails](http://rubyonrails.org/) lacks a recommended way to structure your frontend code for many years. Tao on Rails is the framework to fill the gap which will modularize your page with the new [Custom Elements v1](https://developers.google.com/web/fundamentals/getting-started/primers/customelements) API.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'tao_on_rails'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install tao_on_rails
-
 ## Usage
 
-TODO: Write usage instructions here.
+Use following commands to create Tao application:
+
+```bash
+rails new app_name -m https://git.io/vM2ml && cd app_name && rails g tao:app
+```
+
+There are generators provided by Tao for you to quickly start your work:
+
+* assets
+* view
+* controller
+* locale
+* channel
+* scaffold
+
+It is recommended to use `scaffold` generator as first step of your workflow. See `rails g scaffold --help` for more information.
 
 ## Contributing
 

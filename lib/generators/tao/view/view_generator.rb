@@ -7,6 +7,8 @@ module Zhiren
 
       class_option :variants, type: :array, default: [], desc: "Generate assets for different variants"
 
+      attr_reader :resource
+
       def create_view_files
         @resource = file_name.singularize
         view_path = Pathname.new(File.join("app/views", name.pluralize))
@@ -30,7 +32,7 @@ module Zhiren
           end
         end
       end
-      
+
     end
   end
 end

@@ -7,6 +7,8 @@ module Tao
 
       class_option :variants, type: :array, default: [], desc: "Generate assets for different variants"
 
+      attr_reader :page_id
+
       def create_sass_file
         actions.each do |action|
           @page_id = [class_path, file_name, action].flatten.join('-')
