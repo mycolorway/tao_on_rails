@@ -7,4 +7,5 @@ rvm:
 before_install: gem install bundler -v 1.13.1
 
 script:
+  - rake test
   - bundle exec blade ci
