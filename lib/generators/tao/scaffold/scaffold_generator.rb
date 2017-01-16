@@ -1,4 +1,4 @@
-module TaoOnRails
+module Tao
   module Generators
     class ScaffoldGenerator < Rails::Generators::NamedBase
 

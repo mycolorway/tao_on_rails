@@ -1,4 +1,4 @@
-module TaoOnRails
+module Tao
   module Generators
 
     class ControllerGenerator < Rails::Generators::NamedBase
