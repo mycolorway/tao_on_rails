@@ -2,7 +2,7 @@ require 'turbolinks'
 require 'jquery-rails'
 require 'lodash-rails'
 
-module Tao
+module TaoOnRails
   class Engine < Rails::Engine
   end
 end

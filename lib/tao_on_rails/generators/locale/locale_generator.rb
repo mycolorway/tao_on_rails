@@ -1,10 +1,10 @@
-module Tao
+module TaoOnRails
   module Generators
     class LocaleGenerator < Rails::Generators::NamedBase
       source_root File.expand_path('../templates', __FILE__)
 
       argument :locales, type: :array, default: [I18n.locale], banner: "locale locale"
-      
+
       class_option :model, type: :boolean, default: true, desc: "Generate locale files for model"
       class_option :view, type: :boolean, default: true, desc: "Generate locale files for view"
 

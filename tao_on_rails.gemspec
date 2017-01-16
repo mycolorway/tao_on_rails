@@ -1,11 +1,11 @@
 # coding: utf-8
 $:.push File.expand_path("../lib", __FILE__)
 
-require "tao/version"
+require "tao_on_rails/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "tao_on_rails"
-  spec.version       = Tao::VERSION
+  spec.version       = TaoOnRails::VERSION
   spec.authors       = ["Siyuan Liu", "Terry Tai"]
   spec.email         = ["farthinker@mycolorway.com", "t@mycolorway.com"]
 

@@ -1,4 +1,4 @@
-module Zhiren
+module TaoOnRails
   module Generators
 
     class ControllerGenerator < Rails::Generators::NamedBase

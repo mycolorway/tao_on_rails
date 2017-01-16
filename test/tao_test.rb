@@ -1,13 +1,13 @@
 require 'test_helper'
 
-class TaoTest < ActiveSupport::TestCase
+class TaoOnRailsTest < ActiveSupport::TestCase
 
   test 'version number' do
-    assert Tao::VERSION.is_a? String
+    assert TaoOnRails::VERSION.is_a? String
   end
 
-  test 'Tao::Engine inherits from Rails::Engine' do
-    assert Tao::Engine < Rails::Engine
+  test 'TaoOnRails::Engine inherits from Rails::Engine' do
+    assert TaoOnRails::Engine < Rails::Engine
   end
 
 end

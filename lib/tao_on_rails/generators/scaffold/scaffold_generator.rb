@@ -1,7 +1,7 @@
-module Tao
+module TaoOnRails
   module Generators
     class ScaffoldGenerator < Rails::Generators::NamedBase
-      
+
       argument :actions, type: :array, default: %w(index new create edit update show destroy), banner: "action action"
 
       hook_for 'view', in: :tao, type: :boolean, default: true
