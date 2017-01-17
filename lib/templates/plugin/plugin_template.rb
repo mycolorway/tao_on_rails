@@ -1,3 +1,4 @@
+require 'fileutils'
 require "shellwords"
 
 def apply_template!
@@ -5,23 +6,29 @@ def apply_template!
   assert_options
   add_template_dir_to_source_paths
 
-  gem 'tao_on_rails', github: 'mycolorway/tao_on_rails', branch: 'refactor-structure'
+  plugin_name = name.underscore
 
-  remove_file 'app/assets/javascripts/cable.js'
-  remove_file 'app/assets/javascripts/application.js'
-  remove_file 'app/assets/stylesheets/application.css'
+  remove_dir 'bin'
+  remove_dir 'lib/tasks'
+  template 'lib/plugin_name/engine.rb', "lib/#{plugin_name}/engine.rb"
 
-  template 'app/assets/javascripts/application.coffee'
-  template 'app/assets/stylesheets/application.scss'
-  template 'app/assets/javascripts/home/index_page.coffee'
-  template 'app/assets/stylesheets/home/index_page.scss'
+  template 'lib/assets/javascripts/plugin_name.coffee', "lib/assets/javascripts/#{plugin_name}.coffee"
+  template 'lib/assets/stylesheets/plugin_name.scss', "lib/assets/stylesheets/#{plugin_name}.scss"
 
-  template 'app/views/layouts/application.html.erb', force: true
-  template 'app/helpers/application_helper.rb', force: true
-  template 'app/views/home/index.html.erb'
+  template 'test/plugin_name_test.rb', "test/#{plugin_name}_test.rb", force: true
+  template 'test/test_helper.rb', force: true
+  template 'test/javascripts/plugin_name_test.coffee', "test/javascripts/#{plugin_name}_test.coffee"
 
-  template 'app/controllers/home_controller.rb'
-  route "root to: 'home#index'"
+  template '.blade.yml'
+  template '.gitignore', force: true
+  template '.travis.yml'
+  template 'index.html'
+  template 'Rakefile', force: true
+  template 'plugin_name.gemspec', "#{plugin_name}.gemspec", force: true
+
+  inside do
+    FileUtils.mv 'MIT-LICENSE', 'LICENSE'
+  end
 end
 
 def assert_rails_version

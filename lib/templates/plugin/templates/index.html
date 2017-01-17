@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= name.camelize %></title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link media="all" rel="stylesheet" type="text/css" href="dist/tao.css">
+	<link media="all" rel="stylesheet" type="text/css" href="dist/<%= name.underscore %>.css">
+	<style>
+		.wrapper {
+			width: 800px;
+			height: 600px;
+			border: 1px solid #cccccc;
+			position: relative;
+			margin: 80px auto;
+		}
+	</style>
+
+	<script type="text/javascript" src="dist/tao.js"></script>
+	<script type="text/javascript" src="dist/<%= name.underscore %>.js"></script>
+
+</head>
+<body>
+  <div class="wrapper">
+    <<%= name.dasherize %>></<%= name.dasherize %>>
+  </div>
+</body>
+</html>

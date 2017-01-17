@@ -1,0 +1,11 @@
+sudo: false
+language: ruby
+cache: bundler
+rvm:
+  - 2.3.1
+
+before_install: gem install bundler -v 1.13.1
+
+script:
+  - rake test
+  - bundle exec blade ci
