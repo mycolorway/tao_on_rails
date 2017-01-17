@@ -35,13 +35,13 @@ end
 
 def add_template_dir_to_source_paths
   if __FILE__ =~ %r{\Ahttps?://}
-    tempdir = Dir.mktmpdir('_tao_template')
+    tmp_dir = Dir.mktmpdir('_tao_template')
     source_paths.unshift File.expand_path('lib/templates/app/templates', tmp_dir)
-    at_exit { FileUtils.remove_entry(tempdir) }
+    at_exit { FileUtils.remove_entry(tmp_dir) }
     git :clone => [
       "--quiet --depth 1",
       "https://github.com/mycolorway/tao_on_rails.git",
-      tempdir
+      tmp_dir
     ].map(&:shellescape).join(" ")
   else
     source_paths.unshift(File.expand_path('../templates', __FILE__))
