@@ -7,7 +7,7 @@
 Use following commands to create Tao application:
 
 ```bash
-rails new app_name -m https://git.io/vM2ml && cd app_name && rails g tao:app
+rails new app_name -m https://git.io/vM2ml
 ```
 
 There are generators provided by Tao for you to quickly start your work:
