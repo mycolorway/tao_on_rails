@@ -39,7 +39,9 @@ def add_template_dir_to_source_paths
     source_paths.unshift File.expand_path('lib/templates/app/templates', tmp_dir)
     at_exit { FileUtils.remove_entry(tmp_dir) }
     git :clone => [
-      "--quiet --depth 1",
+      '--quiet',
+      '--depth',
+      '1',
       "https://github.com/mycolorway/tao_on_rails.git",
       tmp_dir
     ].map(&:shellescape).join(" ")
