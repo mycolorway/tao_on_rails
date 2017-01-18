@@ -9,3 +9,4 @@
 /tmp/
 *.gem
 /test/dummy/log
+.DS_Store
