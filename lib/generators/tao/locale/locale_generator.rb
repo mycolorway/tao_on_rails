@@ -20,12 +20,12 @@ module Tao
 
       def copy_to_view
         return unless options[:view]
-        content = (class_path + [plural_name]).reverse.inject(nil) do |content, path|
+        file_content = (class_path + [plural_name]).reverse.inject(nil) do |content, path|
           { path => content }
         end
         locales.each do |locale|
           @locale = locale
-          create_file File.join('config/locales/views', name.pluralize, "#{locale}.yml"), {locale => content}.to_yaml
+          create_file File.join('config/locales/views', name.pluralize, "#{locale}.yml"), {locale => file_content}.to_yaml
         end
       end
 

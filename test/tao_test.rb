@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TaoOnRailsTest < ActiveSupport::TestCase
+class TaoOnRails::Test < ActiveSupport::TestCase
 
   test 'version number' do
     assert TaoOnRails::VERSION

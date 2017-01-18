@@ -1,6 +1,6 @@
-class <%= page_id.camelize %>Page extends TaoPage
+class <%= page_id.underscore.camelize %>Page extends TaoPage
 
-  @tag: "<%= page_id.dasherize %>-page"
+  @tag: "<%= page_id %>-page"
 
   _init: ->
     # called when the page connected to dom for the first time
@@ -11,4 +11,4 @@ class <%= page_id.camelize %>Page extends TaoPage
   _disconnected: ->
     # called every time the page disconnected from dom
 
-TaoPage.register <%= page_id.camelize %>Page
+TaoPage.register <%= page_id.underscore.camelize %>Page

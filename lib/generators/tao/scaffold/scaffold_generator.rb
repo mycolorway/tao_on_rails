@@ -8,12 +8,8 @@ module Tao
       hook_for 'controller', in: :tao, type: :boolean, default: true
       hook_for 'assets', in: :tao, type: :boolean, default: true
 
-      hook_for 'channel', in: :tao, type: :array, default: [] do |instance, channel|
-        instance.invoke channel, options[:channel]
-      end
-
-      hook_for 'locale', in: :tao, type: :array, default: [] do |instance, locale|
-        instance.invoke locale, options[:locale]
+      hook_for 'locale', in: :tao, type: :array do |instance, locale|
+        instance.invoke 'tao:locale', [instance.name] << locale
       end
     end
   end
