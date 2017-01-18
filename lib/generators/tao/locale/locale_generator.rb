@@ -4,7 +4,7 @@ module Tao
       source_root File.expand_path('../templates', __FILE__)
 
       argument :locales, type: :array, default: [I18n.locale], banner: "locale locale"
-      
+
       class_option :model, type: :boolean, default: true, desc: "Generate locale files for model"
       class_option :view, type: :boolean, default: true, desc: "Generate locale files for view"
 
@@ -20,12 +20,12 @@ module Tao
 
       def copy_to_view
         return unless options[:view]
-        content = (class_path + [plural_name]).reverse.inject(nil) do |content, path|
+        file_content = (class_path + [plural_name]).reverse.inject(nil) do |content, path|
           { path => content }
         end
         locales.each do |locale|
           @locale = locale
-          create_file File.join('config/locales/views', name.pluralize, "#{locale}.yml"), {locale => content}.to_yaml
+          create_file File.join('config/locales/views', name.pluralize, "#{locale}.yml"), {locale => file_content}.to_yaml
         end
       end
 

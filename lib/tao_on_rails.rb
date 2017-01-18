@@ -1,7 +1,5 @@
-require "tao_on_rails/rails"
+require 'tao_on_rails/version'
+require 'tao_on_rails/engine'
 
 module TaoOnRails
-  def self.root
-    File.dirname __dir__
-  end
 end

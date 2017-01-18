@@ -4,10 +4,10 @@
 
 ## Usage
 
-Use following commands to create Tao application:
+Create new Tao application with following commands:
 
 ```bash
-rails new app_name -m https://git.io/vM2ml && cd app_name && rails g tao:app
+rails new app_name -m https://git.io/vM2ml
 ```
 
 There are generators provided by Tao for you to quickly start your work:
@@ -20,6 +20,14 @@ There are generators provided by Tao for you to quickly start your work:
 * scaffold
 
 It is recommended to use `scaffold` generator as first step of your workflow. See `rails g scaffold --help` for more information.
+
+## Plugin
+
+Create plugin of Tao on Rails with following commands:
+
+```bash
+rails plugin new plugin_name -m https://git.io/vM2ml
+```
 
 ## Contributing
 

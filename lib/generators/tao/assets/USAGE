@@ -2,17 +2,17 @@ Description:
     Generate assets files for tao page.
 
 Example:
-    `rails generate tao:assets home index`
+    `rails generate tao:assets employee index`
 
     Create files:
-        app/assets/javascripts/home/index_page.coffee
-        app/assets/stylesheets/home/index_page.scss
+        app/assets/javascripts/employees/index_page.coffee
+        app/assets/stylesheets/employees/index_page.scss
 
 
     `rails generate tao:assets home index --variants=default phone`
 
     Create files:
-        app/assets/javascripts/default/home/index_page.coffee
-        app/assets/stylesheets/default/home/index_page.scss
-        app/assets/javascripts/phone/home/index_page.coffee
-        app/assets/stylesheets/phone/home/index_page.scss
+        app/assets/javascripts/default/employees/index_page.coffee
+        app/assets/stylesheets/default/employees/index_page.scss
+        app/assets/javascripts/phone/employees/index_page.coffee
+        app/assets/stylesheets/phone/employees/index_page.scss

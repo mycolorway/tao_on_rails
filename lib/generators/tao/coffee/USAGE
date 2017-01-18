@@ -2,14 +2,14 @@ Description:
     Generate coffee files for tao page.
 
 Example:
-    `rails generate tao:coffee home new`
+    `rails generate tao:coffee employee new`
 
     Create coffee file:
-        app/assets/javascripts/home/new.coffee
+        app/assets/javascripts/employees/new.coffee
 
 
-    `rails generate tao:coffee home index --variants=default phone`
+    `rails generate tao:coffee employee index --variants=default phone`
 
     Create coffee files:
-        app/assets/javascripts/default/home/index.coffee
-        app/assets/javascripts/phone/home/index.coffee
+        app/assets/javascripts/default/employees/index.coffee
+        app/assets/javascripts/phone/employees/index.coffee

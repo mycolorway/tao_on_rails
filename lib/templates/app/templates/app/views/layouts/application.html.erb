@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title><%%= content_for(:title) || 'Using Tao on Rails' %></title>
+    <%%= csrf_meta_tags %>
+
+    <%%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%%= content_for(:stylesheet) %>
+
+    <%%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%%= content_for(:javascript) %>
+  </head>
+
+  <body>
+    <<%%= page_id %>-page>
+      <%%= yield %>
+    </<%%= page_id %>-page>
+  </body>
+</html>

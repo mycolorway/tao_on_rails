@@ -1,4 +1,4 @@
-module Zhiren
+module Tao
   module Generators
     class ViewGenerator < Rails::Generators::NamedBase
       source_root File.expand_path('../templates', __FILE__)
@@ -16,18 +16,18 @@ module Zhiren
         actions.each do |action|
           if (variants = options[:variants]).any?
             variants.each do |variant|
-              variant = variant == 'default' ? '' else "+#{variant}"
+              variant = variant == 'default' ? '' : "+#{variant}"
               if action.in? %w(create update destroy)
-                template "#{action}.js.coffee", view_path.join "#{action}.js#{variant}.coffee"
+                template "#{action}.js.coffee", view_path.join("#{action}.js#{variant}.coffee")
               else
-                template "#{action}.html.erb", view_path.join "#{action}.html#{variant}.erb"
+                template "#{action}.html.erb", view_path.join("#{action}.html#{variant}.erb")
               end
             end
           else
             if action.in? %w(create update destroy)
-              template "#{action}.js.coffee", view_path.join "#{action}.js.coffee"
+              template "#{action}.js.coffee", view_path.join("#{action}.js.coffee")
             else
-              template "#{action}.html.erb", view_path.join "#{action}.html.erb"
+              template "#{action}.html.erb", view_path.join("#{action}.html.erb")
             end
           end
         end

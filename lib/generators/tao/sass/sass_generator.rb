@@ -1,6 +1,6 @@
 module Tao
   module Generators
-    class Sassenerator < Rails::Generators::NamedBase
+    class SassGenerator < Rails::Generators::NamedBase
       source_root File.expand_path('../templates', __FILE__)
 
       argument :actions, type: :array, default: %w(index new edit show), banner: "action action"

@@ -8,8 +8,8 @@ module Tao
       check_class_collision suffix: "Channel"
 
       def create_channel_files
-        template "channel.coffee.erb", "app/assets/javascripts/channels/#{name}.coffee"
-        template "channel.rb.erb", "app/channels/#{name}_channel.rb"
+        template "channel.coffee.erb", "app/assets/javascripts/channels/#{name.singularize}.coffee"
+        template "channel.rb.erb", "app/channels/#{name.singularize}_channel.rb"
       end
 
     end

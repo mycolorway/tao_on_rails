@@ -1,0 +1,47 @@
+load_paths:
+  - lib/assets/javascripts
+  - lib/assets/stylesheets
+  - test/javascripts/
+  - turbolinks-source: lib/assets/javascripts
+  - jquery-rails: vendor/assets/javascripts
+  - lodash-rails: vendor/assets/javascripts
+  - tao_on_rails:
+    - lib/assets/javascripts
+    - lib/assets/stylesheets
+    - vendor/assets/javascripts
+    - vendor/assets/stylesheets
+
+logical_paths:
+  - tao.js
+  - tao.css
+  - <%= name.underscore %>.css
+  - <%= name.underscore %>.js
+  - <%= name.underscore %>_test.js
+
+build:
+  logical_paths:
+    - tao.js
+    - tao.css
+    - <%= name.underscore %>.css
+    - <%= name.underscore %>.js
+  path: dist
+
+plugins:
+  sauce_labs:
+    tunnel_timeout: 120
+    browsers:
+      Google Chrome:
+        os: Mac, Windows
+        version: -2
+      Firefox:
+        os: Mac, Windows
+        version: -2
+      Safari:
+        platform: Mac
+        version: -3
+      Microsoft Edge:
+        version: -2
+      iPhone:
+        version: [9.3]
+      Motorola Droid 4 Emulator:
+        version: [5.1, 4.4]
