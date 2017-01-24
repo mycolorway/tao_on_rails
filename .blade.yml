@@ -22,6 +22,8 @@ build:
 plugins:
   sauce_labs:
     tunnel_timeout: 120
+    tunnel_args:
+      - '-B all'
     browsers:
       Google Chrome:
         os: Mac, Windows
