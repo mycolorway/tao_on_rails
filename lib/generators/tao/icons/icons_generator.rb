@@ -1,6 +1,6 @@
 module Tao
   module Generators
-    class IconsGenerator < Rails::Generators::NamedBase
+    class IconsGenerator < Rails::Generators::Base
       source_root File.expand_path('../templates', __FILE__)
 
       class_option :svg_path, type: :string, default: 'app/assets/icons', desc: "Directory path containing svg source files."
@@ -14,8 +14,8 @@ module Tao
 
       private
 
-      def svg_file
-        Dir.glob(File.expand_path(::Rails.root, svg_path, '*.svg')).uniq
+      def svg_files
+        Dir.glob(File.expand_path(File.join(options[:svg_path], '*.svg'), destination_root)).uniq
       end
 
       def symbol(path)

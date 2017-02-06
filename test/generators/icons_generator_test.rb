@@ -1,12 +1,13 @@
 require 'test_helper'
-require 'generators/tao/assets/icons_generator'
+require 'generators/tao/icons/icons_generator'
 
 class Tao::Generators::IconsGeneratorTest < Rails::Generators::TestCase
   include Tao::Generators::TestHelpers
 
   setup do
     copy_from = File.expand_path('icons/Zhiren.svg', File.dirname(__FILE__))
-    copy_to = File.expand_path(destination_root, 'app/assets/icons/zhiren.svg')
+    copy_to = File.expand_path('app/assets/icons', destination_root)
+    FileUtils.mkdir_p copy_to
     FileUtils.cp copy_from, copy_to
   end
 
