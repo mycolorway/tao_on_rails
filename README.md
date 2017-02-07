@@ -16,6 +16,7 @@ Several generators are available for you to quickly start your work:
 * tao:view
 * tao:controller
 * tao:locale
+* tao:icons
 * tao:channel
 * tao:scaffold
 
