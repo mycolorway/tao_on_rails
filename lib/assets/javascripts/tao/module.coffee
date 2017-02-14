@@ -22,32 +22,41 @@ class TaoModule
     obj.included?.call(@)
     @
 
-  @get: (attributeName, getMethod) ->
-    Object.defineProperty @prototype, attributeName,
-      get: getMethod
+  @get: (name, method) ->
+    Object.defineProperty @prototype, name,
+      get: method
       configurable: true
 
-  @set: (attributeName, setMethod) ->
-    Object.defineProperty @prototype, attributeName,
-      set: setMethod
+  @set: (name, method) ->
+    Object.defineProperty @prototype, name,
+      set: method
       configurable: true
 
-  @attribute: (names..., options = {}) ->
+  @property: (names..., options = {}) ->
     unless typeof options == 'object'
       names.push(options)
       options = {}
 
     names.forEach (name) =>
       @get name, ->
-        @_attributes[name] ? options.default
+        unless _.isUndefined @_proterties[name]
+          @_proterties[name]
+        else if _.isFunction options.default
+          options.default.call @
+        else
+          options.default
       @set name, (val) ->
-        return if @_attributes[name] == val
-        @_attributes[name] = val
+        return if @_proterties[name] == val
+        @_proterties[name] = val
         @["_#{name}Changed"]?()
+
+  @aliasMethod: (newMethod, oldMethod) ->
+    @::[newMethod] = ->
+      @[oldMethod]?.apply(@, arguments)
 
   constructor: (options = {}) ->
     @id = ++id
-    @_attributes = {}
+    @_proterties = {}
 
     if typeof options == 'object'
       @[key] = val for key, val of options
@@ -69,4 +78,4 @@ class TaoModule
   one: (args...) ->
     $(@).one args...
 
-window.TaoModule = TaoModule
+Tao.Module = window.TaoModule = TaoModule
