@@ -9,7 +9,11 @@ module 'TaoComponent',
 
       @attribute 'name', 'age', observe: true
 
-      @attribute 'active', default: true
+      @attribute 'active', type: 'bool', default: true
+
+      @attribute 'json', type: 'object', default: {x: 1}
+
+      @attribute 'array', type: 'array'
 
       _init: ->
         @trigger 'initialized'
@@ -53,10 +57,20 @@ module 'TaoComponent',
   test 'has attributes with default value', (assert) ->
     assert.equal @component.active, true
     assert.equal @component.hasAttribute('active'), false
+    assert.equal _.isEqual(@component.json, {x: 1}), true
+    assert.equal _.isEqual(@component.array, []), true
 
     @component.active = false
     assert.equal @component.active, false
     assert.equal @component.getAttribute('active'), 'false'
+
+    @component.json = {test: 1}
+    assert.equal _.isEqual(@component.json, {test: 1}), true
+    assert.equal @component.getAttribute('json'), '{\"test\":1}'
+
+    @component.array = [1, 2, 3]
+    assert.equal _.isEqual(@component.array, [1, 2, 3]), true
+    assert.equal @component.getAttribute('array'), '[1,2,3]'
 
   test 'call _init and _connect method when connected to DOM', (assert) ->
     done = assert.async()

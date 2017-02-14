@@ -1,5 +1,6 @@
 #= require lodash
 #= require polyfills/polyfills
+#= require ./attribute_parser
 
 components = {}
 
@@ -63,23 +64,21 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
       names.forEach (name) =>
         attrName = _.kebabCase(name)
+
         @get name, ->
-          if @hasAttribute attrName
-            val = @getAttribute(attrName)
-            if val == 'false' then false else (val || true)
-          else if options.default
-            options.default
+          val = if @hasAttribute attrName
+             @getAttribute(attrName)
           else
-            false
+            null
+          TaoAttributeParser.parse val, options
+
         @set name, (val) ->
-          if val == true
-            @setAttribute attrName, ''
-          else if val != false
+          val = TaoAttributeParser.stringify val, options
+          if _.isString val
             @setAttribute attrName, val
-          else if options.default == true
-            @setAttribute attrName, 'false'
           else
             @removeAttribute attrName
+
         @observedAttributes.push(attrName) if options.observe
 
     @tag: '' # to be set by child class
@@ -149,5 +148,5 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
   components[superClassName] = ComponentClass
 
-window.TaoComponentBasedOn = TaoComponentBasedOn
-window.TaoComponent = TaoComponentBasedOn 'HTMLElement'
+Tao.TaoComponentBasedOn = window.TaoComponentBasedOn = TaoComponentBasedOn
+Tao.Component = window.TaoComponent = TaoComponentBasedOn 'HTMLElement'

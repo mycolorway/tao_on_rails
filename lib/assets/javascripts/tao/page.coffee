@@ -9,4 +9,4 @@ class TaoPage extends TaoComponent
       el.beforeCache?()
       null
 
-window.TaoPage = TaoPage
+Tao.Page = window.TaoPage = TaoPage

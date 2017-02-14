@@ -68,4 +68,4 @@ class TaoApplication extends TaoModule
       @_initPage $page
       @trigger 'page-load', [@currentPage]
 
-window.TaoApplication = TaoApplication
+Tao.Application = window.TaoApplication = TaoApplication
