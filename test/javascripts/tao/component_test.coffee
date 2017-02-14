@@ -9,9 +9,9 @@ module 'TaoComponent',
 
       @attribute 'name', 'age', observe: true
 
-      @attribute 'active', type: 'boolean', default: true
+      @attribute 'active', type: 'bool', default: true
 
-      @attribute 'json', type: 'hash', default: {x: 1}
+      @attribute 'json', type: 'object', default: {x: 1}
 
       @attribute 'array', type: 'array'
 

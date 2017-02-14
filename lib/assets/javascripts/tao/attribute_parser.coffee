@@ -14,7 +14,7 @@ class TaoAttributeParser extends TaoModule
     parser = @getParser()
     options = _.extend {}, @defaultOptions, options
     if parse = parser["_#{_.camelCase "parse_#{options.type}"}"]
-      parse value, options
+      parse.call parser, value, options
     else
       value
 
@@ -22,7 +22,7 @@ class TaoAttributeParser extends TaoModule
     parser = @getParser()
     options = _.extend {}, @defaultOptions, options
     if stringify = parser["_#{_.camelCase "stringify_#{options.type}"}"]
-      stringify value, options
+      stringify.call parser, value, options
     else
       value
 
@@ -65,6 +65,7 @@ class TaoAttributeParser extends TaoModule
     value.toString()
 
   _stringifyBoolean: (value, options) ->
+    console.log @
     unless _.isBoolean value
       value = options.default || false
 
