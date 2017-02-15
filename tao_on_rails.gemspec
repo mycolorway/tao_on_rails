@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "lodash-rails", "~> 4.16"
   spec.add_dependency "rails", '~> 5.0', '>= 5.0.1'
 
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sqlite3", '~> 1.3'
   spec.add_development_dependency "blade", "~> 0.7.0"
   spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.6.2"
 end

@@ -30,7 +30,7 @@ module 'TaoComponent',
     TaoComponent.register @TestComponent
 
   beforeEach: ->
-    @component = $('<test-component>').appendTo('body').get(0)
+    @component = $('<test-component array="[4,5]">').appendTo('body').get(0)
 
   afterEach: ->
     @component.jq.off().remove()
@@ -58,7 +58,7 @@ module 'TaoComponent',
     assert.equal @component.active, true
     assert.equal @component.hasAttribute('active'), false
     assert.equal _.isEqual(@component.json, {x: 1}), true
-    assert.equal _.isEqual(@component.array, []), true
+    assert.equal _.isEqual(@component.array, [4,5]), true
 
     @component.active = false
     assert.equal @component.active, false

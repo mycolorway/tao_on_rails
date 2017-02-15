@@ -65,7 +65,6 @@ class TaoAttributeParser extends TaoModule
     value.toString()
 
   _stringifyBoolean: (value, options) ->
-    console.log @
     unless _.isBoolean value
       value = options.default || false
 
