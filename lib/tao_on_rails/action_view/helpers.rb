@@ -3,7 +3,11 @@ module TaoOnRails
     module Helpers
 
       include ::ActionView::Helpers
-      # include ActionView::Context
+
+      def page_id
+        controller_names = controller_path.split('/')
+        [controller_names, action_name].compact.flatten.join('-')
+      end
 
       def icon_tag(name, options = {})
         if options[:class].present?
