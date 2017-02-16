@@ -24,7 +24,7 @@ module TaoOnRails
       def tao_page(tag,  attributes, &block)
         if tag.is_a? Hash
           attributes = tag
-          tag = "#{page_id}-page"
+          tag = "#{page_id.dasherize}-page"
         end
 
         if attributes[:class].present?
