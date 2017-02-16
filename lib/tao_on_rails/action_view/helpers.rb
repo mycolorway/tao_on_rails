@@ -21,7 +21,12 @@ module TaoOnRails
         content_tag(:svg, use_tag, attributes).html_safe
       end
 
-      def tao_page(tag = "#{page_id}-page", attributes, &block)
+      def tao_page(tag,  attributes, &block)
+        if tag.is_a? Hash
+          attributes = tag
+          tag = "#{page_id}-page"
+        end
+
         if attributes[:class].present?
           attributes[:class] += " tao-page"
         else
