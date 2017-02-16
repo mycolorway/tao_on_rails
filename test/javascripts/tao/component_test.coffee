@@ -30,10 +30,13 @@ module 'TaoComponent',
     TaoComponent.register @TestComponent
 
   beforeEach: ->
-    @component = $('<test-component>').appendTo('body').get(0)
+    @component = document.createElement 'test-component'
+    @component.setAttribute 'array', '[1,2]'
+    document.body.appendChild @component
 
   afterEach: ->
     @component.jq.off().remove()
+    @component = null
 
 , ->
 
@@ -57,19 +60,19 @@ module 'TaoComponent',
   test 'has attributes with default value', (assert) ->
     assert.equal @component.active, true
     assert.equal @component.hasAttribute('active'), false
-    assert.equal _.isEqual(@component.json, {x: 1}), true
-    assert.equal _.isEqual(@component.array, []), true
+    assert.deepEqual @component.json, {x: 1}
+    assert.deepEqual @component.array, [1, 2]
 
     @component.active = false
     assert.equal @component.active, false
     assert.equal @component.getAttribute('active'), 'false'
 
     @component.json = {test: 1}
-    assert.equal _.isEqual(@component.json, {test: 1}), true
+    assert.deepEqual @component.json, {test: 1}
     assert.equal @component.getAttribute('json'), '{\"test\":1}'
 
     @component.array = [1, 2, 3]
-    assert.equal _.isEqual(@component.array, [1, 2, 3]), true
+    assert.deepEqual @component.array, [1, 2, 3]
     assert.equal @component.getAttribute('array'), '[1,2,3]'
 
   test 'call _init and _connect method when connected to DOM', (assert) ->
