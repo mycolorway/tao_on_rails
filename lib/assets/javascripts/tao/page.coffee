@@ -5,7 +5,7 @@ class TaoPage extends TaoComponent
   @attribute 'layout', default: 'default'
 
   beforeCache: ->
-    @jp.find('[tao-id]').each (i, el) =>
+    @jq.find('[tao-id]').each (i, el) =>
       el.beforeCache?()
       null
 

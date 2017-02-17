@@ -31187,7 +31187,7 @@ var Deferred = void 0;
     TaoPage.attribute('layout');
 
     TaoPage.prototype.beforeCache = function() {
-      return this.jp.find('[tao-id]').each((function(_this) {
+      return this.jq.find('[tao-id]').each((function(_this) {
         return function(i, el) {
           if (typeof el.beforeCache === "function") {
             el.beforeCache();
