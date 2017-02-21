@@ -95,8 +95,9 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     @attribute 'taoId'
 
     constructor: ->
-      superClass.apply @, arguments
+      _instance = superClass.apply @, arguments
       @_created()
+      return _instance
 
     connectedCallback: ->
       $ =>
