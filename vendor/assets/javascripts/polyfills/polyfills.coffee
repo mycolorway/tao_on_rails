@@ -1,2 +1,2 @@
-# = require ./native-shim
+#= require ./native-shim
 #= require ./custom-elements
