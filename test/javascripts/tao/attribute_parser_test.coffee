@@ -1,6 +1,6 @@
 {module, test} = QUnit
 
-module 'TaoModule',
+module 'Tao Attribute Parser',
 
   before: ->
     @Parser = TaoAttributeParser
