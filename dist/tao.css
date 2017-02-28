@@ -473,3 +473,5 @@ template {
   fill: #9b9b9b; }
   .icon.spin {
     animation: spin 1s infinite linear; }
+.tao-page {
+  display: block; }
