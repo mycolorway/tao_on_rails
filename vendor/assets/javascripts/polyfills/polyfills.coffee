@@ -4,4 +4,5 @@
 #= require_self
 
 customElements.polyfillWrapFlushCallback? (flush) ->
-  $ -> flush()
+  $(document).on 'turbolinks:load', (e) ->
+    flush()

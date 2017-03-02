@@ -1,3 +1,4 @@
+#= require polyfills/polyfills
 #= require turbolinks
 #= require jquery3
 #= require jquery_ujs

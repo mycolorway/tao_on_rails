@@ -1,5 +1,3 @@
-#= require lodash
-#= require polyfills/polyfills
 #= require ./attribute_parser
 
 components = {}
