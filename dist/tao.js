@@ -10282,7 +10282,7 @@ return jQuery;
 (function() {
   if (typeof customElements.polyfillWrapFlushCallback === "function") {
     customElements.polyfillWrapFlushCallback(function(flush) {
-      return $(document).on('turbolinks:load', function(e) {
+      return $(function() {
         return flush();
       });
     });
@@ -28189,6 +28189,9 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
         };
       })(this)).on('turbolinks:render', (function(_this) {
         return function(e) {
+          if (customElements._internals) {
+            customElements._internals.connectTree(document.body);
+          }
           return _this.trigger('page-render', [$('body > .tao-page')]);
         };
       })(this)).on('turbolinks:load', (function(_this) {

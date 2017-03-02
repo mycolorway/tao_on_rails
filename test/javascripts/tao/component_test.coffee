@@ -30,9 +30,7 @@ module 'TaoComponent',
     TaoComponent.register @TestComponent
 
   beforeEach: ->
-    @component = document.createElement 'test-component'
-    @component.setAttribute 'array', '[1,2]'
-    document.body.appendChild @component
+    @component = $('<test-component array="[1,2]" />').appendTo('body').get(0)
 
   afterEach: ->
     @component.jq.off().remove()

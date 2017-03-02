@@ -58,6 +58,10 @@ class TaoApplication extends TaoModule
       @trigger 'before-page-render', [$ e.originalEvent?.data.newBody]
 
     .on 'turbolinks:render', (e) =>
+      # turbolinks render won't trigger patching of customElements polyfills
+      if customElements._internals
+        customElements._internals.connectTree document.body
+
       @trigger 'page-render', [$('body > .tao-page')]
 
     .on 'turbolinks:load', (e) =>
