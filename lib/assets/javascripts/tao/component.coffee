@@ -113,6 +113,7 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
         @_disconnected()
 
     attributeChangedCallback: (name) ->
+      return unless @connected
       @_attributeChanged name
 
     _created: ->

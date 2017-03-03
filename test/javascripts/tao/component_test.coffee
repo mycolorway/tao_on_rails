@@ -29,8 +29,10 @@ module 'TaoComponent',
 
     TaoComponent.register @TestComponent
 
-  beforeEach: ->
+  beforeEach: (assert) ->
+    done = assert.async()
     @component = $('<test-component array="[1,2]" />').appendTo('body').get(0)
+    setTimeout -> done()
 
   afterEach: ->
     @component.jq.off().remove()
