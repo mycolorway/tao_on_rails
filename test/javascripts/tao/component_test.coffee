@@ -87,8 +87,10 @@ module 'TaoComponent',
     component.on 'initialized', ->
       initializeCount++
     .on 'connected', ->
+      assert.equal component.connected, true
       connectCount++
     .on 'disconnected', ->
+      assert.equal component.connected, false
       disconnectCount++
 
     component.one 'connected', ->

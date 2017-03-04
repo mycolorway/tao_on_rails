@@ -28524,12 +28524,12 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       ComponentClass.prototype.connectedCallback = function() {
         return $((function(_this) {
           return function() {
+            _this.connected = true;
             if (!_this.initialized) {
               _this.taoId = ++count;
               _this._init();
               _this.initialized = true;
             }
-            _this.connected = true;
             return _this._connected();
           };
         })(this));
