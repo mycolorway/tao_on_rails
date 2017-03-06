@@ -36,6 +36,6 @@ plugins:
         platform: Mac
         version: -1
       iPhone:
-        version: [9.3]
+        version: [9.3, 7.0]
       Motorola Droid 4 Emulator:
         version: [5.1, 4.4]
