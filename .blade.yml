@@ -26,16 +26,16 @@ plugins:
       - '-B'
       - 'all'
     browsers:
-      # Google Chrome:
-      #   os: Mac, Windows
-      #   version: -1
-      # Firefox:
-      #   os: Mac, Windows
-      #   version: -1
-      # Safari:
-      #   platform: Mac
-      #   version: -1
-      # iPhone:
-      #   version: [9.3]
+      Google Chrome:
+        os: Mac, Windows
+        version: -1
+      Firefox:
+        os: Mac, Windows
+        version: -1
+      Safari:
+        platform: Mac
+        version: -1
+      iPhone:
+        version: [9.3]
       Motorola Droid 4 Emulator:
-        version: [5.1, 4.2]
+        version: [5.1, 4.4]
