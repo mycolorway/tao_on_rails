@@ -3,5 +3,5 @@
 #= require jquery3
 #= require_self
 
-customElements.polyfillWrapFlushCallback? (flush) ->
+window.customElements?.polyfillWrapFlushCallback? (flush) ->
   $ -> flush()

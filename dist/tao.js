@@ -10297,12 +10297,16 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 (function() {
-  if (typeof customElements.polyfillWrapFlushCallback === "function") {
-    customElements.polyfillWrapFlushCallback(function(flush) {
-      return $(function() {
-        return flush();
+  var ref;
+
+  if ((ref = window.customElements) != null) {
+    if (typeof ref.polyfillWrapFlushCallback === "function") {
+      ref.polyfillWrapFlushCallback(function(flush) {
+        return $(function() {
+          return flush();
+        });
       });
-    });
+    }
   }
 
 }).call(this);
