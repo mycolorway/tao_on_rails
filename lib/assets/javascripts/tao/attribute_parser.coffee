@@ -29,6 +29,9 @@ class TaoAttributeParser extends TaoModule
   _parseString: (value, options) ->
     value || options.default || ''
 
+  _parseNumber: (value, options) ->
+    Number(value) || options.default || ''
+
   _parseBoolean: (value, options) ->
     if _.isNil value
       options.default || false
