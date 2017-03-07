@@ -82,7 +82,7 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     @tag: '' # to be set by child class
 
     @register: (componentClass) ->
-      return unless componentClass.tag
+      return unless componentClass.tag && window.customElements
       customElements.define componentClass.tag, componentClass
 
     @observedAttributes: []
@@ -100,7 +100,7 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     connectedCallback: ->
       $ =>
         @connected = true
-        
+
         unless @initialized
           @taoId = ++count
           @_init()

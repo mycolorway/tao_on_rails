@@ -28510,7 +28510,7 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       ComponentClass.tag = '';
 
       ComponentClass.register = function(componentClass) {
-        if (!componentClass.tag) {
+        if (!(componentClass.tag && window.customElements)) {
           return;
         }
         return customElements.define(componentClass.tag, componentClass);
