@@ -29,6 +29,13 @@ class TaoAttributeParser extends TaoModule
   _parseString: (value, options) ->
     value || options.default || ''
 
+  _parseNumber: (value, options) ->
+    value = parseFloat value
+    if _.isNaN value
+      options.default || 0
+    else
+      value
+
   _parseBoolean: (value, options) ->
     if _.isNil value
       options.default || false
@@ -62,6 +69,9 @@ class TaoAttributeParser extends TaoModule
       options.default || []
 
   _stringifyString: (value, options) ->
+    value.toString()
+
+  _stringifyNumber: (value, options) ->
     value.toString()
 
   _stringifyBoolean: (value, options) ->

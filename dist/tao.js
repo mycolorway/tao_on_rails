@@ -28291,6 +28291,15 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       return value || options["default"] || '';
     };
 
+    TaoAttributeParser.prototype._parseNumber = function(value, options) {
+      value = parseFloat(value);
+      if (_.isNaN(value)) {
+        return options["default"] || 0;
+      } else {
+        return value;
+      }
+    };
+
     TaoAttributeParser.prototype._parseBoolean = function(value, options) {
       if (_.isNil(value)) {
         return options["default"] || false;
@@ -28336,6 +28345,10 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
     };
 
     TaoAttributeParser.prototype._stringifyString = function(value, options) {
+      return value.toString();
+    };
+
+    TaoAttributeParser.prototype._stringifyNumber = function(value, options) {
       return value.toString();
     };
 

@@ -11,6 +11,11 @@ module 'Tao Attribute Parser',
     assert.equal @Parser.parse('123'), '123'
     assert.equal @Parser.parse('', {type: 'string', default: '321'}), '321'
 
+  test 'parse number', (assert) ->
+    assert.equal @Parser.parse('abc', {type: 'number'}), 0
+    assert.equal @Parser.parse('123', {type: 'number'}), 123
+    assert.equal @Parser.parse('', {type: 'number', default: 321}), 321
+
   test 'parse bool', (assert) ->
     assert.equal @Parser.parse('true', {type: 'bool'}), true
     assert.equal @Parser.parse('false', {type: 'bool'}), false
@@ -30,6 +35,10 @@ module 'Tao Attribute Parser',
   test 'stringify string', (assert) ->
     assert.equal @Parser.stringify('123'), '123'
     assert.equal @Parser.stringify(true), 'true'
+
+  test 'stringify number', (assert) ->
+    assert.equal @Parser.stringify(123), '123'
+    assert.equal @Parser.stringify(''), ''
 
   test 'stringify bool', (assert) ->
     assert.equal @Parser.stringify(true, {type: 'bool'}), 'true'
