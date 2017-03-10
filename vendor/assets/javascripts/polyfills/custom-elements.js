@@ -66,5 +66,3 @@ E.default.Element_insertAdjacentElement?f(Element.prototype,E.default.Element_in
 */
 var N=window.customElements;if(window.MutationObserver&&(!N||N.forcePolyfill||"function"!=typeof N.define||"function"!=typeof N.get)){var O=new w.default;H.default(O);J.default(O);K.default(O);M.default(O);document.__CE_hasRegistry=!0;var P=new C.default(O);Object.defineProperty(window,"customElements",{configurable:!0,enumerable:!0,value:P})};
 }).call(self);
-
-//# sourceMappingURL=custom-elements.min.js.map
