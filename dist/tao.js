@@ -72,9 +72,6 @@ E.default.Element_insertAdjacentElement?f(Element.prototype,E.default.Element_in
 */
 var N=window.customElements;if(window.MutationObserver&&(!N||N.forcePolyfill||"function"!=typeof N.define||"function"!=typeof N.get)){var O=new w.default;H.default(O);J.default(O);K.default(O);M.default(O);document.__CE_hasRegistry=!0;var P=new C.default(O);Object.defineProperty(window,"customElements",{configurable:!0,enumerable:!0,value:P})};
 }).call(self);
-
-//# sourceMappingURL=custom-elements.min.js.map
-;
 /*!
  * jQuery JavaScript Library v3.1.1
  * https://jquery.com/
@@ -27965,7 +27962,8 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
 }).call(this);
 (function() {
   var TaoModule,
-    slice = [].slice;
+    slice = [].slice,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   TaoModule = (function() {
     var id;
@@ -28053,6 +28051,28 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       })(this));
     };
 
+    TaoModule._options = [];
+
+    TaoModule.option = function() {
+      var i, names, options;
+      names = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), options = arguments[i++];
+      if (options == null) {
+        options = {};
+      }
+      if (typeof options !== 'object') {
+        names.push(options);
+        options = {};
+      }
+      return names.forEach((function(_this) {
+        return function(name) {
+          if (indexOf.call(_this._options, name) < 0) {
+            _this._options.push(name);
+          }
+          return _this.property(name, options);
+        };
+      })(this));
+    };
+
     TaoModule.aliasMethod = function(newMethod, oldMethod) {
       return this.prototype[newMethod] = function() {
         var ref;
@@ -28067,10 +28087,12 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       }
       this.id = ++id;
       this._proterties = {};
-      if (typeof options === 'object') {
+      if (_.isObject(options)) {
         for (key in options) {
           val = options[key];
-          this[key] = val;
+          if (indexOf.call(this.constructor._options, key) >= 0) {
+            this[key] = val;
+          }
         }
       }
       this._init();

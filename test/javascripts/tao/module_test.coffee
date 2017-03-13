@@ -4,37 +4,47 @@ module 'TaoModule',
 
   before: ->
     class @ParentModule extends TaoModule
+      @option 'nickname', default: 'xiao10'
       @property 'x', default: 1
-      @property 'y', default: 2
+      @option 'y', default: 2
 
       _xChanged: ->
         @trigger 'xChanged'
 
 
     class @ChildModule extends @ParentModule
+      @option 'nickname', default: 'xiao1'
       @property 'x', default: 3
       @property 'z', default: 0
 
 , ->
 
-  test 'constructor options', (assert) ->
-    parentInstance = new @ParentModule
-      x: 3
-    childInstance = new @ChildModule
-      x: 4
+  test 'define options', (assert) ->
+    assert.deepEqual @ParentModule._options, ['nickname', 'y']
+    assert.deepEqual @ChildModule._options, ['nickname', 'y']
 
-    assert.equal parentInstance.x, 3
-    assert.equal childInstance.x, 4
+    child1 = new @ChildModule()
+    assert.equal child1.nickname, 'xiao1'
+    assert.equal child1.x, 3
+    assert.equal child1.y, 2
+    assert.equal child1.z, 0
+
+    child2 = new @ChildModule
+      nickname: 'xiao2'
+      x: 9
+      y: 8
+      z: 7
+    assert.equal child2.nickname, 'xiao2'
+    assert.equal child2.x, 3
+    assert.equal child2.y, 8
+    assert.equal child2.z, 0
 
   test 'property inheritance', (assert) ->
     parentInstance = new @ParentModule()
     childInstance = new @ChildModule()
 
-    assert.equal parentInstance.x, 1
     assert.equal parentInstance.y, 2
-    assert.equal childInstance.x, 3
     assert.equal childInstance.y, 2
-    assert.equal childInstance.z, 0
 
   test 'property changed hook', (assert) ->
     parentInstance = new @ParentModule()

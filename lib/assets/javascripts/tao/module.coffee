@@ -50,6 +50,17 @@ class TaoModule
         @_proterties[name] = val
         @["_#{name}Changed"]?()
 
+  @_options: []
+
+  @option: (names..., options = {}) ->
+    unless typeof options == 'object'
+      names.push(options)
+      options = {}
+
+    names.forEach (name) =>
+      @_options.push(name) unless name in @_options
+      @property name, options
+
   @aliasMethod: (newMethod, oldMethod) ->
     @::[newMethod] = ->
       @[oldMethod]?.apply(@, arguments)
@@ -58,8 +69,9 @@ class TaoModule
     @id = ++id
     @_proterties = {}
 
-    if typeof options == 'object'
-      @[key] = val for key, val of options
+    if _.isObject options
+      for key, val of options
+        @[key] = val if key in @constructor._options
 
     @_init()
 
