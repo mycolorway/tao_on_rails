@@ -28,9 +28,9 @@ module TaoOnRails
         end
 
         if attributes[:class].present?
-          attributes[:class] += " tao-page"
+          attributes[:class] += " tao-page #{tag}"
         else
-          attributes[:class] = "tao-page"
+          attributes[:class] = "tao-page #{tag}"
         end
 
         content_tag(tag, capture(&block), attributes)

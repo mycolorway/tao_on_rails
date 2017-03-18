@@ -9,10 +9,10 @@ class Tao::Generators::ScaffoldGeneratorTest < Rails::Generators::TestCase
   test 'generate all files' do
     run_generator %w(employees/dimissions index show --locale=en)
 
-    assert_file 'app/assets/javascripts/employees/dimissions/index_page.coffee'
-    assert_file 'app/assets/javascripts/employees/dimissions/show_page.coffee'
-    assert_file 'app/assets/stylesheets/employees/dimissions/index_page.scss'
-    assert_file 'app/assets/stylesheets/employees/dimissions/show_page.scss'
+    assert_file 'app/assets/javascripts/employees/dimissions/index.coffee'
+    assert_file 'app/assets/javascripts/employees/dimissions/show.coffee'
+    assert_file 'app/assets/stylesheets/employees/dimissions/index.scss'
+    assert_file 'app/assets/stylesheets/employees/dimissions/show.scss'
     assert_file 'app/controllers/employees/dimissions_controller.rb'
     assert_file 'config/locales/models/employees/dimissions/en.yml'
     assert_file 'config/locales/views/employees/dimissions/en.yml'

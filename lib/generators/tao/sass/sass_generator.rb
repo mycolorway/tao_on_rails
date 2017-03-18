@@ -14,10 +14,10 @@ module Tao
           @page_id = [class_path, file_name, action].flatten.join('-')
           if (variants = options[:variants]).any?
             variants.each do |variant|
-              template "sass.erb", File.join("app/assets/stylesheets", variant, name.pluralize, "#{action}_page.scss")
+              template "sass.erb", File.join("app/assets/stylesheets", variant, name.pluralize, "#{action}.scss")
             end
           else
-            template "sass.erb", File.join('app/assets/stylesheets', name.pluralize, "#{action}_page.scss")
+            template "sass.erb", File.join('app/assets/stylesheets', name.pluralize, "#{action}.scss")
           end
         end
       end

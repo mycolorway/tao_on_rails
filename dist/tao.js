@@ -28228,6 +28228,9 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       })(this)).on('turbolinks:before-render', (function(_this) {
         return function(e) {
           var ref;
+          if (customElements._internals) {
+            customElements._internals.disconnectTree(document.body);
+          }
           return _this.trigger('before-page-render', [$((ref = e.originalEvent) != null ? ref.data.newBody : void 0)]);
         };
       })(this)).on('turbolinks:render', (function(_this) {
