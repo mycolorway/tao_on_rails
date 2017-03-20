@@ -2,15 +2,13 @@
 module TaoOnRails
   class Component
 
-    attr_reader :options, :block, :template_path, :attributes, :locals, :block_content, :view
+    attr_reader :options, :template_path, :block_content, :view
 
     def initialize options = {}, view = nil, &block
       @view = view
       @options = options
       @block_content = block_given? ? yield : ""
-      @template_path = options.delete(:template_path) || default_path
-      @attributes = options.delete(:attributes)
-      @locals = OpenStruct.new(options.delete(:locals))
+      @template_path = options.delete(:template_path) || default_template_path
     end
 
     def render
@@ -27,7 +25,7 @@ module TaoOnRails
 
     private
 
-    def default_path
+    def default_template_path
       "components/#{component_name}"
     end
 

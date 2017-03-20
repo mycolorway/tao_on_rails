@@ -11,7 +11,6 @@ module TaoOnRails
       ::ActiveSupport.on_load :action_view do
         TaoOnRails::ActionView::DynamicHelpers.init_components
 
-        include TaoOnRails::ActionView::DynamicHelpers
         include TaoOnRails::ActionView::Helpers
       end
     end
