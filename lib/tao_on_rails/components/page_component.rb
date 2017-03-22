@@ -4,7 +4,7 @@ module TaoOnRails
   module Components
     class PageComponent < Base
 
-      def initialize options = {}, view = nil, &block
+      def initialize options = {}, view = nil
         super
 
         if @options[:class].present?

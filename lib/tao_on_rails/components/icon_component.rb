@@ -6,7 +6,7 @@ module TaoOnRails
 
       attr_reader :name
 
-      def initialize options = {}, view = nil, &block
+      def initialize options = {}, view = nil
         super
 
         @name = @options.delete(:name)
@@ -18,7 +18,7 @@ module TaoOnRails
         end
       end
 
-      def render
+      def render &block
         content_tag(:svg, %Q(<use xlink:href="#icon-#{name}"/>), options)
       end
 
