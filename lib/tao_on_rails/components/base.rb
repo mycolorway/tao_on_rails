@@ -31,11 +31,15 @@ module TaoOnRails
       protected
 
       def self.tag_prefix
-        :tao
+        @tag_prefix ||= 'tao'
+      end
+
+      def self.namespace_name
+        @namespace_name ||= self.name.deconstantize.underscore.split('/').map(&:singularize).join('_')
       end
 
       def self.default_template_path
-        @default_template_path ||= "components/#{self.component_name}"
+        @default_template_path ||= "components/#{self.name.underscore}"
       end
 
     end
