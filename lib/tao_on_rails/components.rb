@@ -13,8 +13,8 @@ module TaoOnRails
 
       TaoOnRails::Components::Base.descendants.each do |klass|
         module_eval %Q{
-        def #{klass.component_name} options = {}, &block
-          component = #{klass.name}.new options, controller.view_context
+        def #{klass.component_name} *args, &block
+          component = #{klass.name}.new *args, controller.view_context
           component.render &block
         end
         }

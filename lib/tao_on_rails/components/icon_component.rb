@@ -6,10 +6,10 @@ module TaoOnRails
 
       attr_reader :name
 
-      def initialize options = {}, view = nil
-        super
+      def initialize name, options = {}, view = nil
+        super options, view
 
-        @name = @options.delete(:name)
+        @name = name
 
         if @options[:class].present?
           @options[:class] += " icon icon-#{name}"
