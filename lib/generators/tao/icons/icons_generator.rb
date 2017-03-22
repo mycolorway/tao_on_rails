@@ -20,7 +20,9 @@ module Tao
 
       def symbol(path)
         name = File.basename(path, ".*").underscore().dasherize()
-        content = File.read(path)
+        document = Nokogiri::XML(File.read(path))
+        document.css('[id="Main"], [id="Main"] [fill], [fill="none"]').each {|n| n.delete 'fill' }
+        content = document.to_s
         content.gsub(/<?.+\?>/,'')
           .gsub(/<!.+?>/,'')
           .gsub(/<title>.*<\/title>/, '')
@@ -28,7 +30,6 @@ module Tao
           .gsub(/id=/,'class=')
           .gsub(/<svg.+?>/, %Q{<svg id="icon-#{name}" #{dimensions(content)}>})
           .gsub(/svg/,'symbol')
-          .gsub(/\sfill=".+?"/,'')
           .gsub(/\n/, '') # Remove endlines
           .gsub(/\s{2,}/, ' ') # Remove whitespace
           .gsub(/>\s+</, '><') # Remove whitespace between tags
