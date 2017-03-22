@@ -3,20 +3,19 @@ module TaoOnRails
   module Components
     class Base
 
-      attr_reader :options, :template_path, :block_content, :view
+      attr_reader :options, :template_path, :view
 
-      def initialize options = {}, view = nil, &block
+      def initialize options = {}, view = nil
         @view = view
         @options = options
-        @block_content = block_given? ? yield : ""
         @template_path = options.delete(:template_path) || self.class.default_template_path
       end
 
-      def render
+      def render &block
         if view.lookup_context.exist?(template_path, [], true)
-          view.render partial: template_path, locals: { component: self }
+          view.render layout: template_path, locals: { component: self }, &block
         else
-          view.content_tag self.class.tag_name, block_content, options
+          view.content_tag self.class.tag_name, options, &block
         end
       end
 

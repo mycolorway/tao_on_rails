@@ -14,8 +14,8 @@ module TaoOnRails
       TaoOnRails::Components::Base.descendants.each do |klass|
         module_eval %Q{
         def #{klass.component_name} options = {}, &block
-          component = #{klass.name}.new options, controller.view_context, &block
-          component.render
+          component = #{klass.name}.new options, controller.view_context
+          component.render &block
         end
         }
       end
