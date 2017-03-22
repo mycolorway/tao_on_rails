@@ -4,6 +4,8 @@ module TaoOnRails
   module Components
     class IconComponent < Base
 
+      component_name :icon
+
       attr_reader :name
 
       def initialize name, options = {}, view = nil

@@ -7,8 +7,10 @@ require 'tao_on_rails/components'
 module TaoOnRails
   class Engine < Rails::Engine
 
-    config.eager_load_paths << Rails.root.join('app/components')
-    config.eager_load_paths << Rails.root.join('lib/components')
+    if Rails.root
+      config.eager_load_paths << Rails.root.join('app/components')
+      config.eager_load_paths << Rails.root.join('lib/components')
+    end
 
     initializer "tao_on_rails.view_helpers" do |app|
       ::ActiveSupport.on_load :action_view do

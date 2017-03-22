@@ -1,5 +1,5 @@
-require 'tao_on_rails/components/icon'
-require 'tao_on_rails/components/page'
+require 'tao_on_rails/components/icon_component'
+require 'tao_on_rails/components/page_component'
 
 module TaoOnRails
   module Components
@@ -13,9 +13,9 @@ module TaoOnRails
 
       TaoOnRails::Components::Base.descendants.each do |klass|
         module_eval %Q{
-        def #{klass.component_name} *args, &block
-          component = #{klass.name}.new *args, controller.view_context
-          component.render &block
+        def #{klass.tag_name.underscore} *args, &block
+          component = #{klass.name}.new(*args, controller.view_context)
+          component.render(&block)
         end
         }
       end

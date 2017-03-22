@@ -19,25 +19,27 @@ module TaoOnRails
         end
       end
 
-      def self.tag_name
-        @tag_name ||= "#{self.tag_prefix}-#{self.component_name.dasherize}"
+      def self.tag_name tag_name = nil
+        @tag_name = tag_name if tag_name
+        @tag_name ||= "#{self.tag_prefix}-#{self.component_name.to_s.dasherize}"
       end
 
-      def self.component_name
-        @component_name ||= self.name.demodulize.underscore.gsub(/(.+)_component$/, '\1')
+      def self.component_name component_name = nil
+        @component_name = component_name if component_name
+        @component_name ||= self.name.underscore.split('/').map(&:singularize).join('_')
+          .gsub(/(.+)_component$/, '\1')
+          .gsub(/^#{Regexp.quote(self.tag_prefix.to_s.underscore)}_(.+)/, '\1')
       end
 
       protected
 
-      def self.tag_prefix
+      def self.tag_prefix prefix = nil
+        @tag_prefix = prefix if prefix
         @tag_prefix ||= 'tao'
       end
 
-      def self.namespace_name
-        @namespace_name ||= self.name.deconstantize.underscore.split('/').map(&:singularize).join('_')
-      end
-
-      def self.default_template_path
+      def self.default_template_path path = nil
+        @default_template_path = path if path
         @default_template_path ||= "components/#{self.name.underscore}"
       end
 

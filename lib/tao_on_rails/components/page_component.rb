@@ -4,6 +4,8 @@ module TaoOnRails
   module Components
     class PageComponent < Base
 
+      component_name :page
+
       def initialize options = {}, view = nil
         super
 
@@ -14,8 +16,8 @@ module TaoOnRails
         end
       end
 
-      def tag_name
-        @tag_name ||= "#{tag_prefix}-#{view.page_id}"
+      def render &block
+        view.content_tag "#{self.class.tag_prefix}-#{view.page_id}", options, &block
       end
 
     end
