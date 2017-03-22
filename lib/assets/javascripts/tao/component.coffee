@@ -79,11 +79,15 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
         @observedAttributes.push(attrName) if options.observe
 
-    @tag: '' # to be set by child class
+    @_tag: 'tao-component'
+
+    @tag: (tag) ->
+      @_tag = tag unless _.isUndefined tag
+      @_tag
 
     @register: (componentClass) ->
-      return unless componentClass.tag && window.customElements
-      customElements.define componentClass.tag, componentClass
+      return unless componentClass.tag() && window.customElements
+      customElements.define componentClass.tag(), componentClass
 
     @observedAttributes: []
 

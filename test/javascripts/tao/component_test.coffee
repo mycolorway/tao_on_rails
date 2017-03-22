@@ -5,7 +5,7 @@ module 'TaoComponent',
   before: ->
     class @TestComponent extends TaoComponent
 
-      @tag: 'test-component'
+      @tag 'test-component'
 
       @attribute 'name', 'age', observe: true
 
