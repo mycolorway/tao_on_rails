@@ -4,20 +4,24 @@ module TaoOnRails
   module Components
     class PageComponent < Base
 
-      component_name :page
-
-      def initialize options = {}, view = nil
+      def initialize options, view
         super
 
+        @page_id = view.page_id
+
         if @options[:class].present?
-          @options[:class] += " tao-page #{tag_name}"
+          @options[:class] += " tao-page #{@page_id}-page"
         else
-          @options[:class] = "tao-page #{tag_name}"
+          @options[:class] = "tao-page #{@page_id}-page"
         end
       end
 
       def render &block
-        view.content_tag "#{self.class.tag_prefix}-#{view.page_id}", options, &block
+        view.content_tag "#{view.page_id}-page", options, &block
+      end
+
+      def self.component_name
+        :page
       end
 
     end

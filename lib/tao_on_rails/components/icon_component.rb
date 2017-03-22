@@ -4,11 +4,9 @@ module TaoOnRails
   module Components
     class IconComponent < Base
 
-      component_name :icon
-
       attr_reader :name
 
-      def initialize name, options = {}, view = nil
+      def initialize name, options, view
         super options, view
 
         @name = name
@@ -20,8 +18,12 @@ module TaoOnRails
         end
       end
 
-      def render &block
-        content_tag(:svg, %Q(<use xlink:href="#icon-#{name}"/>), options)
+      def render
+        view.content_tag(:svg, %Q(<use xlink:href="#icon-#{name}"/>).html_safe, options)
+      end
+
+      def self.component_name
+        :icon
       end
 
     end
