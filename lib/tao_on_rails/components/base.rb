@@ -25,13 +25,13 @@ module TaoOnRails
       end
 
       def self.component_name
-        @component_name ||= self.name.demodulize.underscore
+        @component_name ||= self.name.demodulize.underscore.gsub(/(.+)_component$/, '\1')
       end
 
       protected
 
       def self.tag_prefix
-        @tag_prefix ||= 'tao'
+        :tao
       end
 
       def self.default_template_path

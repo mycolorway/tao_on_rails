@@ -2,7 +2,7 @@ require 'tao_on_rails/components/base'
 
 module TaoOnRails
   module Components
-    class Page < Base
+    class PageComponent < Base
 
       def initialize options = {}, view = nil, &block
         super

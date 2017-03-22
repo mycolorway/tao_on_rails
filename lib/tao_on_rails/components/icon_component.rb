@@ -2,7 +2,7 @@ require 'tao_on_rails/components/base'
 
 module TaoOnRails
   module Components
-    class Icon < Base
+    class IconComponent < Base
 
       attr_reader :name
 
