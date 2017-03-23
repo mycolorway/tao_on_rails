@@ -1,6 +1,6 @@
 class HomeIndexPage extends TaoPage
 
-  @tag: 'home-index-page'
+  @tag 'home-index-page'
 
   _init: ->
     # called when the page connected to dom for the first time

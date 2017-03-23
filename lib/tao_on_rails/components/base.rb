@@ -12,7 +12,7 @@ module TaoOnRails
 
       def render &block
         if view.lookup_context.exists?(template_path, [], true)
-          view.render layout: template_path, locals: instance_values, &block
+          view.render layout: template_path, locals: {component: self}, &block
         else
           view.content_tag self.class.tag_name, options, &block
         end

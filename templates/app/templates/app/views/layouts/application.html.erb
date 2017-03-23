@@ -15,8 +15,9 @@
   </head>
 
   <body>
-    <<%%= page_id %>-page>
+    <%%= tao_page layout: 'default' do %>
       <%%= yield %>
-    </<%%= page_id %>-page>
+    <%% end %>
+  </body>
   </body>
 </html>

@@ -7,7 +7,7 @@
 Create new Tao on Rails application with following commands:
 
 ```bash
-rails new app_name -m https://git.io/vM1lZ
+rails new app_name -m https://git.io/vSvyw
 ```
 
 Several generators are available for you to quickly start your work:
@@ -15,19 +15,20 @@ Several generators are available for you to quickly start your work:
 * tao:assets
 * tao:view
 * tao:controller
+* tao:component
 * tao:locale
 * tao:icons
 * tao:channel
 * tao:scaffold
 
-It is recommended to use `tao:scaffold` generator as first step of your workflow. See `rails g tao:scaffold --help` for more information.
+See `rails g tao:xxx --help` for more information.
 
 ## Plugin
 
 Start writing plugin for Tao on Rails with following commands:
 
 ```bash
-rails plugin new plugin_name -m https://git.io/vM1lE
+rails plugin new plugin_name -m https://git.io/vSvyy
 ```
 
 ## Contributing

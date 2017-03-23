@@ -11,6 +11,7 @@ def apply_template!
   remove_dir 'bin'
   remove_dir 'lib/tasks'
   template 'lib/plugin_name/engine.rb', "lib/#{plugin_name}/engine.rb"
+  template 'lib/plugin_name.rb', "lib/#{plugin_name}.rb", force: true
 
   template 'lib/assets/javascripts/plugin_name.coffee', "lib/assets/javascripts/#{plugin_name}.coffee"
   template 'lib/assets/stylesheets/plugin_name.scss', "lib/assets/stylesheets/#{plugin_name}.scss"

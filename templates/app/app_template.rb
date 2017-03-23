@@ -13,11 +13,10 @@ def apply_template!
 
   template 'app/assets/javascripts/application.coffee'
   template 'app/assets/stylesheets/application.scss'
-  template 'app/assets/javascripts/home/index_page.coffee'
-  template 'app/assets/stylesheets/home/index_page.scss'
+  template 'app/assets/javascripts/home/index.coffee'
+  template 'app/assets/stylesheets/home/index.scss'
 
   template 'app/views/layouts/application.html.erb', force: true
-  template 'app/helpers/application_helper.rb', force: true
   template 'app/views/home/index.html.erb'
 
   template 'app/controllers/home_controller.rb'
