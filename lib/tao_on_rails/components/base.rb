@@ -4,9 +4,9 @@ module TaoOnRails
 
       attr_reader :options, :template_path, :view
 
-      def initialize view, options
+      def initialize view, options = {}
         @view = view
-        @options = options || {}
+        @options = options
         @template_path = @options.delete(:template_path) || self.class.template_path
       end
 

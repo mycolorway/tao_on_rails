@@ -6,7 +6,7 @@ module TaoOnRails
 
       attr_reader :name
 
-      def initialize view, name, options
+      def initialize view, name, options = {}
         super view, options
 
         @name = name
