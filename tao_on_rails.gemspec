@@ -24,5 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3", '~> 1.3'
   spec.add_development_dependency "blade", "~> 0.7.0"
   spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.6.2"
-  spec.add_development_dependency "nokogiri", '~> 1.7.1'
+  spec.add_development_dependency "nokogiri", '~> 1.7'
 end
