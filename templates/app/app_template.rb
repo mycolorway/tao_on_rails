@@ -5,7 +5,7 @@ def apply_template!
   assert_options
   add_template_dir_to_source_paths
 
-  gem 'tao_on_rails', github: 'mycolorway/tao_on_rails', branch: 'refactor-structure'
+  gem 'tao_on_rails'
 
   remove_file 'app/assets/javascripts/cable.js'
   remove_file 'app/assets/javascripts/application.js'
@@ -50,7 +50,7 @@ def add_template_dir_to_source_paths
     at_exit { remove_dir tmp_dir }
     repo_url = 'https://github.com/mycolorway/tao_on_rails.git'
     git :clone => "--quiet --depth 1 #{repo_url} #{tmp_dir}".shellescape
-    source_paths.unshift File.expand_path('lib/templates/app/templates', tmp_dir)
+    source_paths.unshift File.expand_path('templates/app/templates', tmp_dir)
   else
     source_paths.unshift(File.expand_path('../templates', __FILE__))
   end
