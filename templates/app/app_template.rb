@@ -1,5 +1,3 @@
-require "shellwords"
-
 def apply_template!
   assert_rails_version
   assert_options

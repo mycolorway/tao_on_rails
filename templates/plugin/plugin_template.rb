@@ -1,5 +1,4 @@
 require 'fileutils'
-require "shellwords"
 
 def apply_template!
   assert_rails_version
@@ -58,7 +57,7 @@ def add_template_dir_to_source_paths
     tmp_dir = Dir.mktmpdir('_tao_template')
     at_exit { remove_dir tmp_dir }
     repo_url = 'https://github.com/mycolorway/tao_on_rails.git'
-    git :clone => "--quiet --depth 1 #{repo_url} #{tmp_dir}".shellescape
+    git clone: "--quiet --depth 1 #{repo_url} #{tmp_dir}"
     source_paths.unshift File.expand_path('templates/app/templates', tmp_dir)
   else
     source_paths.unshift(File.expand_path('../templates', __FILE__))
