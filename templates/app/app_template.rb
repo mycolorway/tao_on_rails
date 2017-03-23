@@ -18,6 +18,7 @@ def apply_template!
   template 'app/views/home/index.html.erb'
 
   template 'app/controllers/home_controller.rb'
+  template 'app/components/application_component.rb'
   route "root to: 'home#index'"
 end
 
