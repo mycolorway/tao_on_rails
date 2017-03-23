@@ -18,12 +18,10 @@ module TaoOnRails
         end
 
         TaoOnRails::Components::Base.descendants.each do |klass|
-          params = klass.instance_method(:initialize).parameters
-          params.pop
           module_eval %Q{
-          def #{klass.tag_name.underscore} #{params.map{|p| "#{p[1]} = nil"}.join(', ')}, &block
-            #{klass.name}.new(#{params.map(&:last).join(', ')}, self).render(&block)
-          end
+            def #{klass.tag_name.underscore} *args, &block
+              #{klass.name}.new(self, *args).render(&block)
+            end
           }
         end
       end

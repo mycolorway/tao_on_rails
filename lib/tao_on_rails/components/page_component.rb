@@ -4,7 +4,7 @@ module TaoOnRails
   module Components
     class PageComponent < Base
 
-      def initialize options, view
+      def initialize view, options
         super
 
         @page_id = view.page_id
