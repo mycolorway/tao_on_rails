@@ -12,7 +12,11 @@ module TaoOnRails
 
       def render &block
         if view.lookup_context.exists?(template_path, [], true)
-          view.render layout: template_path, locals: {component: self}, &block
+          if block_given?
+            view.render layout: template_path, locals: {component: self}, &block
+          else
+            view.render partial: template_path, locals: {component: self}
+          end
         else
           view.content_tag self.class.tag_name, options, &block
         end
@@ -33,7 +37,7 @@ module TaoOnRails
       end
 
       def self.template_path
-        @template_path ||= "components/#{self.name.underscore}"
+        @template_path ||= "components/#{self.name.underscore.gsub(/(.+)_component$/, '\1')}"
       end
 
     end
