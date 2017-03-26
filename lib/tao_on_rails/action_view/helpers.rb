@@ -4,7 +4,7 @@ module TaoOnRails
 
       def page_id
         controller_names = controller_path.split('/')
-        [controller_names, action_name].compact.flatten.join('-')
+        [controller_names, action_name].compact.flatten.join('_').dasherize
       end
 
       # Define the dynamic view helpers for components
