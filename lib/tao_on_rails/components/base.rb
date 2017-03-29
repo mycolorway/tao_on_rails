@@ -18,7 +18,7 @@ module TaoOnRails
             view.render partial: template_path, locals: {component: self}
           end
         else
-          view.content_tag self.class.tag_name, options, &block
+          view.content_tag self.class.tag_name, nil, options, &block
         end
       end
 
