@@ -31,6 +31,10 @@ Start writing plugin for Tao on Rails with following commands:
 rails plugin new plugin_name -m https://git.io/vSvyy
 ```
 
+## Documentation
+
+See [wiki](https://github.com/mycolorway/tao_on_rails/wiki) for tutorials and API reference.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/mycolorway/tao_on_rails. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
