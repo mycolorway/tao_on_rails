@@ -35,7 +35,7 @@ plugins:
       Safari:
         platform: Mac
         version: -1
-      iPhone:
+      iPhone 5s Simulator:
         version: [9.3]
-      Motorola Droid 4 Emulator:
+      Android Emulator:
         version: [5.1, 4.4]
