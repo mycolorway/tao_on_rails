@@ -13,7 +13,10 @@ module TaoOnRails
       def render &block
         if view.lookup_context.exists?(template_path, [], true)
           if block_given?
-            view.render layout: template_path, locals: {component: self}, &block
+            block_content = view.capture(&block)
+            view.render layout: template_path, locals: {component: self} do
+              block_content
+            end
           else
             view.render partial: template_path, locals: {component: self}
           end
