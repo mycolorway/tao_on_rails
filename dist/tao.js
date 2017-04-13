@@ -28174,11 +28174,29 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       return TaoApplication.__super__.constructor.apply(this, arguments);
     }
 
+    TaoApplication._initializers = {};
+
+    TaoApplication.initializer = function(name, callback) {
+      return this._initializers[name] = callback;
+    };
+
+    TaoApplication.removeInitializer = function(name) {
+      return this._initializers[name] = null;
+    };
+
     TaoApplication.prototype._init = function() {
+      var callback, name, ref, results;
       this._initGon();
       this._initI18n();
       this._initUjs();
-      return this._initTurbolinks();
+      this._initTurbolinks();
+      ref = this.constructor._initializers;
+      results = [];
+      for (name in ref) {
+        callback = ref[name];
+        results.push(typeof callback === "function" ? callback(this) : void 0);
+      }
+      return results;
     };
 
     TaoApplication.prototype._initGon = function() {

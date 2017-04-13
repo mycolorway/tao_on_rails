@@ -2,11 +2,21 @@
 
 class TaoApplication extends TaoModule
 
+  @_initializers: {}
+
+  @initializer: (name, callback) ->
+    @_initializers[name] = callback
+
+  @removeInitializer: (name) ->
+    @_initializers[name] = null
+
   _init: ->
     @_initGon()
     @_initI18n()
     @_initUjs()
     @_initTurbolinks()
+
+    callback?(@) for name, callback of @constructor._initializers
 
   _initGon: ->
     return unless window.gon
