@@ -1,8 +1,0 @@
-Description:
-    Generate coffee file containing all svg icons.
-
-Example:
-    `rails generate tao:icons`
-
-    Create coffee file:
-        lib/assets/javascripts/tao/icons.coffee

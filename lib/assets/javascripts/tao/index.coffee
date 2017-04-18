@@ -3,12 +3,10 @@
 #= require jquery3
 #= require jquery_ujs
 #= require lodash
-#= require i18n
 
 #= require_self
-#= require tao/application
-#= require tao/page
-#= require tao/helpers
-#= require tao/icons
+#= require ./application
+#= require ./page
+#= require ./helpers
 
 window.Tao = {}

@@ -5,7 +5,7 @@ require '<%= name.underscore %>/version'
 
 Gem::Specification.new do |spec|
   spec.name          = '<%= name.underscore %>'
-  spec.version       = TaoOnRails::VERSION
+  spec.version       = <%= name.camelize %>::VERSION
   spec.authors       = ['your name']
   spec.email         = ['your email']
 
