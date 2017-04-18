@@ -28226,14 +28226,6 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
       }
     };
 
-    TaoApplication.prototype._initIcons = function($page) {
-      var $icons;
-      $icons = $page.siblings('#tao-icons');
-      if (!($icons.length > 0)) {
-        return $page[0].insertAdjacentHTML('beforebegin', Tao.iconsHtml || '');
-      }
-    };
-
     TaoApplication.prototype._initPage = function($page) {
       return window.currentPage = this.currentPage = $page[0];
     };
@@ -28297,7 +28289,6 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
             return;
           }
           _this._initGon();
-          _this._initIcons($page);
           _this._initPage($page);
           return _this.trigger('page-load', [_this.currentPage]);
         };
@@ -28743,12 +28734,6 @@ var o,i,s,a,u;return i=null!=n?n:{},a=i.restorationIdentifier,s=i.restorationDat
   Tao.helpers = {
     reflow: function(el) {
       return $(el)[0].offsetHeight;
-    },
-    icon: function(name, attributes) {
-      if (attributes == null) {
-        attributes = {};
-      }
-      return $("<svg><use xlink:href=\"#icon-" + name + "\"/></svg>").attr(attributes).addClass("icon icon-" + name);
     }
   };
 

@@ -34,11 +34,6 @@ class TaoApplication extends TaoModule
   _initI18n: ->
     I18n.locale = @locale if window.I18n && @locale
 
-  _initIcons: ($page) ->
-    $icons = $page.siblings('#tao-icons')
-    unless $icons.length > 0
-      $page[0].insertAdjacentHTML('beforebegin', Tao.iconsHtml || '')
-
   _initPage: ($page) ->
     window.currentPage = @currentPage = $page[0]
 
@@ -82,7 +77,6 @@ class TaoApplication extends TaoModule
       $page = $ 'body > .tao-page'
       return unless $page.length > 0
       @_initGon()
-      @_initIcons $page
       @_initPage $page
       @trigger 'page-load', [@currentPage]
 
