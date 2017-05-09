@@ -3,7 +3,7 @@ module TaoOnRails
     module Helpers
 
       def page_id
-        return @page_id if @page_id.present?
+        return @page_id if defined?(@page_id)
         controller_names = controller_path.split('/')
         [controller_names, action_name].compact.flatten.join('_').dasherize
       end
