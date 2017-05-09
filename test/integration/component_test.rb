@@ -6,6 +6,8 @@ class ComponentTest < ActionDispatch::IntegrationTest
   test "The Tao Page should be render correctly" do
     get "/posts/1"
 
+    assert_response :success
+
     assert response.body.include?('<h1>Tao Page</h1>')
   end
 
@@ -41,6 +43,8 @@ class ComponentTest < ActionDispatch::IntegrationTest
 
   test "render component without component template defined" do
     get "/authors/1"
+
+    assert_response :success
 
     assert response.body.include?('<tao-author>')
     assert response.body.include?('<h2>Jesus<h2>')
