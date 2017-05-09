@@ -10,3 +10,4 @@
 *.gem
 /test/dummy/log
 .DS_Store
+/test/dummy/tmp/cache

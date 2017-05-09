@@ -9,6 +9,9 @@
   </head>
 
   <body>
-    <%= yield %>
+    <%= tao_page layout: 'default' do %>
+      <h1>Tao Page</h1>
+      <%= yield %>
+    <% end %>
   </body>
 </html>
