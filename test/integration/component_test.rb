@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ComponentTest < ActionDispatch::IntegrationTest
-  attr_reader :article_component_template
 
   test "The Tao Page should be render correctly" do
     get "/posts/1"
