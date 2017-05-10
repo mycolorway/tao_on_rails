@@ -13,7 +13,6 @@ class ComponentTest < ActionDispatch::IntegrationTest
   test "article component should be render correctly" do
     get "/posts"
 
-
     assert_response :success
 
     assert response.body.include?('<article>')
@@ -25,8 +24,6 @@ class ComponentTest < ActionDispatch::IntegrationTest
     assert response.body.include?(' <p>CarpeDiem</p>')
     assert_not response.body.include?('<h2>Comments</h2>')
   end
-
-
 
   test "article component should be render correctly with block given" do
     get "/posts/1"
