@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "turbolinks", "~> 5.0"
   spec.add_dependency "jquery-rails", "~> 4.2"
   spec.add_dependency "lodash-rails", "~> 4.16"
-  spec.add_dependency "rails", '~> 5.0'
+  spec.add_dependency "rails", '~> 5.0', '>= 5.0.1', '< 5.1'
 
   spec.add_development_dependency "sqlite3", '~> 1.3'
   spec.add_development_dependency "blade", "~> 0.7.0"
