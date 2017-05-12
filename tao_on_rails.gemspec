@@ -25,4 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "blade", "~> 0.7.0"
   spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.6.2"
   spec.add_development_dependency "nokogiri", '~> 1.7'
+  spec.add_development_dependency 'pry', '~> 0.10'
+  spec.add_development_dependency 'mocha', '~> 1.2'
 end
