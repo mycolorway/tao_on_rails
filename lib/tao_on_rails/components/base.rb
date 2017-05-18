@@ -2,34 +2,35 @@ module TaoOnRails
   module Components
     class Base
 
-      attr_reader :options, :template_path, :view
+      attr_reader :options, :template_name, :template_paths, :view
 
       def initialize view, options = {}
         @view = view
         @options = options
-        @template_path = @options.delete(:template_path) || self.class.template_path
+        @template_name = self.class.template_name.dup
+        @template_paths = self.class.template_paths.dup
+        @template_paths.unshift(@options.delete(:template_path)) if @options[:template_path].present?
       end
 
       def render &block
-        if view.lookup_context.exists?(template_path, [], true)
+        if template = find_template
           if block_given?
-            block_content = view.capture(&block)
-            view.render layout: template_path, locals: {
-              component: self,
-              block_given: true
-            } do
-              block_content
+            template.render(view, {component: self, block_given: true}) do |*name|
+              view._layout_for(*name, &block)
             end
           else
-            view.render partial: template_path, locals: {
-              component: self,
-              block_given: false
-            }
+            template.render(view, {component: self})
           end
         else
           view.content_tag self.class.tag_name, nil, options, &block
         end
       end
+
+      def translate key
+        i18n_scope = self.class.name.underscore.split('/').join('.').gsub(/(.+)_component$/, '\1')
+        I18n.t(key, scope: i18n_scope).presence
+      end
+      alias_method :t, :translate
 
       def self.tag_name
         @tag_name ||= "#{self.tag_prefix}-#{self.component_name.to_s.dasherize}"
@@ -45,8 +46,25 @@ module TaoOnRails
         :tao
       end
 
-      def self.template_path
-        @template_path ||= "components/#{self.name.underscore.gsub(/(.+)_component$/, '\1')}"
+      def self.template_paths
+        @template_paths ||= [
+          "components/#{self.name.deconstantize.underscore}",
+          "#{self.name.deconstantize.underscore}/components"
+        ]
+      end
+
+      def self.template_name
+        @template_name ||= self.name.demodulize.underscore.gsub(/(.+)_component$/, '\1')
+      end
+
+      private
+
+      def find_template
+        view.lookup_context.find_all(template_name, template_paths, true, template_keys).first
+      end
+
+      def template_keys
+        [:component, :block_given]
       end
 
     end

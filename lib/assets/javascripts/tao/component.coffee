@@ -109,13 +109,16 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           @taoId = ++count
           @_init()
           @initialized = true
+          @trigger 'initialized'
 
         @_connected()
+        @trigger 'connected'
 
     disconnectedCallback: ->
       $ =>
         @connected = false
         @_disconnected()
+        @trigger 'disconnected'
 
     attributeChangedCallback: (name) ->
       return unless @connected
