@@ -15,15 +15,6 @@ module 'TaoComponent',
 
       @attribute 'array', type: 'array'
 
-      _init: ->
-        @trigger 'initialized'
-
-      _connected: ->
-        @trigger 'connected'
-
-      _disconnected: ->
-        @trigger 'disconnected'
-
       _nameChanged: ->
         @trigger 'nameChanged'
 
