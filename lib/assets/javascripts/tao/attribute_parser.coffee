@@ -53,9 +53,9 @@ class TaoAttributeParser extends TaoModule
       try
         JSON.parse value
       catch e
-        options.default || {}
+        options.default || null
     else
-      options.default || {}
+      options.default || null
 
   @aliasMethod '_parseObject', '_parseHash'
 
@@ -64,9 +64,9 @@ class TaoAttributeParser extends TaoModule
       try
         JSON.parse value
       catch e
-        options.default || []
+        options.default || null
     else
-      options.default || []
+      options.default || null
 
   _stringifyString: (value, options) ->
     value.toString()

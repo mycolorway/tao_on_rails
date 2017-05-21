@@ -139,8 +139,21 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     _attributeChanged: (name) ->
       @["_#{_.camelCase name}Changed"]?()
 
+    _reflow: ->
+      @offsetHeight
+      @
+
     beforeCache: ->
       # called before turbolinks cache pages
+
+    findComponent: (selector, readyCallback) ->
+      component = @jq.find(selector).get(0)
+      if component.connected
+        readyCallback? component
+      else
+        @one 'connected', selector, ->
+          readyCallback? component
+      component
 
     on: (args...) ->
       @jq.on args...
@@ -149,6 +162,9 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
       @jq.off args...
 
     trigger: (args...) ->
+      @jq.trigger(args...)
+
+    triggerHandler: (args...) ->
       @jq.triggerHandler(args...)
 
     one: (args...) ->

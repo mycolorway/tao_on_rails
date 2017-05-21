@@ -14,10 +14,10 @@ module Tao
           @page_id = [class_path, file_name, action].flatten.join('-')
           if (variants = options[:variants]).any?
             variants.each do |variant|
-              template "coffee.erb", File.join("app/assets/javascripts", variant, name.pluralize, "#{action}.coffee")
+              template "coffee.erb", File.join("app/assets/javascripts", variant, name.pluralize, "#{action}_page.coffee")
             end
           else
-            template "coffee.erb", File.join('app/assets/javascripts', name.pluralize, "#{action}.coffee")
+            template "coffee.erb", File.join('app/assets/javascripts', name.pluralize, "#{action}_page.coffee")
           end
         end
       end

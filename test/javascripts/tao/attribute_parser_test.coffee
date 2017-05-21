@@ -24,12 +24,12 @@ module 'Tao Attribute Parser',
 
   test 'parse hash', (assert) ->
     assert.equal _.isEqual(@Parser.parse('{"x": 1}', {type: 'hash'}), {x: 1}), true
-    assert.equal _.isEqual(@Parser.parse('', {type: 'hash'}), {}), true
+    assert.equal _.isEqual(@Parser.parse('', {type: 'hash'}), null), true
     assert.equal _.isEqual(@Parser.parse('', {type: 'hash', default: {y: 1}}), {y: 1}), true
 
   test 'parse array', (assert) ->
     assert.equal _.isEqual(@Parser.parse('[1,2]', {type: 'array'}), [1,2]), true
-    assert.equal _.isEqual(@Parser.parse('', {type: 'array'}), []), true
+    assert.equal _.isEqual(@Parser.parse('', {type: 'array'}), null), true
     assert.equal _.isEqual(@Parser.parse('', {type: 'array', default: [3,4]}), [3,4]), true
 
   test 'stringify string', (assert) ->
