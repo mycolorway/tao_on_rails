@@ -155,11 +155,15 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           readyCallback? component
       component
 
-    on: (args...) ->
-      @jq.on args...
+    on: (name, args...) ->
+      name = "#{name}.#{@constructor._tag}-#{@taoId}" if name && name.indexOf('.') < 0
+      console.log name
+      @jq.on name, args...
 
-    off: (args...) ->
-      @jq.off args...
+    off: (name = '', args...) ->
+      name = "#{name}.#{@constructor._tag}-#{@taoId}" if name.indexOf('.') < 0
+      console.log name
+      @jq.off name, args...
 
     trigger: (args...) ->
       @jq.trigger(args...)
