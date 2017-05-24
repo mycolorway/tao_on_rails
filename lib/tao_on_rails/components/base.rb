@@ -4,12 +4,12 @@ module TaoOnRails
 
       attr_reader :options, :template_name, :template_paths, :view
 
+      delegate :tag_name, :component_name, :tag_prefix, :template_paths, :template_name, to: :class
+
       def initialize view, options = {}
         @view = view
         @options = options
-        @template_name = self.class.template_name.dup
-        @template_paths = self.class.template_paths.dup
-        @template_paths.unshift(@options.delete(:template_path)) if @options[:template_path].present?
+        template_paths.unshift(@options.delete(:template_path)) if @options[:template_path].present?
       end
 
       def render &block
@@ -23,7 +23,7 @@ module TaoOnRails
             template.render(view, {component: self})
           end
         else
-          view.content_tag self.class.tag_name, nil, options, &block
+          view.content_tag tag_name, nil, options, &block
         end
       end
 
