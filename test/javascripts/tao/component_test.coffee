@@ -9,7 +9,7 @@ module 'TaoComponent',
 
       @attribute 'name', 'age', observe: true
 
-      @attribute 'active', type: 'bool', default: true
+      @attribute 'active', type: 'bool'
 
       @attribute 'json', type: 'object', default: {x: 1}
 
@@ -49,14 +49,14 @@ module 'TaoComponent',
     assert.equal nameChangedCount, 1
 
   test 'has attributes with default value', (assert) ->
-    assert.equal @component.active, true
+    assert.equal @component.active, false
     assert.equal @component.hasAttribute('active'), false
     assert.deepEqual @component.json, {x: 1}
     assert.deepEqual @component.array, [1, 2]
 
     @component.active = false
     assert.equal @component.active, false
-    assert.equal @component.getAttribute('active'), 'false'
+    assert.equal @component.hasAttribute('active'), false
 
     @component.json = {test: 1}
     assert.deepEqual @component.json, {test: 1}

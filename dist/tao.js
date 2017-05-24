@@ -28303,168 +28303,155 @@ return t.dispatch("turbolinks:before-render",{data:{newBody:e}})},r.prototype.no
 
 }).call(this);
 (function() {
-  var TaoAttributeParser, parser,
+  var TaoAttributeManager, manager,
     extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
-  parser = null;
+  manager = null;
 
-  TaoAttributeParser = (function(superClass) {
-    extend(TaoAttributeParser, superClass);
+  TaoAttributeManager = (function(superClass) {
+    extend(TaoAttributeManager, superClass);
 
-    function TaoAttributeParser() {
-      return TaoAttributeParser.__super__.constructor.apply(this, arguments);
+    function TaoAttributeManager() {
+      return TaoAttributeManager.__super__.constructor.apply(this, arguments);
     }
 
-    TaoAttributeParser.defaultOptions = {
+    TaoAttributeManager.defaultOptions = {
       type: 'string'
     };
 
-    TaoAttributeParser.getParser = function() {
-      return parser || (parser = new TaoAttributeParser());
+    TaoAttributeManager.getManager = function() {
+      return manager || (manager = new TaoAttributeManager());
     };
 
-    TaoAttributeParser.parse = function(value, options) {
-      var parse;
-      if (options == null) {
-        options = {};
-      }
-      parser = this.getParser();
+    TaoAttributeManager.getAttribute = function(element, name, options) {
+      var ref;
+      manager = this.getManager();
       options = _.extend({}, this.defaultOptions, options);
-      if (parse = parser["_" + (_.camelCase("parse_" + options.type))]) {
-        return parse.call(parser, value, options);
-      } else {
-        return value;
-      }
+      return (ref = manager._attributes[_.camelCase(options.type)]) != null ? ref.get(element, name, options) : void 0;
     };
 
-    TaoAttributeParser.stringify = function(value, options) {
-      var stringify;
-      if (options == null) {
-        options = {};
-      }
-      parser = this.getParser();
+    TaoAttributeManager.setAttribute = function(element, name, val, options) {
+      var ref;
+      manager = this.getManager();
       options = _.extend({}, this.defaultOptions, options);
-      if (stringify = parser["_" + (_.camelCase("stringify_" + options.type))]) {
-        return stringify.call(parser, value, options);
+      return (ref = manager._attributes[_.camelCase(options.type)]) != null ? ref.set(element, name, val, options) : void 0;
+    };
+
+    TaoAttributeManager.prototype._attributes = {};
+
+    TaoAttributeManager.registerAttribute = function(type, config) {
+      if (_.isString(config)) {
+        return this.prototype._attributes[type] = this.prototype._attributes[config];
       } else {
-        return value;
+        return this.prototype._attributes[type] = config;
       }
     };
 
-    TaoAttributeParser.prototype._parseString = function(value, options) {
-      return value || options["default"] || '';
-    };
-
-    TaoAttributeParser.prototype._parseNumber = function(value, options) {
-      value = parseFloat(value);
-      if (_.isNaN(value)) {
-        return options["default"] || 0;
-      } else {
-        return value;
+    TaoAttributeManager.registerAttribute('string', {
+      get: function(element, name, options) {
+        return element.getAttribute(name) || options["default"] || '';
+      },
+      set: function(element, name, val, options) {
+        return element.setAttribute(name, val.toString());
       }
-    };
+    });
 
-    TaoAttributeParser.prototype._parseBoolean = function(value, options) {
-      if (_.isNil(value)) {
-        return options["default"] || false;
-      } else if (value === 'true') {
-        return true;
-      } else if (value === 'false') {
-        return false;
-      } else {
-        return !!value;
+    TaoAttributeManager.registerAttribute('number', {
+      get: function(element, name, options) {
+        var value;
+        value = parseFloat(element.getAttribute(name));
+        if (_.isNaN(value)) {
+          return options["default"] || null;
+        } else {
+          return value;
+        }
+      },
+      set: function(element, name, val, options) {
+        return element.setAttribute(name, val.toString());
       }
-    };
+    });
 
-    TaoAttributeParser.aliasMethod('_parseBool', '_parseBoolean');
+    TaoAttributeManager.registerAttribute('boolean', {
+      get: function(element, name, options) {
+        return element.hasAttribute(name);
+      },
+      set: function(element, name, val, options) {
+        if (val) {
+          return element.setAttribute(name, '');
+        } else {
+          return element.removeAttribute(name);
+        }
+      }
+    });
 
-    TaoAttributeParser.prototype._parseHash = function(value, options) {
-      var e;
-      if (_.isString(value)) {
-        try {
-          return JSON.parse(value);
-        } catch (error) {
-          e = error;
+    TaoAttributeManager.registerAttribute('bool', 'boolean');
+
+    TaoAttributeManager.registerAttribute('hash', {
+      get: function(element, name, options) {
+        var e, value;
+        value = element.getAttribute(name);
+        if (_.isString(value)) {
+          try {
+            return JSON.parse(value);
+          } catch (error) {
+            e = error;
+            return options["default"] || null;
+          }
+        } else {
           return options["default"] || null;
         }
-      } else {
-        return options["default"] || null;
+      },
+      set: function(element, name, val, options) {
+        var e;
+        val = (function() {
+          try {
+            return JSON.stringify(val);
+          } catch (error) {
+            e = error;
+            return '{}';
+          }
+        })();
+        return element.setAttribute(name, val);
       }
-    };
+    });
 
-    TaoAttributeParser.aliasMethod('_parseObject', '_parseHash');
+    TaoAttributeManager.registerAttribute('object', 'hash');
 
-    TaoAttributeParser.prototype._parseArray = function(value, options) {
-      var e;
-      if (_.isString(value)) {
-        try {
-          return JSON.parse(value);
-        } catch (error) {
-          e = error;
+    TaoAttributeManager.registerAttribute('array', {
+      get: function(element, name, options) {
+        var e, value;
+        value = element.getAttribute(name);
+        if (_.isString(value)) {
+          try {
+            return JSON.parse(value);
+          } catch (error) {
+            e = error;
+            return options["default"] || null;
+          }
+        } else {
           return options["default"] || null;
         }
-      } else {
-        return options["default"] || null;
+      },
+      set: function(element, name, val, options) {
+        var e;
+        val = (function() {
+          try {
+            return JSON.stringify(val);
+          } catch (error) {
+            e = error;
+            return '[]';
+          }
+        })();
+        return element.setAttribute(name, val);
       }
-    };
+    });
 
-    TaoAttributeParser.prototype._stringifyString = function(value, options) {
-      return value.toString();
-    };
-
-    TaoAttributeParser.prototype._stringifyNumber = function(value, options) {
-      return value.toString();
-    };
-
-    TaoAttributeParser.prototype._stringifyBoolean = function(value, options) {
-      if (!_.isBoolean(value)) {
-        value = options["default"] || false;
-      }
-      if (value === true) {
-        return 'true';
-      } else if (value === false) {
-        return 'false';
-      } else {
-        return null;
-      }
-    };
-
-    TaoAttributeParser.aliasMethod('_stringifyBool', '_stringifyBoolean');
-
-    TaoAttributeParser.prototype._stringifyHash = function(value, options) {
-      var e;
-      if (!_.isObject(value)) {
-        value = options["default"] || {};
-      }
-      try {
-        return JSON.stringify(value);
-      } catch (error) {
-        e = error;
-        return '{}';
-      }
-    };
-
-    TaoAttributeParser.aliasMethod('_stringifyObject', '_stringifyHash');
-
-    TaoAttributeParser.prototype._stringifyArray = function(value, options) {
-      var e;
-      if (!_.isObject(value)) {
-        value = options["default"] || [];
-      }
-      try {
-        return JSON.stringify(value);
-      } catch (error) {
-        e = error;
-        return '[]';
-      }
-    };
-
-    return TaoAttributeParser;
+    return TaoAttributeManager;
 
   })(TaoModule);
 
-  Tao.AttributeParser = window.TaoAttributeParser = TaoAttributeParser;
+  Tao.AttributeManager = window.TaoAttributeManager = TaoAttributeManager;
 
 }).call(this);
 (function() {
@@ -28566,17 +28553,11 @@ return t.dispatch("turbolinks:before-render",{data:{newBody:e}})},r.prototype.no
             var attrName;
             attrName = _.kebabCase(name);
             _this.get(name, function() {
-              var val;
-              val = this.hasAttribute(attrName) ? this.getAttribute(attrName) : null;
-              return TaoAttributeParser.parse(val, options);
+              return Tao.AttributeManager.getAttribute(this, attrName, options);
             });
             _this.set(name, function(val) {
-              val = TaoAttributeParser.stringify(val, options);
-              if (_.isString(val)) {
-                return this.setAttribute(attrName, val);
-              } else {
-                return this.removeAttribute(attrName);
-              }
+              Tao.AttributeManager.setAttribute(this, attrName, val, options);
+              return this;
             });
             if (options.observe) {
               return _this.observedAttributes.push(attrName);
@@ -28690,7 +28671,6 @@ return t.dispatch("turbolinks:before-render",{data:{newBody:e}})},r.prototype.no
         if (name && name.indexOf('.') < 0) {
           name = name + "." + this.constructor._tag + "-" + this.taoId;
         }
-        console.log(name);
         return (ref = this.jq).on.apply(ref, [name].concat(slice.call(args)));
       };
 
@@ -28703,7 +28683,6 @@ return t.dispatch("turbolinks:before-render",{data:{newBody:e}})},r.prototype.no
         if (name.indexOf('.') < 0) {
           name = name + "." + this.constructor._tag + "-" + this.taoId;
         }
-        console.log(name);
         return (ref = this.jq).off.apply(ref, [name].concat(slice.call(args)));
       };
 

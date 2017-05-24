@@ -1,4 +1,4 @@
-#= require ./attribute_parser
+#= require ./attribute_manager
 
 components = {}
 
@@ -64,18 +64,11 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
         attrName = _.kebabCase(name)
 
         @get name, ->
-          val = if @hasAttribute attrName
-             @getAttribute(attrName)
-          else
-            null
-          TaoAttributeParser.parse val, options
+          Tao.AttributeManager.getAttribute @, attrName, options
 
         @set name, (val) ->
-          val = TaoAttributeParser.stringify val, options
-          if _.isString val
-            @setAttribute attrName, val
-          else
-            @removeAttribute attrName
+          Tao.AttributeManager.setAttribute @, attrName, val, options
+          @
 
         @observedAttributes.push(attrName) if options.observe
 
@@ -157,12 +150,10 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
     on: (name, args...) ->
       name = "#{name}.#{@constructor._tag}-#{@taoId}" if name && name.indexOf('.') < 0
-      console.log name
       @jq.on name, args...
 
     off: (name = '', args...) ->
       name = "#{name}.#{@constructor._tag}-#{@taoId}" if name.indexOf('.') < 0
-      console.log name
       @jq.off name, args...
 
     trigger: (args...) ->
