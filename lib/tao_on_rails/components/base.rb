@@ -23,7 +23,7 @@ module TaoOnRails
             template.render(view, {component: self})
           end
         else
-          view.content_tag tag_name, nil, options, &block
+          view.content_tag tag_name, nil, html_options, &block
         end
       end
 
@@ -32,6 +32,25 @@ module TaoOnRails
         I18n.t(key, scope: i18n_scope).presence
       end
       alias_method :t, :translate
+
+      def html_options
+        @html_options ||= transform_html_options options
+      end
+
+      def transform_html_options options
+        options.transform_keys { |key|
+          key.to_s.dasherize
+        }.transform_values { |value|
+          case value
+          when true
+            ''
+          when false
+            nil
+          else
+            value
+          end
+        }
+      end
 
       def self.tag_name
         @tag_name ||= "#{self.tag_prefix}-#{self.component_name.to_s.dasherize}"

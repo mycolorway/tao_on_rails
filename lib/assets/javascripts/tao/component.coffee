@@ -67,8 +67,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           Tao.AttributeManager.getAttribute @, attrName, options
 
         @set name, (val) ->
+          return if @_beforeAttributeChanged(attrName, val) == false
           Tao.AttributeManager.setAttribute @, attrName, val, options
-          @
 
         @observedAttributes.push(attrName) if options.observe
 
@@ -128,6 +128,9 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
     _disconnected: ->
       # called when the element was disconnected from dom
+
+    _beforeAttributeChanged: (name, val) ->
+      @["_before#{_.upperFirst _.camelCase name}Changed"]?(val)
 
     _attributeChanged: (name) ->
       @["_#{_.camelCase name}Changed"]?()
