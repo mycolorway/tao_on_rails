@@ -16,8 +16,8 @@ module TaoOnRails
         if template = find_template
           if block_given?
             block_content = view.capture(&block)
-            template.render(view, {component: self, block_given: true}) do
-              block_content
+            template.render(view, {component: self, block_given: true}) do |*name|
+              view._layout_for(*name) {block_content}
             end
           else
             template.render(view, {component: self})
