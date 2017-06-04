@@ -8,7 +8,7 @@ module TaoOnRails
 
       def initialize view, options = {}
         @view = view
-        @options = options
+        @options = merge_options default_options, options
         template_paths.unshift(@options.delete(:template_path)) if @options[:template_path].present?
       end
 
@@ -27,9 +27,9 @@ module TaoOnRails
         end
       end
 
-      def translate key
+      def translate key, options = {}
         i18n_scope = self.class.name.underscore.split('/').join('.').gsub(/(.+)_component$/, '\1')
-        I18n.t(key, scope: i18n_scope).presence
+        I18n.t(key, options.merge!(scope: i18n_scope)).presence
       end
       alias_method :t, :translate
 
@@ -39,7 +39,7 @@ module TaoOnRails
 
       def transform_html_options options
         options.transform_keys { |key|
-          key.to_s.dasherize
+          key.to_s.dasherize.to_sym
         }.transform_values { |value|
           case value
           when true
@@ -78,6 +78,24 @@ module TaoOnRails
       end
 
       private
+
+      def default_options
+        {}
+      end
+
+      def merge_options options, other_options
+        options.merge(other_options) { |key, old_val, new_val|
+          if key.to_s == 'class'
+            old_val = old_val.split(' ') if old_val.is_a? String
+            new_val = new_val.split(' ') if new_val.is_a? String
+            Array(old_val) + Array(new_val)
+          elsif old_val.is_a?(Hash) && old_val.is_a?(Hash)
+            old_val.merge! new_val
+          else
+            new_val
+          end
+        }
+      end
 
       def find_template
         view.lookup_context.find_all(template_name, template_paths, true, template_keys).first
