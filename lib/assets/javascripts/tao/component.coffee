@@ -145,7 +145,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     findComponent: (selector, readyCallback) ->
       component = @jq.find(selector).get(0)
       if component.connected
-        readyCallback? component
+        # make sure element is returned before callback
+        setTimeout -> readyCallback? component
       else
         @one 'connected', selector, ->
           readyCallback? component

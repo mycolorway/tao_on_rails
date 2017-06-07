@@ -14,6 +14,18 @@ module TaoOnRails
 
       def render &block
         if template = find_template
+          render_template template, &block
+        else
+          view.content_tag tag_name, nil, html_options, &block
+        end
+      end
+
+      def render_template(template, &block)
+        if template.is_a?(String) || template.is_a?(Symbol)
+          template = find_template(template)
+        end
+
+        if template
           if block_given?
             block_content = view.capture(&block)
             template.render(view, {component: self, block_given: true}) do |*name|
@@ -22,8 +34,6 @@ module TaoOnRails
           else
             template.render(view, {component: self})
           end
-        else
-          view.content_tag tag_name, nil, html_options, &block
         end
       end
 
@@ -35,21 +45,6 @@ module TaoOnRails
 
       def html_options
         @html_options ||= transform_html_options options
-      end
-
-      def transform_html_options options
-        options.transform_keys { |key|
-          key.to_s.dasherize.to_sym
-        }.transform_values { |value|
-          case value
-          when true
-            ''
-          when false
-            nil
-          else
-            value
-          end
-        }
       end
 
       def self.tag_name
@@ -97,8 +92,27 @@ module TaoOnRails
         }
       end
 
-      def find_template
-        view.lookup_context.find_all(template_name, template_paths, true, template_keys).first
+      def transform_html_options options, other_options = nil
+        if other_options
+          options = merge_options options, other_options
+        end
+        
+        options.transform_keys { |key|
+          key.to_s.dasherize.to_sym
+        }.transform_values { |value|
+          case value
+          when true
+            ''
+          when false
+            nil
+          else
+            value
+          end
+        }
+      end
+
+      def find_template(name = template_name)
+        view.lookup_context.find_all(name, template_paths, true, template_keys).first
       end
 
       def template_keys
