@@ -1,6 +1,6 @@
 class <%= name.camelize %> extends TaoComponent
 
-  @tag: '<%= name.dasherize %>'
+  @tag '<%= name.dasherize %>'
 
   _init: ->
     # called when the page connected to dom for the first time
