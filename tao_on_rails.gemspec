@@ -16,15 +16,14 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{lib,vendor}/**/*", "LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "turbolinks", "~> 5.0"
-  spec.add_dependency "jquery-rails", "~> 4.2"
-  spec.add_dependency "lodash-rails", "~> 4.16"
-  spec.add_dependency "rails", '~> 5.0.3'
+  spec.add_dependency "turbolinks", "~> 5.0.1"
+  spec.add_dependency "jquery-rails", "~> 4.3.1"
+  spec.add_dependency "lodash-rails", "~> 4.17.4"
+  spec.add_dependency "rails", '~> 5.1.1'
 
-  spec.add_development_dependency "sqlite3", '~> 1.3'
+  spec.add_development_dependency "sqlite3", '~> 1.3.13'
   spec.add_development_dependency "blade", "~> 0.7.0"
-  spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.6.2"
-  spec.add_development_dependency "nokogiri", '~> 1.7'
-  spec.add_development_dependency 'mocha', '~> 1.2'
-  spec.add_development_dependency 'minitest', '5.10.1'
+  spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.7.0"
+  # spec.add_development_dependency 'mocha', '~> 1.2'
+  # spec.add_development_dependency 'minitest', '5.10.1'
 end
