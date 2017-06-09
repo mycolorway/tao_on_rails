@@ -1,0 +1,6 @@
+<article>
+  <% post = component.options[:post] || @post %>
+  <h1><%= post.title %></h1>
+  <p><%= post.content %></p>
+  <%= yield if block_given? %>
+</article>

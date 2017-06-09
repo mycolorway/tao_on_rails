@@ -3,6 +3,7 @@ require 'tao_on_rails/components/base'
 module TaoOnRails
   module Components
     class PageComponent < Base
+      attr_reader :page_id
 
       def initialize view, options = {}
         super
