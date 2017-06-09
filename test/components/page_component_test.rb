@@ -13,7 +13,7 @@ module TaoOnRails
       # #initialize
       test "it should set the @page_id and class correctly" do
         assert_equal 'home', page_component.instance_variable_get(:@page_id)
-        assert_equal 'tao-page home-page', page_component.options[:class]
+        assert_equal ['tao-page', 'home-page'], page_component.options[:class]
       end
 
       # #render

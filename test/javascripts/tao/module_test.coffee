@@ -77,3 +77,12 @@ module 'TaoModule',
 
     instance3 = new @ChildModule()
     assert.equal instance3.id, id + 2
+
+  test 'mixins', (assert) ->
+    @ParentModule.include ->
+      @property 'z', default: 3
+      mixinVariable: 'heihei'
+
+    instance = new @ParentModule()
+    assert.equal instance.z, 3
+    assert.equal instance.mixinVariable, 'heihei'

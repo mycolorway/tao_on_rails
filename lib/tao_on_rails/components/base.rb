@@ -2,7 +2,7 @@ module TaoOnRails
   module Components
     class Base
 
-      attr_reader :options, :template_name, :template_paths, :view
+      attr_reader :options, :view
 
       delegate :tag_name, :component_name, :tag_prefix, :template_paths, :template_name, to: :class
 
@@ -96,7 +96,7 @@ module TaoOnRails
         if other_options
           options = merge_options options, other_options
         end
-        
+
         options.transform_keys { |key|
           key.to_s.dasherize.to_sym
         }.transform_values { |value|

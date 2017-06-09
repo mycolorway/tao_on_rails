@@ -5,6 +5,10 @@ module 'TaoComponent',
   before: ->
     class @TestComponent extends TaoComponent
 
+      @include ->
+        @attribute 'fromMixin', default: 'yes'
+        mixinVariable: 'heihei'
+
       @tag 'test-component'
 
       @attribute 'name', 'age', observe: true
@@ -115,3 +119,7 @@ module 'TaoComponent',
   test 'jq attribute returns jquery object', (assert) ->
     assert.ok @component.jq.jquery
     assert.equal @component.jq.get(0), @component
+
+  test 'mixins', (assert) ->
+    assert.equal @component.fromMixin, 'yes'
+    assert.equal @component.mixinVariable, 'heihei'
