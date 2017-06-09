@@ -26,8 +26,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     count = 0
 
     @extend: (obj) ->
-      unless obj and typeof obj == 'object'
-        throw new Error('TaoComponent.extend: param should be an object')
+      obj = obj.call(@) if _.isFunction obj
+      return unless obj and typeof obj == 'object'
 
       for key, val of obj when key not in ['included', 'extended']
         @[key] = val
@@ -36,8 +36,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
       @
 
     @include: (obj) ->
-      unless obj and typeof obj == 'object'
-        throw new Error('TaoComponent.include: param should be an object')
+      obj = obj.call(@) if _.isFunction obj
+      return unless obj and typeof obj == 'object'
 
       for key, val of obj when key not in ['included', 'extended']
         @::[key] = val
