@@ -17,7 +17,7 @@ module Tao
         def generate_sample_app
           root_path = File.expand_path('../', destination_root)
           FileUtils.cd(root_path) do
-            system "rails new tmp --skip-active-record --skip-test-unit --skip-spring --skip-bundle --quiet"
+            system "rails new tmp --skip-active-record --skip-action-mailer --skip-test-unit --skip-spring --skip-bundle --skip-system-test --skip-git --quiet"
           end
         end
 
