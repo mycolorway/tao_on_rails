@@ -13,12 +13,6 @@ logical_paths:
   - tao.js
   - tao_test.js
 
-build:
-  logical_paths:
-    - tao.js
-    - tao.css
-  path: dist
-
 plugins:
   sauce_labs:
     tunnel_timeout: 120
