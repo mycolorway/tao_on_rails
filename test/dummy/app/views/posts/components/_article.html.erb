@@ -1,0 +1,11 @@
+<article>
+  <h1><%= component.post.title %></h1>
+  <p><%= component.post.content %></p>
+  <%= yield if block_given? %>
+
+  <% if component.options[:comment] %>
+    <%= tao_post_comment_list do %>
+      <h3>Comments</h3>
+    <% end %>
+  <% end %>
+</article>

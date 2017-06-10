@@ -1,4 +1,4 @@
-#= require ./attribute_parser
+#= require ./attribute_manager
 
 components = {}
 
@@ -26,8 +26,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     count = 0
 
     @extend: (obj) ->
-      unless obj and typeof obj == 'object'
-        throw new Error('TaoComponent.extend: param should be an object')
+      obj = obj.call(@) if _.isFunction obj
+      return unless obj and typeof obj == 'object'
 
       for key, val of obj when key not in ['included', 'extended']
         @[key] = val
@@ -36,8 +36,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
       @
 
     @include: (obj) ->
-      unless obj and typeof obj == 'object'
-        throw new Error('TaoComponent.include: param should be an object')
+      obj = obj.call(@) if _.isFunction obj
+      return unless obj and typeof obj == 'object'
 
       for key, val of obj when key not in ['included', 'extended']
         @::[key] = val
@@ -64,18 +64,11 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
         attrName = _.kebabCase(name)
 
         @get name, ->
-          val = if @hasAttribute attrName
-             @getAttribute(attrName)
-          else
-            null
-          TaoAttributeParser.parse val, options
+          Tao.AttributeManager.getAttribute @, attrName, options
 
         @set name, (val) ->
-          val = TaoAttributeParser.stringify val, options
-          if _.isString val
-            @setAttribute attrName, val
-          else
-            @removeAttribute attrName
+          return if @_beforeAttributeChanged(attrName, val) == false
+          Tao.AttributeManager.setAttribute @, attrName, val, options
 
         @observedAttributes.push(attrName) if options.observe
 
@@ -136,6 +129,9 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     _disconnected: ->
       # called when the element was disconnected from dom
 
+    _beforeAttributeChanged: (name, val) ->
+      @["_before#{_.upperFirst _.camelCase name}Changed"]?(val)
+
     _attributeChanged: (name) ->
       @["_#{_.camelCase name}Changed"]?()
 
@@ -149,7 +145,8 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     findComponent: (selector, readyCallback) ->
       component = @jq.find(selector).get(0)
       if component.connected
-        readyCallback? component
+        # make sure element is returned before callback
+        setTimeout -> readyCallback? component
       else
         @one 'connected', selector, ->
           readyCallback? component
@@ -157,12 +154,10 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
     on: (name, args...) ->
       name = "#{name}.#{@constructor._tag}-#{@taoId}" if name && name.indexOf('.') < 0
-      console.log name
       @jq.on name, args...
 
     off: (name = '', args...) ->
       name = "#{name}.#{@constructor._tag}-#{@taoId}" if name.indexOf('.') < 0
-      console.log name
       @jq.off name, args...
 
     trigger: (args...) ->

@@ -6,15 +6,8 @@ module TaoOnRails
       attr_reader :page_id
 
       def initialize view, options = {}
-        super
-
         @page_id = view.page_id
-
-        if @options[:class].present?
-          @options[:class] += " tao-page #{@page_id}-page"
-        else
-          @options[:class] = "tao-page #{@page_id}-page"
-        end
+        super
       end
 
       def render &block
@@ -23,6 +16,12 @@ module TaoOnRails
 
       def self.component_name
         :page
+      end
+
+      private
+
+      def default_options
+        {class: ['tao-page', "#{@page_id}-page"]}
       end
 
     end

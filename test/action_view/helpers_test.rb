@@ -18,8 +18,7 @@ module TaoOnRails
 
       # .define_component_helpers
       test "it should define the helper method for awesome components" do
-        assert view.respond_to?(:tao_article)
-        assert view.respond_to?(:tao_author)
+        assert view.respond_to?(:tao_post_article)
       end
 
     end

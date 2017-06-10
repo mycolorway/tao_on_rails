@@ -1,6 +1,5 @@
 /.bundle/
 /.yardoc
-/Gemfile.lock
 /_yardoc/
 /coverage/
 /doc/
@@ -9,6 +8,7 @@
 /tmp/
 *.gem
 /test/dummy/log
+/test/dummy/tmp/*
 .DS_Store
 /test/dummy/tmp/cache
 /vendor/bundle
