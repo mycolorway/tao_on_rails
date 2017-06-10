@@ -18,14 +18,6 @@ logical_paths:
   - <%= name.underscore %>.js
   - <%= name.underscore %>_test.js
 
-build:
-  logical_paths:
-    - tao.js
-    - tao.css
-    - <%= name.underscore %>.css
-    - <%= name.underscore %>.js
-  path: dist
-
 plugins:
   sauce_labs:
     tunnel_timeout: 120
@@ -38,10 +30,10 @@ plugins:
         version: -2
       Safari:
         platform: Mac
-        version: -3
+        version: -2
       Microsoft Edge:
         version: -2
       iPhone:
-        version: [9.3]
-      Motorola Droid 4 Emulator:
-        version: [5.1, 4.4]
+        version: [10.0, 9.3, 8.4]
+      Android:
+        version: [6.0, 5.1, 4.4]

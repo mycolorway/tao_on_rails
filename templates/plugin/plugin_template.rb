@@ -33,10 +33,10 @@ def apply_template!
 end
 
 def assert_rails_version
-  requirement = Gem::Requirement.new('~> 5.0.0')
+  requirement = Gem::Requirement.new('>= 5.0.0')
   rails_version = Gem::Version.new(Rails::VERSION::STRING)
   return if requirement.satisfied_by?(rails_version)
-  fail Rails::Generators::Error, 'Rails #{RAILS_REQUIREMENT} is required'
+  fail Rails::Generators::Error, 'Rails >= 5.0.0 is required'
 end
 
 def assert_options
