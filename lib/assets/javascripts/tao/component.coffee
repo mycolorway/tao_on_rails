@@ -135,7 +135,7 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     _attributeChanged: (name) ->
       @["_#{_.camelCase name}Changed"]?()
 
-    _reflow: ->
+    reflow: ->
       @offsetHeight
       @
 
