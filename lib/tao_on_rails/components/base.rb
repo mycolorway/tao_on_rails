@@ -116,7 +116,7 @@ module TaoOnRails
       end
 
       def template_keys
-        [:component, :block_given]
+        @template_keys ||= [:component, :block_given]
       end
 
     end
