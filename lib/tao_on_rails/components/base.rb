@@ -92,7 +92,7 @@ module TaoOnRails
         }
       end
 
-      def transform_html_options options = {}, other_options = nil
+      def transform_html_options options, other_options = nil
         if other_options
           options = merge_options options, other_options
         end
