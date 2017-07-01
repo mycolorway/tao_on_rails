@@ -25,6 +25,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "blade", "~> 0.7.0"
-  spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.7.0"
+  spec.add_development_dependency "blade-sauce_labs_plugin", "~> 0.7.1"
   spec.add_development_dependency 'mocha', '~> 1.2.1'
 end
