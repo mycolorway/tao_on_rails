@@ -153,11 +153,13 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
       component
 
     on: (name, args...) ->
-      name = "#{name}.#{@constructor._tag}-#{@taoId}" if name && name.indexOf('.') < 0
+      if name && name.indexOf('.') < 0
+        name = "#{name}.#{@constructor._tag}-#{@taoId}"
       @jq.on name, args...
 
     off: (name = '', args...) ->
-      name = "#{name}.#{@constructor._tag}-#{@taoId}" if name.indexOf('.') < 0
+      if name.indexOf('.') < 0
+        name = "#{name}.#{@constructor._tag}-#{@taoId}"
       @jq.off name, args...
 
     trigger: (args...) ->
