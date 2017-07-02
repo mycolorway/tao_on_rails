@@ -15,7 +15,7 @@ module TaoOnRails
           Rails.root.join('lib/components/**/*.rb'),
           Rails.root.join('app/components/**/*.rb')
         ]).each do |component|
-          require component
+          require_dependency component
         end
 
         TaoOnRails::Components::Base.descendants.each do |klass|
