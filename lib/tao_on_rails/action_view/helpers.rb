@@ -11,12 +11,8 @@ module TaoOnRails
       # Define the dynamic view helpers for components
       # This method should be called in action_view context
       def self.define_component_helpers
-        Dir.glob([
-          Rails.root.join('lib/components/**/*.rb'),
-          Rails.root.join('app/components/**/*.rb')
-        ]).each do |component|
-          require_dependency component
-        end
+        load_tao_components
+        ::ActiveSupport.run_load_hooks(:tao_components, self)
 
         TaoOnRails::Components::Base.descendants.each do |klass|
           module_eval %Q{
@@ -24,6 +20,15 @@ module TaoOnRails
               #{klass.name}.new(self, *args).render(&block)
             end
           }
+        end
+      end
+
+      def self.load_tao_components(root = Rails.root)
+        Dir.glob([
+          root.join('lib/components/**/*.rb'),
+          root.join('app/components/**/*.rb')
+        ]).each do |component|
+          require_dependency component
         end
       end
 
