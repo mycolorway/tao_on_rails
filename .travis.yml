@@ -6,4 +6,4 @@ rvm:
 
 script:
   - rake test
-  - bundle exec blade ci
+  - travis_wait bundle exec blade ci
