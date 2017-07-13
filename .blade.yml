@@ -15,7 +15,8 @@ logical_paths:
 
 plugins:
   sauce_labs:
-    tunnel_timeout: 120
+    tunnel_args:
+      - "--verbose"
     browsers:
       Google Chrome:
         os: Mac, Windows

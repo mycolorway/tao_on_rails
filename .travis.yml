@@ -5,5 +5,5 @@ rvm:
   - 2.4.1
 
 script:
-  - rake test
-  - travis_wait bin/blade ci
+  - bundle exec rake test
+  - travis_wait bundle exec blade ci
