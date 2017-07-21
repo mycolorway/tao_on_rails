@@ -142,15 +142,23 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
     beforeCache: ->
       # called before turbolinks cache pages
 
-    findComponent: (selector, readyCallback) ->
-      component = @jq.find(selector).get(0)
-      if component.connected
-        # make sure element is returned before callback
-        setTimeout -> readyCallback? component
-      else
-        @one 'connected', selector, ->
-          readyCallback? component
-      component
+    findComponent: (selectors...) ->
+      readyCallback = selectors.pop() if _.isFunction(_.last(selectors))
+      components = selectors.map (s) =>
+        deferred = $.Deferred()
+        element = @jq.find(s).get(0)
+        if element.connected
+          # make sure element is returned before callback
+          setTimeout -> deferred.resolve()
+        else
+          @one 'connected', s, -> deferred.resolve()
+        [element, deferred.promise()]
+
+      elements = components.map (c) -> c[0]
+      promises = components.map (c) -> c[1]
+      $.when(promises...).then -> readyCallback?(elements...)
+
+      if elements.length > 1 then elements else elements[0]
 
     on: (name, args...) ->
       if name && name.indexOf('.') < 0
