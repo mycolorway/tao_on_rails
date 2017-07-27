@@ -152,7 +152,7 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           setTimeout -> deferred.resolve()
         else
           @on 'tao:connected', s, (e) ->
-            return unless $(e.target).is(s)
+            return unless e.target == e.currentTarget
             deferred.resolve()
             @off 'tao:connected', s
         [element, deferred.promise()]
