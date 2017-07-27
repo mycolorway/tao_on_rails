@@ -102,16 +102,16 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           @taoId = ++count
           @_init()
           @initialized = true
-          @trigger 'tao:initialized'
+          @namespacedTrigger 'initialized'
 
         @_connected()
-        @trigger 'tao:connected'
+        @namespacedTrigger 'connected'
 
     disconnectedCallback: ->
       $ =>
         @connected = false
         @_disconnected()
-        @trigger 'tao:disconnected'
+        @namespacedTrigger 'disconnected'
 
     attributeChangedCallback: (name) ->
       return unless @connected
@@ -178,6 +178,10 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
 
     triggerHandler: (args...) ->
       @jq.triggerHandler(args...)
+
+    namespacedTrigger: (name, params) ->
+      @trigger "tao:#{name}", params
+      @trigger "#{@constructor._tag}:#{name}", params
 
     one: (args...) ->
       @jq.one args...
