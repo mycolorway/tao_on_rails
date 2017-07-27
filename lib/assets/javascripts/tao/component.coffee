@@ -102,16 +102,16 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           @taoId = ++count
           @_init()
           @initialized = true
-          @trigger 'initialized'
+          @trigger 'tao:initialized'
 
         @_connected()
-        @trigger 'connected'
+        @trigger 'tao:connected'
 
     disconnectedCallback: ->
       $ =>
         @connected = false
         @_disconnected()
-        @trigger 'disconnected'
+        @trigger 'tao:disconnected'
 
     attributeChangedCallback: (name) ->
       return unless @connected
@@ -151,7 +151,10 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
           # make sure element is returned before callback
           setTimeout -> deferred.resolve()
         else
-          @one 'connected', s, -> deferred.resolve()
+          @on 'tao:connected', s, (e) ->
+            return unless $(e.target).is(s)
+            deferred.resolve()
+            @off 'tao:connected', s
         [element, deferred.promise()]
 
       elements = components.map (c) -> c[0]
