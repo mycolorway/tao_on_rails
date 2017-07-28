@@ -88,21 +88,21 @@ module 'TaoComponent',
       assert.equal component.connected, false
       disconnectCount++
 
-    component.one 'tao:connected', ->
+    component.one 'test-component:connected', ->
       assert.ok component.initialized
       assert.ok component.connected
       assert.equal initializeCount, 1
       assert.equal connectCount, 1
       assert.equal disconnectCount, 0
 
-      component.one 'tao:disconnected', ->
+      component.one 'test-component:disconnected', ->
         assert.ok component.initialized
         assert.notOk component.connected
         assert.equal initializeCount, 1
         assert.equal connectCount, 1
         assert.equal disconnectCount, 1
 
-        component.one 'tao:connected', ->
+        component.one 'test-component:connected', ->
           assert.ok component.initialized
           assert.ok component.connected
           assert.equal initializeCount, 1
