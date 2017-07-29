@@ -23,7 +23,6 @@ def apply_template!
   template '.blade.yml'
   template '.gitignore', force: true
   template '.travis.yml'
-  template 'index.html'
   template 'Rakefile', force: true
   template 'plugin_name.gemspec', "#{plugin_name}.gemspec", force: true
 
