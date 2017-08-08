@@ -9,7 +9,8 @@ module TaoOnRails
       def initialize view, options = {}
         @view = view
         @options = merge_options default_options, options
-        template_paths.unshift(@options.delete(:template_path)) if @options[:template_path].present?
+        template_paths.unshift(@options.delete(:template_path)) if @options.key?(:template_path)
+        @tag_name = @options.delete(:tag_name) if @options.key?(:tag_name)
       end
 
       def render &block
