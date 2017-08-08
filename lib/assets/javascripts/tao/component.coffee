@@ -136,32 +136,15 @@ TaoComponentBasedOn = (superClassName = 'HTMLElement') ->
       @["_#{_.camelCase name}Changed"]?()
 
     reflow: ->
-      @offsetHeight
+      Tao.helpers.reflow @
       @
 
     beforeCache: ->
       # called before turbolinks cache pages
 
     findComponent: (selectors...) ->
-      readyCallback = selectors.pop() if _.isFunction(_.last(selectors))
-      components = selectors.map (s) =>
-        deferred = $.Deferred()
-        element = @jq.find(s).get(0)
-        if element.connected
-          # make sure element is returned before callback
-          setTimeout -> deferred.resolve()
-        else
-          @on 'tao:connected', s, (e) ->
-            return unless e.target == e.currentTarget
-            deferred.resolve()
-            @off 'tao:connected', s
-        [element, deferred.promise()]
-
-      elements = components.map (c) -> c[0]
-      promises = components.map (c) -> c[1]
-      $.when(promises...).then -> readyCallback?(elements...)
-
-      if elements.length > 1 then elements else elements[0]
+      callback = selectors.pop() if _.isFunction(_.last(selectors))
+      Tao.helpers.findComponent selectors, callback, @
 
     on: (name, args...) ->
       if name && name.indexOf('.') < 0

@@ -38,7 +38,7 @@ class TaoAttributeManager extends TaoModule
     get: (element, name, options) ->
       value = parseFloat element.getAttribute(name)
       if _.isNaN value
-        options.default || null
+        if _.isNumber(options.default) then options.default else null
       else
         value
     set: (element, name, val, options) ->

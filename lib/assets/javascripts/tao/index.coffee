@@ -5,8 +5,10 @@
 #= require lodash
 
 #= require_self
+#= require ./helpers
+#= require ./module
+#= require ./component
 #= require ./application
 #= require ./page
-#= require ./helpers
 
 window.Tao = {}
