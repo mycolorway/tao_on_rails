@@ -1,5 +1,3 @@
-require 'tao_on_rails/components/base'
-
 module TaoOnRails
   module Components
     class PageComponent < Base

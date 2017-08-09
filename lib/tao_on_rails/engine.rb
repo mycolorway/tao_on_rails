@@ -1,16 +1,17 @@
 require 'turbolinks'
 require 'jquery-rails'
 require 'lodash-rails'
-require 'tao_on_rails/action_view/helpers'
-require 'tao_on_rails/components'
 
 module TaoOnRails
   class Engine < Rails::Engine
 
-    initializer "tao_on_rails.view_helpers" do |app|
+    config.eager_load_paths += Dir["#{config.root}/lib/**/"]
+
+    initializer "tao_on_rails" do
       ::ActiveSupport.on_load :action_view do
-        TaoOnRails::ActionView::Helpers.define_component_helpers
-        include TaoOnRails::ActionView::Helpers
+        include ::TaoOnRails::ActionView::Helpers
+        load_tao_components ::TaoOnRails::Engine.root
+        define_component_helpers
       end
     end
 
