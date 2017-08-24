@@ -4,13 +4,13 @@ module TaoOnRails
 
       attr_reader :options, :view
 
-      delegate :tag_name, :component_name, :tag_prefix, :template_paths, :template_name, to: :class
+      delegate :component_name, :tag_prefix, :template_paths, :template_name, to: :class
 
       def initialize view, options = {}
         @view = view
         @options = merge_options default_options, options
         template_paths.unshift(@options.delete(:template_path)) if @options.key?(:template_path)
-        @tag_name = @options.delete(:tag_name) if @options.key?(:tag_name)
+        @tag_name = @options.delete(:tag_name)
       end
 
       def render &block
@@ -46,6 +46,10 @@ module TaoOnRails
 
       def html_options
         @html_options ||= transform_html_options options
+      end
+
+      def tag_name
+        @tag_name || self.class.tag_name
       end
 
       def self.tag_name
