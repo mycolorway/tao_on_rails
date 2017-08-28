@@ -16,6 +16,11 @@ module TaoOnRails
         assert pc.template_paths.include?('tao_on_rails/components/base_test/components')
       end
 
+      test "it could customlize tag name" do
+        pc = PostComponent.new(view, { display: 'disable', tag_name: 'another-post'})
+        assert_equal 'another-post', pc.tag_name
+      end
+
       # #render
       test "when block not given and template not exist, it should render with just the content with content_tag" do
         pc = PostComponent.new(view)
