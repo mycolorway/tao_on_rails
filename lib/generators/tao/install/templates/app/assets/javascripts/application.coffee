@@ -9,4 +9,4 @@ class Application extends TaoApplication
     super
     @cable = ActionCable.createConsumer()
 
-window.app = new Application
+window.app = new Application()
