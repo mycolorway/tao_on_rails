@@ -30,7 +30,7 @@ module TaoOnRails
             root.join('lib/**/components/**/*.rb'),
             root.join('app/**/components/**/*.rb')
           ]).each do |component|
-            require_dependency component
+            require component
           end
         end
 
