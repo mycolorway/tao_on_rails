@@ -1,0 +1,48 @@
+{
+  "name": "@mycolorway/tao",
+  "version": "1.0.0",
+  "description": "The Missing Front-end Framework for Rails Project",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node_modules/.bin/webpack --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mycolorway/tao_on_rails.git"
+  },
+  "keywords": [
+    "rails",
+    "custome-elements",
+    "front-end",
+    "tao"
+  ],
+  "author": "farthinker <farthinker@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mycolorway/tao_on_rails/issues"
+  },
+  "homepage": "https://github.com/mycolorway/tao_on_rails#readme",
+  "dependencies": {
+    "@webcomponents/custom-elements": "^1.0.4",
+    "jquery": "^3.2.1",
+    "turbolinks": "^5.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "clean-webpack-plugin": "^0.1.17",
+    "coffee-loader": "^0.9.0",
+    "coffeescript": "^2.0.2",
+    "copy-webpack-plugin": "^4.2.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "lodash": "^4.17.4",
+    "raw-loader": "^0.5.1",
+    "webpack": "^3.8.1"
+  },
+  "peerDependencies": {
+    "turbolinks": "^5.0.3",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4"
+  }
+}
