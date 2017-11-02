@@ -7,23 +7,7 @@ components = {}
 ComponentBasedOn = (superClassName = 'HTMLElement') ->
   return components[superClassName] if components[superClassName]
 
-  class ComponentClass
-
-    # coffee's inheritance code is not compatible with custom elements
-    superClass = window[superClassName]
-
-    @prototype = Object.create superClass.prototype,
-      constructor:
-        value: @
-        enumerable: false
-        writable: true
-        configurable: true
-
-    if Object.setPrototypeOf?
-      Object.setPrototypeOf @, superClass
-    else
-      @__proto__ = superClass
-
+  class ComponentClass extends window[superClassName]
 
     count = 0
 
@@ -92,9 +76,8 @@ ComponentBasedOn = (superClassName = 'HTMLElement') ->
     @attribute 'taoId'
 
     constructor: ->
-      _instance = superClass.apply @, arguments
+      super arguments...
       @_created()
-      return _instance
 
     connectedCallback: ->
       $ =>

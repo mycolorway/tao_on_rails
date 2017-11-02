@@ -15,7 +15,14 @@ const defaultConfig = {
   module: {
     rules: [{
       test: /\.coffee$/,
-      use: ['coffee-loader']
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/env']
+        }
+      }, {
+        loader: 'coffee-loader'
+      }]
     }]
   },
   externals : {
@@ -44,16 +51,6 @@ const railsConfig = _.extend({}, defaultConfig, {
       amd: 'tao',
       commonjs: "tao"
     }
-  },
-  module: {
-    rules: [{
-      test: /\.coffee$/,
-      use: [{
-        loader: 'babel-loader'
-      }, {
-        loader: 'coffee-loader'
-      }]
-    }]
   },
   plugins: [
     new CleanWebpackPlugin(['../lib/assets/stylesheets'], {

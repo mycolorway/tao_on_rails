@@ -1,9 +1,25 @@
+dist: trusty
+
 sudo: false
+
 language: ruby
-cache: bundler
+
+cache:
+  bundler: true
+  yarn: true
+
+addons:
+  chrome: stable
+
 rvm:
   - 2.4.1
 
+node_js:
+  - 'node'
+
+before_install:
+  - cd frontend && yarn
+
 script:
   - bundle exec rake test
-  - travis_wait 30 bundle exec blade ci
+  - cd frontend && yarn run ci
