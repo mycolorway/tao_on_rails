@@ -11,7 +11,7 @@ rvm:
 node_js:
   - 'node'
 before_install:
-  - cd frontend && yarn
+  - cd frontend && yarn && cd -
 script:
   - bundle exec rake test
-  - cd frontend && yarn run ci
+  - cd frontend && yarn run ci && cd -
