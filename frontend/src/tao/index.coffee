@@ -7,12 +7,9 @@ import AttributeManager from './attribute_manager'
 import helpers from './helpers'
 
 export default {
-  Module
-  Component
-  Application
-  Page
-  AttributeManager
-  helpers
+  Module, Component, Application, Page, AttributeManager, helpers
 }
 
-export { Module, Component, Application, Page, AttributeManager, helpers }
+export {
+  Module, Component, Application, Page, AttributeManager, helpers
+}
