@@ -22,7 +22,8 @@ module.exports = (config) => {
           use: [{
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/env']
+              presets: ['@babel/env'],
+              plugins: ['@babel/transform-runtime']
             }
           }, {
             loader: 'coffee-loader'

@@ -8,15 +8,15 @@ module Tao
 
         gem 'tao_on_rails'
 
-        remove_file 'app/assets/javascripts/cable.js'
-        remove_file 'app/assets/javascripts/application.js'
-        remove_file 'app/assets/stylesheets/application.css'
-
-        template 'app/assets/javascripts/application.coffee'
-        template 'app/assets/stylesheets/application.scss'
-        template 'app/assets/stylesheets/_globals.scss'
-
-        template 'app/views/layouts/application.html.erb', force: true
+        # remove_file 'app/assets/javascripts/cable.js'
+        # remove_file 'app/assets/javascripts/application.js'
+        # remove_file 'app/assets/stylesheets/application.css'
+        #
+        # template 'app/assets/javascripts/application.coffee'
+        # template 'app/assets/stylesheets/application.scss'
+        # template 'app/assets/stylesheets/_globals.scss'
+        #
+        # template 'app/views/layouts/application.html.erb', force: true
 
         template 'app/components/application_component.rb'
       end

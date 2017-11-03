@@ -2,9 +2,8 @@
   "name": "@mycolorway/tao",
   "version": "1.0.0",
   "description": "The Missing Front-end Framework for Rails Project",
-  "main": "dist/index.js",
+  "main": "src/tao/index.coffee",
   "scripts": {
-    "build": "webpack",
     "test": "karma start",
     "ci": "karma start --single-run"
   },
@@ -25,17 +24,17 @@
   },
   "homepage": "https://github.com/mycolorway/tao_on_rails#readme",
   "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.4",
     "@webcomponents/custom-elements": "^1.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.5",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.4",
     "@babel/preset-env": "^7.0.0-beta.5",
     "babel-loader": "8.0.0-beta.0",
     "chai": "^4.1.2",
-    "clean-webpack-plugin": "^0.1.17",
     "coffee-loader": "^0.9.0",
     "coffeescript": "^2.0.2",
-    "copy-webpack-plugin": "^4.2.0",
     "jquery": "^3.2.1",
     "karma": "^1.7.1",
     "karma-chrome-launcher": "^2.2.0",
@@ -49,6 +48,7 @@
   "peerDependencies": {
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
+    "rails-ujs": "^5.1.4",
     "turbolinks": "^5.0.3"
   }
 }

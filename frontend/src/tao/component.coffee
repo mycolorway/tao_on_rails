@@ -1,4 +1,5 @@
 import AttributeManager from './attribute_manager'
+import helpers from './helpers'
 import $ from 'jquery'
 import _ from 'lodash'
 
@@ -121,7 +122,7 @@ ComponentBasedOn = (superClassName = 'HTMLElement') ->
       @["_#{_.camelCase name}Changed"]?()
 
     reflow: ->
-      Tao.helpers.reflow @
+      helpers.reflow @
       @
 
     beforeCache: ->
@@ -129,7 +130,7 @@ ComponentBasedOn = (superClassName = 'HTMLElement') ->
 
     findComponent: (selectors...) ->
       callback = selectors.pop() if _.isFunction(_.last(selectors))
-      Tao.helpers.findComponent selectors, callback, @
+      helpers.findComponent selectors, callback, @
 
     on: (name, args...) ->
       if name && name.indexOf('.') < 0
