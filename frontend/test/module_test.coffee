@@ -1,4 +1,4 @@
-import TaoModule from '../../src/tao/module'
+import TaoModule from '../src/module'
 import { expect } from 'chai'
 
 describe 'TaoModule', ->

@@ -65,9 +65,10 @@ ComponentBasedOn = (superClassName = 'HTMLElement') ->
       @_tag = tag unless _.isUndefined tag
       @_tag
 
-    @register: (componentClass) ->
+    @register: (componentClass = @) ->
       return unless componentClass.tag() && window.customElements
       customElements.define componentClass.tag(), componentClass
+      componentClass
 
     @observedAttributes: []
 

@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import $ from 'jquery'
-import AttributeManager from '../../src/tao/attribute_manager'
+import AttributeManager from '../src/attribute_manager'
 
 describe 'Tao AttributeManager', ->
 

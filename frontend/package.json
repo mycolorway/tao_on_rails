@@ -2,7 +2,7 @@
   "name": "@mycolorway/tao",
   "version": "1.0.0",
   "description": "The Missing Front-end Framework for Rails Project",
-  "main": "src/tao/index.coffee",
+  "main": "src/index.coffee",
   "scripts": {
     "test": "karma start",
     "ci": "karma start --single-run"
