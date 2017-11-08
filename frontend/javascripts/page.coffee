@@ -1,5 +1,4 @@
-import Component from '../component'
-import './styles'
+import Component from './component'
 
 export default class Page extends Component
 

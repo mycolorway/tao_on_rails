@@ -14,7 +14,7 @@ module.exports = (config) => {
 
     webpack: {
       resolve: {
-        extensions: [".js", ".json", ".coffee", ".scss"]
+        extensions: [".js", ".json", ".coffee"]
       },
       module: {
         rules: [{
@@ -28,9 +28,6 @@ module.exports = (config) => {
           }, {
             loader: 'coffee-loader'
           }]
-        }, {
-          test: /\.scss$/,
-          use: ['style-loader', 'css-loader', 'sass-loader']
         }]
       }
     },

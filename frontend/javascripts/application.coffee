@@ -11,6 +11,8 @@ class Application extends Module
   @removeInitializer: (name) ->
     @_initializers[name] = null
 
+  pageSelector: 'body > .tao-page'
+
   _init: ->
     @_initGon()
     @_initI18n()
@@ -75,10 +77,10 @@ class Application extends Module
       if customElements._internals
         customElements._internals.connectTree document.body
 
-      @trigger 'page-render', [$('body > .tao-page')]
+      @trigger 'page-render', [$(@pageSelector)]
 
     .on 'turbolinks:load', (e) =>
-      $page = $ 'body > .tao-page'
+      $page = $(@pageSelector)
       return unless $page.length > 0
       @_initGon()
       @_initPage $page

@@ -1,4 +1,4 @@
-import TaoComponent from '../src/component'
+import TaoComponent from '../javascripts/component'
 import $ from 'jquery'
 import { expect } from 'chai'
 
