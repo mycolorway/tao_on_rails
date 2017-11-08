@@ -1,7 +1,7 @@
 import Module from './module'
 import $ from 'jquery'
 
-export default class Application extends Module
+class Application extends Module
 
   @_initializers: {}
 
@@ -83,3 +83,5 @@ export default class Application extends Module
       @_initGon()
       @_initPage $page
       @trigger 'page-load', [@currentPage]
+
+export default Application

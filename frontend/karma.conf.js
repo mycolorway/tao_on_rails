@@ -14,7 +14,7 @@ module.exports = (config) => {
 
     webpack: {
       resolve: {
-        extensions: [".js", ".json", ".coffee"]
+        extensions: [".js", ".json", ".coffee", ".scss"]
       },
       module: {
         rules: [{
@@ -22,12 +22,15 @@ module.exports = (config) => {
           use: [{
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/env'],
-              plugins: ['@babel/transform-runtime']
+              presets: ['env'],
+              plugins: ['transform-runtime']
             }
           }, {
             loader: 'coffee-loader'
           }]
+        }, {
+          test: /\.scss$/,
+          use: ['style-loader', 'css-loader', 'sass-loader']
         }]
       }
     },
