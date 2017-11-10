@@ -23,6 +23,7 @@
     "url": "https://github.com/mycolorway/tao_on_rails/issues"
   },
   "homepage": "https://github.com/mycolorway/tao_on_rails#readme",
+  "files": ["frontend"],
   "dependencies": {
     "@webcomponents/custom-elements": "^1.0.4"
   },
