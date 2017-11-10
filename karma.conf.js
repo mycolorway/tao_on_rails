@@ -6,10 +6,10 @@ module.exports = (config) => {
 
     browsers: ['ChromeHeadless'],
 
-    files: ['test/index.coffee'],
+    files: ['frontend/test/index.coffee'],
 
     preprocessors: {
-      'test/index.coffee': ['webpack']
+      'frontend/test/index.coffee': ['webpack']
     },
 
     webpack: {
