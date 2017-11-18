@@ -1,9 +1,0 @@
-Description:
-    Generate channel files for action cable.
-
-Example:
-    `rails generate tao:channel chat speak`
-
-    Create files:
-        app/assets/javascripts/channels/chat.coffee
-        app/channels/chat_channel.rb

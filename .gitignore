@@ -12,3 +12,6 @@
 .DS_Store
 /test/dummy/tmp/cache
 /vendor/bundle
+
+node_modules
+yarn-error.log
