@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["{lib,vendor}/**/*", "LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "rails", '>= 5.0.0', '< 5.2'
+  spec.add_dependency "rails", '>= 5.0.0', '< 5.3'
 
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency 'mocha', '~> 1.2.1'
