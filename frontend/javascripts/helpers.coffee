@@ -25,9 +25,9 @@ componentReady = (components, callback) ->
     if el.connected
       setTimeout -> deferred.resolve()
     else
-      el.on 'tao:connected.taoReady', (e) ->
+      $(el).on 'tao:connected.taoReady', (e) ->
         return unless e.target == el
-        el.off 'tao:connected.taoReady'
+        $(el).off 'tao:connected.taoReady'
         deferred.resolve()
     deferred.promise()
 
