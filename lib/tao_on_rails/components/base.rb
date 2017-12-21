@@ -117,7 +117,7 @@ module TaoOnRails
       end
 
       def find_template(name = template_name)
-        view.lookup_context.find_all(name, template_paths, true, template_keys).first
+        view.lookup_context.find_all(name, template_paths, true, template_keys, formats: [:html]).first
       end
 
       def template_keys
