@@ -28,7 +28,10 @@ componentReady = (components, callback) ->
       $(el).on 'tao:connected.taoReady', (e) ->
         return unless e.target == el
         $(el).off 'tao:connected.taoReady'
-        deferred.resolve()
+        if el.connected
+          deferred.resolve()
+        else
+          deferred.reject()
     deferred.promise()
 
   $.when(promises...).then -> callback()
