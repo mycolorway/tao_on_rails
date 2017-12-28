@@ -131,7 +131,9 @@ ComponentBasedOn = (superClassName = 'HTMLElement') ->
 
     findComponent: (selectors...) ->
       callback = selectors.pop() if _.isFunction(_.last(selectors))
-      helpers.findComponent selectors, callback, @
+      helpers.findComponent selectors, (components...) =>
+        callback?(components...) if @connected
+      , @
 
     on: (name, args...) ->
       if name && name.indexOf('.') < 0
