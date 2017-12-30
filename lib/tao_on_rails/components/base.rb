@@ -39,8 +39,15 @@ module TaoOnRails
       end
 
       def translate key, options = {}
-        i18n_scope = self.class.name.underscore.split('/').join('.').gsub(/(.+)_component$/, '\1')
-        I18n.t(key, options.merge!(scope: i18n_scope)).presence
+        keys = [].tap do |result|
+          component_class = self.class
+          until component_class == TaoOnRails::Components::Base
+            scope = component_class.name.underscore.split('/').join('.').gsub(/(.+)_component$/, '\1')
+            result << "#{scope}.#{key}".to_sym
+            component_class = component_class.superclass
+          end
+        end
+        I18n.t(keys.shift, options.merge!(default: keys))
       end
       alias_method :t, :translate
 
