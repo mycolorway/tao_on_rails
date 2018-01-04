@@ -11,7 +11,7 @@ class Application extends Module
   @removeInitializer: (name) ->
     @_initializers[name] = null
 
-  pageSelector: 'body > .tao-page'
+  pageSelector: 'body'
 
   _init: ->
     @_initGon()
