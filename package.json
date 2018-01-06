@@ -1,6 +1,6 @@
 {
   "name": "@mycolorway/tao",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-beta.1",
   "description": "The Missing Front-end Framework for Rails Project",
   "main": "frontend/javascripts/index.coffee",
   "scripts": {
@@ -23,9 +23,11 @@
     "url": "https://github.com/mycolorway/tao_on_rails/issues"
   },
   "homepage": "https://github.com/mycolorway/tao_on_rails#readme",
-  "files": ["frontend"],
+  "files": [
+    "frontend"
+  ],
   "dependencies": {
-    "@webcomponents/custom-elements": "^1.0.4"
+    "@webcomponents/custom-elements": "^1.0.6"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
