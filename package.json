@@ -1,6 +1,6 @@
 {
   "name": "@mycolorway/tao",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "The Missing Front-end Framework for Rails Project",
   "main": "frontend/javascripts/index.coffee",
   "scripts": {

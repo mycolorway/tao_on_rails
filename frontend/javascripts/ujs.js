@@ -569,7 +569,8 @@ import jQuery from 'jquery'
           form.data('ujs:formnovalidate-button', button.attr('formnovalidate'));
           form.data('ujs:submit-button-formaction', button.attr('formaction'));
           form.data('ujs:submit-button-formmethod', button.attr('formmethod'));
-          button.data('ujs:skip-event', true).click();
+          button.data('ujs:skip-event', true);
+          setTimeout(function() { button.click(); }, 0);
         } else {
           rails.stopEverything(event);
         }
