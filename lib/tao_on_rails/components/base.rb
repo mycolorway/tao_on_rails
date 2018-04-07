@@ -41,7 +41,7 @@ module TaoOnRails
       def translate key, options = {}
         keys = [].tap do |result|
           component_class = self.class
-          until component_class == TaoOnRails::Components::Base
+          until component_class.name == 'TaoOnRails::Components::Base'
             scope = component_class.name.underscore.split('/').join('.').gsub(/(.+)_component$/, '\1')
             result << "#{scope}.#{key}".to_sym
             component_class = component_class.superclass
