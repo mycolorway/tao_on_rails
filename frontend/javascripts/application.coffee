@@ -66,17 +66,9 @@ class Application extends Module
       @trigger 'page-request-end', [e.originalEvent?.data.xhr]
 
     .on 'turbolinks:before-render', (e) =>
-      # turbolinks render won't trigger patching of customElements polyfills
-      if customElements._internals
-        customElements._internals.disconnectTree document.body
-
       @trigger 'before-page-render', [$ e.originalEvent?.data.newBody]
 
     .on 'turbolinks:render', (e) =>
-      # turbolinks render won't trigger patching of customElements polyfills
-      if customElements._internals
-        customElements._internals.connectTree document.body
-
       @trigger 'page-render', [$(@pageSelector)]
 
     .on 'turbolinks:load', (e) =>

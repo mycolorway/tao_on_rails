@@ -12,37 +12,46 @@ if window.customElements
   eval '''
   (() => {
     'use strict';
+
     // Do nothing if `customElements` does not exist.
     if (!window.customElements) return;
+
     const NativeHTMLElement = window.HTMLElement;
     const nativeDefine = window.customElements.define;
     const nativeGet = window.customElements.get;
+
     /**
      * Map of user-provided constructors to tag names.
      *
      * @type {Map<Function, string>}
      */
     const tagnameByConstructor = new Map();
+
     /**
      * Map of tag names to user-provided constructors.
      *
      * @type {Map<string, Function>}
      */
     const constructorByTagname = new Map();
+
+
     /**
      * Whether the constructors are being called by a browser process, ie parsing
      * or createElement.
      */
     let browserConstruction = false;
+
     /**
      * Whether the constructors are being called by a user-space process, ie
      * calling an element constructor.
      */
     let userConstruction = false;
+
     window.HTMLElement = function() {
       if (!browserConstruction) {
         const tagname = tagnameByConstructor.get(this.constructor);
         const fakeClass = nativeGet.call(window.customElements, tagname);
+
         // Make sure that the fake constructor doesn't call back to this constructor
         userConstruction = true;
         const instance = new (fakeClass)();
@@ -58,6 +67,7 @@ if window.customElements
     // works because instanceof uses HTMLElement.prototype, which is on the
     // ptototype chain of built-in elements.
     window.HTMLElement.prototype = NativeHTMLElement.prototype;
+
     const define = (tagname, elementClass) => {
       const elementProto = elementClass.prototype;
       const StandInElement = class extends NativeHTMLElement {
@@ -65,9 +75,11 @@ if window.customElements
           // Call the native HTMLElement constructor, this gives us the
           // under-construction instance as `this`:
           super();
+
           // The prototype will be wrong up because the browser used our fake
           // class, so fix it:
           Object.setPrototypeOf(this, elementProto);
+
           if (!userConstruction) {
             // Make sure that user-defined constructor bottom's out to a do-nothing
             // HTMLElement() call
@@ -84,11 +96,14 @@ if window.customElements
       standInProto.disconnectedCallback = elementProto.disconnectedCallback;
       standInProto.attributeChangedCallback = elementProto.attributeChangedCallback;
       standInProto.adoptedCallback = elementProto.adoptedCallback;
+
       tagnameByConstructor.set(elementClass, tagname);
       constructorByTagname.set(tagname, elementClass);
       nativeDefine.call(window.customElements, tagname, StandInElement);
     };
+
     const get = (tagname) => constructorByTagname.get(tagname);
+
     // Workaround for Safari bug where patching customElements can be lost, likely
     // due to native wrapper garbage collection issue
     Object.defineProperty(window, 'customElements',
@@ -97,5 +112,6 @@ if window.customElements
       {value: define, configurable: true, writable: true});
     Object.defineProperty(window.customElements, 'get',
       {value: get, configurable: true, writable: true});
+
   })();
-'''
+  '''
