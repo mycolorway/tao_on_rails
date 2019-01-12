@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["farthinker@mycolorway.com", "t@mycolorway.com"]
 
   spec.homepage      = "https://github.com/mycolorway/tao_on_rails"
-  spec.summary       = %q{The missing frontend solution for Rails project}
-  spec.description   = %q{Ruby on Rails lacks a recommended way to structure your frontend code for many years. Tao on Rails is the framework to fill the gap which will modularize your page with the new Custom Elements v1 API.}
+  spec.summary       = %q{The component solution for Rails project}
+  spec.description   = %q{Tao on Rails provide frontend component based on Custom Elements v1 and backend component for rendering.}
   spec.license       = "MIT"
 
   spec.required_ruby_version     = ">= 2.3.1"

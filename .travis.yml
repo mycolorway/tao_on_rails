@@ -10,6 +10,7 @@ rvm:
 node_js:
   - 'node'
 before_install:
+  - cd frontend && npm i -g npm
   - cd frontend && npm ci
 script:
   - bundle exec rake test

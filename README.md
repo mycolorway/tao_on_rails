@@ -1,10 +1,10 @@
 # Tao on Rails [![Build Status](https://travis-ci.org/mycolorway/tao_on_rails.svg?branch=master)](https://travis-ci.org/mycolorway/tao_on_rails)
 
-[Ruby on Rails](http://rubyonrails.org/) lacks a recommended way to structure your frontend code in large project for many years. Tao on Rails is the framework to fill the gap which will modularize your page with the new [Custom Elements v1](https://developers.google.com/web/fundamentals/getting-started/primers/customelements) API.
+Tao on Rails provide both frontend and backend component solution for rails project.
 
-## Documentation
+## Frontend Components
 
-See [tao.zhiren.com](https://tao.zhiren.com) for tutorials and API reference.
+## Backend Components
 
 ## Contributing
 
