@@ -4,10 +4,10 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  entry: './frontend/src/index.js',
   output: {
     filename: 'tao.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'frontend/dist'),
     library: 'tao',
     libraryTarget: 'umd',
   },
@@ -20,7 +20,7 @@ module.exports = {
     }],
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['frontend/dist']),
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
     }),
