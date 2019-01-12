@@ -2,15 +2,6 @@ require 'test_helper'
 
 class ComponentTest < ActionDispatch::IntegrationTest
 
-  test "The Tao Page should be render correctly" do
-    get "/posts/1"
-
-    assert_response :success
-    
-    assert response.body.include?('<posts-show-page')
-    assert response.body.include?('<h1>Tao Page</h1>')
-  end
-
   test "article component should be render correctly" do
     get "/posts"
 
