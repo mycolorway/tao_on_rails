@@ -102,4 +102,19 @@ describe('component', () => {
       done();
     });
   });
+
+  it('call ready hook after all child component are ready', async () => {
+    hooks.ready.calls.reset();
+    const parentComponent = document.createElement('test-component');
+    const childComponent = document.createElement('test-component');
+    parentComponent.fullName = 'parent';
+    childComponent.fullName = 'child';
+    parentComponent.appendChild(childComponent);
+    document.body.appendChild(parentComponent);
+    await componnetReady(parentComponent);
+
+    expect(hooks.ready).toHaveBeenCalledTimes(2);
+    expect(hooks.ready.calls.first().object).toBe(childComponent);
+    expect(hooks.ready.calls.mostRecent().object).toBe(parentComponent);
+  });
 });

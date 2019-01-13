@@ -4,19 +4,22 @@ import {
 } from './utils';
 import mergeMixins from './merge-mixins';
 
-function generateComponentClass(tagName, {
-  properties = {},
-  created,
-  init,
-  connected,
-  ready,
-  disconnected,
-  ...customOptions
-} = {}) {
+function generateComponentClass(tagName, options = {}) {
+  const {
+    properties = {},
+    created,
+    init,
+    connected,
+    ready,
+    disconnected,
+    ...customOptions
+  } = options;
   const componentClass = class extends HTMLElement {
-    static count = 0;
+    static $count = 0;
 
-    static tag = tagName;
+    static $tag = tagName;
+
+    static $tao = true;
 
     static observedAttributes = Object.keys(properties).reduce((acc, key) => {
       if (isFunction(properties[key].observer)) acc.push(dasherize(key));
@@ -24,24 +27,24 @@ function generateComponentClass(tagName, {
     }, []);
 
     static register() {
-      if (!this.tag || !window.customElements) return;
-      customElements.define(this.tag, this);
+      if (!this.$tag || !window.customElements) return;
+      customElements.define(this.$tag, this);
     }
 
-    props = Object.assign({}, properties, {
+    $props = Object.assign({}, properties, {
       taoId: { type: String },
     });
 
     get properties() {
-      return this.props;
+      return this.$props;
     }
 
     set properties(value) {
-      this.props = value;
+      this.$props = value;
     }
 
-    get tag() {
-      return this.constructor.tag;
+    get $tag() {
+      return this.constructor.$tag;
     }
 
     constructor() {
@@ -102,7 +105,6 @@ function generateComponentClass(tagName, {
     }
 
     attributeChangedCallback(attributeName, oldValue, newValue) {
-      debugger;
       if (this.taoStatus === 'connected' || this.taoStatus === 'ready') {
         const property = this.properties[camelize(attributeName)];
         if (property && property.observer) {
@@ -114,8 +116,8 @@ function generateComponentClass(tagName, {
     connectedCallback() {
       domReady().then(() => {
         if (!this.initialized) {
-          this.constructor.count += 1;
-          this.taoId = this.constructor.count;
+          this.constructor.$count += 1;
+          this.taoId = this.constructor.$count;
           this.init();
           this.initialized = true;
           this.namespacedTrigger('initialized');
@@ -151,7 +153,7 @@ function generateComponentClass(tagName, {
     }
 
     namespacedTrigger(name, detail = null) {
-      [`tao:${name}`, `${this.tag}:${name}`].forEach((eventName) => {
+      [`tao:${name}`, `${this.$tag}:${name}`].forEach((eventName) => {
         this.trigger(eventName, detail);
       });
     }
@@ -159,13 +161,13 @@ function generateComponentClass(tagName, {
     trigger(name, detail = null) {
       this.dispatchEvent(new CustomEvent(name, {
         detail,
-        bubbles: true,
         cancelable: true,
       }));
     }
   };
 
   Object.assign(componentClass.prototype, customOptions);
+  componentClass.$options = options;
   return componentClass;
 }
 

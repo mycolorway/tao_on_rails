@@ -42,8 +42,15 @@ function mergeMixin(options, mixin) {
   return Object.assign({}, options, result);
 }
 
-export default function mergeMixins({ mixins = [], ...options }) {
+export default function mergeMixins({ extends: parentComponents = [], mixins = [], ...options }) {
   let result = options;
+
+  parentComponents.forEach((component) => {
+    if (component.$tao && component.$options) {
+      result = mergeMixin(result, mergeMixins(component.$options));
+    }
+  });
+
   mixins.forEach((mixin) => {
     result = mergeMixin(result, mergeMixins(mixin));
   });
