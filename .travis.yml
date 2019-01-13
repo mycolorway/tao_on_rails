@@ -3,7 +3,6 @@ sudo: false
 language: ruby
 cache:
   bundler: true
-  yarn: true
 addons:
   chrome: stable
 rvm:
@@ -11,7 +10,8 @@ rvm:
 node_js:
   - 'node'
 before_install:
-  - yarn
+  - npm i npm@latest -g
+  - npm ci
 script:
   - bundle exec rake test
-  - yarn run ci
+  - npm run ci

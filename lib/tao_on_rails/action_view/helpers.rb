@@ -16,7 +16,7 @@ module TaoOnRails
           load_tao_components
           ::ActiveSupport.run_load_hooks(:tao_components, self)
 
-          TaoOnRails::Components::Base.descendants.each do |klass|
+          TaoOnRails::BaseComponent.descendants.each do |klass|
             module_eval %Q{
               def #{klass.tag_name.underscore} *args, &block
                 #{klass.name}.new(self, *args).render(&block)

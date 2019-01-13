@@ -1,5 +1,5 @@
 module Posts
-  class ArticleComponent < TaoOnRails::Components::Base
+  class ArticleComponent < TaoOnRails::BaseComponent
 
     attr_reader :post
 

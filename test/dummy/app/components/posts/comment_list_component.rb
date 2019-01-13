@@ -1,4 +1,4 @@
 module Posts
-  class CommentListComponent < TaoOnRails::Components::Base
+  class CommentListComponent < TaoOnRails::BaseComponent
   end
 end

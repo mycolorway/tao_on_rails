@@ -3,7 +3,6 @@ ENV['RAILS_ENV'] = 'test'
 
 require File.expand_path('../../test/dummy/config/environment.rb', __FILE__)
 require 'rails/test_help'
-require 'generators/test_helpers'
 require 'mocha/mini_test'
 
 

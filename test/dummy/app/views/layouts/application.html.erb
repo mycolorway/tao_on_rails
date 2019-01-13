@@ -3,15 +3,10 @@
   <head>
     <title>Dummy</title>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= csp_meta_tag %>
   </head>
 
   <body>
-    <%= tao_page layout: 'default' do %>
-      <h1>Tao Page</h1>
-      <%= yield %>
-    <% end %>
+    <%= yield %>
   </body>
 </html>
