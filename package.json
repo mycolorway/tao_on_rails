@@ -1,7 +1,7 @@
 {
   "name": "@mycolorway/tao",
-  "version": "2.0.0",
-  "description": "The component solution for Rails Project",
+  "version": "2.0.0-beta.1",
+  "description": "The component solution for Rails project",
   "main": "frontend/dist/tao.js",
   "module": "frontend/src/index.js",
   "scripts": {
