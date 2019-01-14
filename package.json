@@ -1,9 +1,8 @@
 {
   "name": "@mycolorway/tao",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "The component solution for Rails project",
   "main": "frontend/dist/tao.js",
-  "module": "frontend/src/index.js",
   "scripts": {
     "build": "webpack --watch --progress",
     "test": "karma start",
@@ -26,8 +25,8 @@
   },
   "homepage": "https://github.com/mycolorway/tao_on_rails#readme",
   "files": [
-    "src",
-    "dist"
+    "frontend/src",
+    "frontend/dist"
   ],
   "dependencies": {
     "@babel/runtime": "^7.2.0",

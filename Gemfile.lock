@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tao_on_rails (2.0.0)
+    tao_on_rails (2.0.0.pre.beta.2)
       rails (>= 5.0.0, < 5.3)
 
 GEM
