@@ -31,7 +31,7 @@ function mergeMixin(options, mixin) {
   const result = {};
   Object.keys(mixin).forEach((key) => {
     if (key === 'properties') {
-      result.properties = normalizeProperties(mergeData(mixin.properties, options.properties));
+      result.properties = mergeData(mixin.properties, options.properties);
     } else if (LIFECYCLE_METHODS.indexOf(key) > -1) {
       result[key] = mergeLifecycleMethod(mixin[key], options[key]);
     } else {
@@ -54,6 +54,10 @@ export default function mergeMixins({ extends: parentComponents = [], mixins = [
   mixins.forEach((mixin) => {
     result = mergeMixin(result, mergeMixins(mixin));
   });
+
+  if (result.properties) {
+    result.properties = normalizeProperties(result.properties);
+  }
 
   return result;
 }
