@@ -27,7 +27,7 @@ function generateComponentClass(tagName, options = {}) {
     }, []);
 
     static register() {
-      if (!this.$tag || !window.customElements) return;
+      if (!this.$tag || !window.customElements || customElements.get(this.$tag)) return;
       customElements.define(this.$tag, this);
     }
 
