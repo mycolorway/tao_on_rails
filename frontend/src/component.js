@@ -14,7 +14,7 @@ function generateComponentClass(tagName, options = {}) {
     disconnected,
     ...customOptions
   } = options;
-  const componentClass = class extends HTMLElement {
+  const componentClass = class extends window.HTMLElement {
     static $count = 0;
 
     static $tag = tagName;
