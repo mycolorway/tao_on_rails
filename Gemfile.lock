@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tao_on_rails (2.0.0.pre.beta.3)
+    tao_on_rails (2.0.0.pre.beta.6)
       rails (>= 5.0.0, < 5.3)
 
 GEM
@@ -55,7 +55,7 @@ GEM
     erubi (1.8.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    i18n (1.5.2)
+    i18n (1.5.3)
       concurrent-ruby (~> 1.0)
     loofah (2.2.3)
       crass (~> 1.0.2)
