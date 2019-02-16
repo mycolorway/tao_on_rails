@@ -152,17 +152,16 @@ function generateComponentClass(tagName, options = {}) {
       return Promise.all(promises);
     }
 
-    namespacedTrigger(name, detail = null) {
+    namespacedTrigger(name, params = {}) {
       [`tao:${name}`, `${this.$tag}:${name}`].forEach((eventName) => {
-        this.trigger(eventName, detail);
+        this.trigger(eventName, params);
       });
     }
 
-    trigger(name, detail = null) {
-      this.dispatchEvent(new CustomEvent(name, {
-        detail,
+    trigger(name, params = {}) {
+      this.dispatchEvent(new CustomEvent(name, Object.assign({
         cancelable: true,
-      }));
+      }, params)));
     }
   };
 
