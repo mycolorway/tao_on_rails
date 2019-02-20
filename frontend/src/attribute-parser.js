@@ -19,7 +19,7 @@ registerAttributeParser(String, {
 });
 
 registerAttributeParser(Number, {
-  parse(value, { defaultValue = null } = {}) {
+  parse(value, { defaultValue = 0 } = {}) {
     const number = Number(value);
     return value === null || Number.isNaN(number) ? defaultValue : number;
   },
