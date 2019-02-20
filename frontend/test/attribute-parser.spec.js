@@ -14,6 +14,7 @@ describe('attribute parser', () => {
 
     expect(parser.parse('1')).toBe(1);
     expect(parser.parse(null)).toBe(0);
+    expect(parser.parse(null, { defaultValue: 1 })).toBe(1);
     expect(parser.parse('test', { defaultValue: 1 })).toBe(1);
     expect(parser.stringify(1)).toBe('1');
   });
