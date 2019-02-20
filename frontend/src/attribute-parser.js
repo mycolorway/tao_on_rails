@@ -19,9 +19,9 @@ registerAttributeParser(String, {
 });
 
 registerAttributeParser(Number, {
-  parse(value, { defaultValue = null } = {}) {
+  parse(value, { defaultValue = 0 } = {}) {
     const number = Number(value);
-    return Number.isNaN(number) ? defaultValue : number;
+    return value === null || Number.isNaN(number) ? defaultValue : number;
   },
   stringify(value) {
     return value.toString();
