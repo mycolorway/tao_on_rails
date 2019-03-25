@@ -1,3 +1,6 @@
 last 2 major versions
-> 0.5% in CN
+> 1% in CN
+chrome >= 57
+not ie <= 11
+not ie_mob <= 11
 not dead
