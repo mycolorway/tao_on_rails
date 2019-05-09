@@ -7,12 +7,13 @@ describe('component', () => {
 
   beforeAll(() => {
     hooks = {
-      nameObserver: jasmine.createSpy(),
-      created: jasmine.createSpy(),
-      init: jasmine.createSpy(),
-      connected: jasmine.createSpy(),
-      ready: jasmine.createSpy(),
-      disconnected: jasmine.createSpy(),
+      nameObserver: jasmine.createSpy('nameObserver'),
+      activeObserver: jasmine.createSpy('activeObserver'),
+      created: jasmine.createSpy('created'),
+      init: jasmine.createSpy('init'),
+      connected: jasmine.createSpy('connected'),
+      ready: jasmine.createSpy('ready'),
+      disconnected: jasmine.createSpy('disconnected'),
     };
     Component('test-component', {
       mixins: [{
@@ -27,16 +28,31 @@ describe('component', () => {
         disconnected: hooks.disconnected,
       }],
       properties: {
-        active: Boolean,
+        active: {
+          type: Boolean,
+          observer: '_activeChanged',
+        },
         json: {
           type: Object,
           default: { x: 1 },
         },
         array: Array,
+        customProp: {
+          get() {
+            console.log(this.fullName, this.age);
+            return `${this.fullName}_${this.age}`;
+          },
+        },
+        notAttribute: {
+          type: Boolean,
+          syncAttribute: false,
+          default: false,
+        },
       },
       created: hooks.created,
       init: hooks.init,
       connected: hooks.connected,
+      _activeChanged: hooks.activeObserver,
     });
   });
 
@@ -67,7 +83,7 @@ describe('component', () => {
 
     expect(component.fullName).toBe('farthinker');
     expect(component.getAttribute('full-name')).toBe('farthinker');
-    expect(hooks.nameObserver).toHaveBeenCalledWith('farthinker', null);
+    expect(hooks.nameObserver).toHaveBeenCalledWith('farthinker', '');
 
     expect(component.active).toBe(false);
     expect(component.hasAttribute('active')).toBe(false);
@@ -75,7 +91,7 @@ describe('component', () => {
 
     expect(component.active).toBe(true);
     expect(component.hasAttribute('active')).toBe(true);
-
+    expect(hooks.activeObserver).toHaveBeenCalledWith(true, false);
 
     expect(component.json).toEqual({ x: 1 });
     component.json = { y: 2 };
@@ -116,5 +132,20 @@ describe('component', () => {
     expect(hooks.ready).toHaveBeenCalledTimes(2);
     expect(hooks.ready.calls.first().object).toBe(childComponent);
     expect(hooks.ready.calls.mostRecent().object).toBe(parentComponent);
+  });
+
+  it('could has custom properties', () => {
+    component.fullName = 'farthinker';
+    component.age = 18;
+
+    expect(component.customProp).toBe('farthinker_18');
+  });
+
+  it('could has independent properties', () => {
+    expect(component.notAttribute).toBe(false);
+    component.notAttribute = true;
+
+    expect(component.notAttribute).toBe(true);
+    expect(component.hasAttribute('not-attribute')).toBe(false);
   });
 });

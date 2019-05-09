@@ -13,6 +13,10 @@ export function isFunction(obj) {
   return typeof obj === 'function';
 }
 
+export function isPlainObject(object) {
+  return object.toString() === '[object Object]';
+}
+
 export function domReady() {
   return new Promise((resolve) => {
     if (document.readyState === 'complete' || document.readyState === 'interactive') {
@@ -30,7 +34,21 @@ export function componnetReady(el) {
     if (el.taoStatus === 'ready') {
       resolve();
     } else {
-      el.addEventListener('tao:ready', resolve);
+      el.addEventListener('tao:ready', resolve, {
+        once: true,
+      });
+    }
+  });
+}
+
+export function componnetConnected(el) {
+  return new Promise((resolve) => {
+    if (el.taoStatus === 'connected' || el.taoStatus === 'ready') {
+      resolve();
+    } else {
+      el.addEventListener('tao:connected', resolve, {
+        once: true,
+      });
     }
   });
 }

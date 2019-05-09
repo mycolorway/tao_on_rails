@@ -20,7 +20,7 @@ module.exports = {
     }],
   },
   plugins: [
-    new CleanWebpackPlugin(['frontend/dist']),
+    new CleanWebpackPlugin(),
     new BundleAnalyzerPlugin({
       openAnalyzer: false,
     }),

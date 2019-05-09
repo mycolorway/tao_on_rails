@@ -1,3 +1,5 @@
+import { isPlainObject } from './utils';
+
 const LIFECYCLE_METHODS = 'created init connected ready disconnected'.split(' ');
 
 function mergeData(data1, data2) {
@@ -20,7 +22,7 @@ function mergeLifecycleMethod(method1, method2) {
 
 function normalizeProperties(properties) {
   return Object.keys(properties).reduce((acc, key) => {
-    acc[key] = properties[key].type ? properties[key] : {
+    acc[key] = isPlainObject(properties[key]) ? properties[key] : {
       type: properties[key],
     };
     return acc;

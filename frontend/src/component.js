@@ -1,6 +1,6 @@
 import { getAttributeParser } from './attribute-parser';
 import {
-  dasherize, camelize, domReady, isFunction, componnetReady,
+  dasherize, camelize, domReady, isFunction, componnetReady, componnetConnected,
 } from './utils';
 import mergeMixins from './merge-mixins';
 
@@ -22,7 +22,8 @@ function generateComponentClass(tagName, options = {}) {
     static $tao = true;
 
     static observedAttributes = Object.keys(properties).reduce((acc, key) => {
-      if (isFunction(properties[key].observer)) acc.push(dasherize(key));
+      const { observer } = properties[key];
+      if (isFunction(observer) || typeof observer === 'string') acc.push(dasherize(key));
       return acc;
     }, []);
 
@@ -77,30 +78,47 @@ function generateComponentClass(tagName, options = {}) {
       Object.keys(this.properties).forEach((key) => {
         const property = this.properties[key];
         const attributeName = dasherize(key);
-        const attributeParser = getAttributeParser(property.type);
 
-        Object.defineProperty(this, key, {
-          configurable: true,
-          get() {
-            if (property.type === Boolean) {
-              return this.hasAttribute(attributeName);
-            }
-            return attributeParser.parse(this.getAttribute(attributeName), {
-              defaultValue: property.default,
-            });
-          },
-          set(value) {
-            if (property.type === Boolean) {
-              if (value) {
-                this.setAttribute(attributeName, '');
-              } else {
-                this.removeAttribute(attributeName);
+        if (isFunction(property.get) || isFunction(property.set)) {
+          Object.defineProperty(this, key, {
+            configurable: true,
+            enumerable: true,
+            get: property.get,
+            set: property.set,
+          });
+        } else if (property.syncAttribute === false) {
+          Object.defineProperty(this, key, {
+            configurable: true,
+            enumerable: true,
+            value: property.default,
+            writable: true,
+          });
+        } else if (property.type) {
+          const attributeParser = getAttributeParser(property.type);
+          Object.defineProperty(this, key, {
+            configurable: true,
+            enumerable: true,
+            get() {
+              if (property.type === Boolean) {
+                return this.hasAttribute(attributeName);
               }
-            } else {
-              this.setAttribute(attributeName, attributeParser.stringify(value));
-            }
-          },
-        });
+              return attributeParser.parse(this.getAttribute(attributeName), {
+                defaultValue: property.default,
+              });
+            },
+            set(value) {
+              if (property.type === Boolean) {
+                if (value) {
+                  this.setAttribute(attributeName, '');
+                } else {
+                  this.removeAttribute(attributeName);
+                }
+              } else {
+                this.setAttribute(attributeName, attributeParser.stringify(value));
+              }
+            },
+          });
+        }
       });
     }
 
@@ -108,7 +126,18 @@ function generateComponentClass(tagName, options = {}) {
       if (this.taoStatus === 'connected' || this.taoStatus === 'ready') {
         const property = this.properties[camelize(attributeName)];
         if (property && property.observer) {
-          property.observer.call(this, newValue, oldValue);
+          const attributeParser = getAttributeParser(property.type);
+          const parsedNewValue = attributeParser.parse(newValue, {
+            defaultValue: property.default,
+          });
+          const parsedOldValue = attributeParser.parse(oldValue, {
+            defaultValue: property.default,
+          });
+          if (isFunction(property.observer)) {
+            property.observer.call(this, parsedNewValue, parsedOldValue);
+          } else if (typeof property.observer === 'string' && isFunction(this[property.observer])) {
+            this[property.observer].call(this, parsedNewValue, parsedOldValue);
+          }
         }
       }
     }
@@ -127,18 +156,22 @@ function generateComponentClass(tagName, options = {}) {
         this.taoStatus = 'connected';
         this.namespacedTrigger('connected');
         this.childrenReady().then(() => {
-          this.ready();
-          this.taoStatus = 'ready';
-          this.namespacedTrigger('ready');
+          if (this.taoStatus === 'connected') { // make sure current status is still connected
+            this.ready();
+            this.taoStatus = 'ready';
+            this.namespacedTrigger('ready');
+          }
         });
       });
     }
 
     disconnectedCallback() {
       domReady().then(() => {
-        this.disconnected();
-        this.taoStatus = null;
-        this.namespacedTrigger('disconnected');
+        componnetConnected(this).then(() => {
+          this.disconnected();
+          this.taoStatus = null;
+          this.namespacedTrigger('disconnected');
+        });
       });
     }
 
