@@ -39,7 +39,6 @@ describe('component', () => {
         array: Array,
         customProp: {
           get() {
-            console.log(this.fullName, this.age);
             return `${this.fullName}_${this.age}`;
           },
         },
