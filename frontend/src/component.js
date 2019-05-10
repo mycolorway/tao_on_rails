@@ -1,8 +1,10 @@
 import { getAttributeParser } from './attribute-parser';
 import {
-  dasherize, camelize, domReady, isFunction, componnetReady, componnetConnected,
+  dasherize, camelize, domReady, isFunction, componnetReady,
 } from './utils';
 import mergeMixins from './merge-mixins';
+
+let componentCount = 0;
 
 function generateComponentClass(tagName, options = {}) {
   const {
@@ -15,8 +17,6 @@ function generateComponentClass(tagName, options = {}) {
     ...customOptions
   } = options;
   const componentClass = class extends window.HTMLElement {
-    static $count = 0;
-
     static $tag = tagName;
 
     static $tao = true;
@@ -145,8 +145,8 @@ function generateComponentClass(tagName, options = {}) {
     connectedCallback() {
       domReady().then(() => {
         if (!this.initialized) {
-          this.constructor.$count += 1;
-          this.taoId = this.constructor.$count;
+          componentCount += 1;
+          this.taoId = componentCount;
           this.init();
           this.initialized = true;
           this.namespacedTrigger('initialized');
@@ -167,11 +167,9 @@ function generateComponentClass(tagName, options = {}) {
 
     disconnectedCallback() {
       domReady().then(() => {
-        componnetConnected(this).then(() => {
-          this.disconnected();
-          this.taoStatus = null;
-          this.namespacedTrigger('disconnected');
-        });
+        this.disconnected();
+        this.taoStatus = null;
+        this.namespacedTrigger('disconnected');
       });
     }
 

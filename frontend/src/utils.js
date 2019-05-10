@@ -40,15 +40,3 @@ export function componnetReady(el) {
     }
   });
 }
-
-export function componnetConnected(el) {
-  return new Promise((resolve) => {
-    if (el.taoStatus === 'connected' || el.taoStatus === 'ready') {
-      resolve();
-    } else {
-      el.addEventListener('tao:connected', resolve, {
-        once: true,
-      });
-    }
-  });
-}
