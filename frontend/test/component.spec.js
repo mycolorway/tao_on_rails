@@ -4,6 +4,7 @@ import { componnetReady } from '../src/utils';
 describe('component', () => {
   let component;
   let hooks = {};
+  let BaseComponent;
 
   beforeAll(() => {
     hooks = {
@@ -15,7 +16,7 @@ describe('component', () => {
       ready: jasmine.createSpy('ready'),
       disconnected: jasmine.createSpy('disconnected'),
     };
-    Component('test-component', {
+    BaseComponent = Component('test-component', {
       mixins: [{
         properties: {
           fullName: {
@@ -146,5 +147,52 @@ describe('component', () => {
 
     expect(component.notAttribute).toBe(true);
     expect(component.hasAttribute('not-attribute')).toBe(false);
+  });
+
+  it('call children disconnected hook after parent component disconnected', async () => {
+    const hookSequences = [];
+
+    Component('component-a', {
+      extends: [BaseComponent],
+
+      connected() {
+        hookSequences.push(`connected-${this.fullName}`);
+      },
+
+      ready() {
+        hookSequences.push(`ready-${this.fullName}`);
+      },
+
+      disconnected() {
+        hookSequences.push(`disconnected-${this.fullName}`);
+      },
+    });
+
+    const parentComponent = document.createElement('component-a');
+    const childComponent = document.createElement('component-a');
+    parentComponent.fullName = 'parent';
+    childComponent.fullName = 'child';
+    parentComponent.appendChild(childComponent);
+    document.body.appendChild(parentComponent);
+    await componnetReady(parentComponent);
+
+    expect(hookSequences).toEqual([
+      'connected-parent', 'connected-child',
+      'ready-child', 'ready-parent',
+    ]);
+
+    const newWrapper = document.createElement('div');
+    document.body.appendChild(newWrapper);
+
+    hookSequences.length = 0;
+    newWrapper.appendChild(parentComponent);
+
+    setTimeout(() => {
+      expect(hookSequences).toEqual([
+        'disconnected-parent', 'disconnected-child',
+        'connected-parent', 'connected-child',
+        'ready-child', 'ready-parent',
+      ]);
+    });
   });
 });
