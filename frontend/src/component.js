@@ -167,9 +167,12 @@ function generateComponentClass(tagName, options = {}) {
 
     disconnectedCallback() {
       domReady().then(() => {
-        this.disconnected();
-        this.taoStatus = null;
-        this.namespacedTrigger('disconnected');
+        if (this.taoStatus === 'connected' || this.taoStatus === 'ready') {
+          this.disconnected();
+          this.childrenDisconnected();
+          this.taoStatus = null;
+          this.namespacedTrigger('disconnected');
+        }
       });
     }
 
@@ -181,6 +184,17 @@ function generateComponentClass(tagName, options = {}) {
         }
       });
       return Promise.all(promises);
+    }
+
+    childrenDisconnected() {
+      this.querySelectorAll('[tao-id]').forEach((el) => {
+        if (el.taoStatus === 'connected' || el.taoStatus === 'ready') {
+          el.disconnected();
+          // eslint-disable-next-line no-param-reassign
+          el.taoStatus = null;
+          el.namespacedTrigger('disconnected');
+        }
+      });
     }
 
     namespacedTrigger(name, params = {}) {
