@@ -169,7 +169,7 @@ function generateComponentClass(tagName, options = {}) {
       domReady().then(() => {
         if (this.taoStatus === 'connected' || this.taoStatus === 'ready') {
           this.disconnected();
-          this.childrenDisconnected();
+          this.disconnectChildren();
           this.taoStatus = null;
           this.namespacedTrigger('disconnected');
         }
@@ -186,7 +186,7 @@ function generateComponentClass(tagName, options = {}) {
       return Promise.all(promises);
     }
 
-    childrenDisconnected() {
+    disconnectChildren() {
       this.querySelectorAll('[tao-id]').forEach((el) => {
         if (el.taoStatus === 'connected' || el.taoStatus === 'ready') {
           el.disconnected();
