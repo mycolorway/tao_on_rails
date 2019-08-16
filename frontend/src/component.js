@@ -198,13 +198,15 @@ function generateComponentClass(tagName, options = {}) {
     }
 
     namespacedTrigger(name, params = {}) {
+      let result = true;
       [`tao:${name}`, `${this.$tag}:${name}`].forEach((eventName) => {
-        this.trigger(eventName, params);
+        result = this.trigger(eventName, params) && result;
       });
+      return result;
     }
 
     trigger(name, params = {}) {
-      this.dispatchEvent(new CustomEvent(name, Object.assign({
+      return this.dispatchEvent(new CustomEvent(name, Object.assign({
         cancelable: true,
       }, params)));
     }
