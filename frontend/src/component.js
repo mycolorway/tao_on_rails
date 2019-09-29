@@ -99,8 +99,8 @@ function generateComponentClass(tagName, options = {}) {
             configurable: true,
             enumerable: true,
             get() {
-              if (property.type === Boolean) {
-                return this.hasAttribute(attributeName);
+              if (property.type === Boolean && !this.hasAttribute(attributeName)) {
+                return false;
               }
               return attributeParser.parse(this.getAttribute(attributeName), {
                 defaultValue: property.default,
