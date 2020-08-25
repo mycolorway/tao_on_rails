@@ -82,7 +82,7 @@ module TaoOnRails
           old_val = old_val.split(' ') if old_val.is_a? String
           new_val = new_val.split(' ') if new_val.is_a? String
           Array(old_val) + Array(new_val)
-        elsif old_val.is_a?(Hash) && old_val.is_a?(Hash)
+        elsif old_val.is_a?(Hash) && new_val.is_a?(Hash)
           old_val.merge! new_val
         else
           new_val
