@@ -1,6 +1,6 @@
 {
   "name": "@mycolorway/tao",
-  "version": "2.0.0-beta.14",
+  "version": "2.0.1",
   "description": "The component solution for Rails project",
   "main": "frontend/dist/tao.js",
   "scripts": {
