@@ -6,7 +6,7 @@ module TaoOnRails
     initializer 'tao_on_rails' do
       ::ActiveSupport.on_load :action_view do
         include ::TaoOnRails::ActionView::Helpers
-        load_tao_components ::TaoOnRails::Engine.root
+        #load_tao_components ::TaoOnRails::Engine.root
         define_component_helpers
       end
     end

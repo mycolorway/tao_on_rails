@@ -13,7 +13,7 @@ module TaoOnRails
         # Define the dynamic view helpers for components
         # This method should be called in action_view context
         def define_component_helpers
-          load_tao_components
+          #load_tao_components
           ::ActiveSupport.run_load_hooks(:tao_components, self)
 
           TaoOnRails::BaseComponent.descendants.each do |klass|
