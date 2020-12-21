@@ -26,16 +26,10 @@ module TaoOnRails
         end
 
         def load_tao_components(root = Rails.root)
-          Dir.glob([
-            root.join('lib/**/components/**/*.rb'),
-            root.join('app/**/components/**/*.rb')
-          ]).each do |component|
-            require component
-          end
+          Rails.application.config.autoload_paths << "#{root}/lib/components"
+          Rails.application.config.autoload_paths << "#{root}/app/components"
         end
-
       end
-
     end
   end
 end
