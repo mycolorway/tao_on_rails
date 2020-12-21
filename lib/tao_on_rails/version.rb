@@ -1,5 +1,3 @@
 module TaoOnRails
-  def self.version
-    '2.0.1'
-  end
+  VERSION = '2.0.1'.freeze
 end

@@ -5,7 +5,7 @@ require "tao_on_rails/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "tao_on_rails"
-  spec.version       = TaoOnRails.version
+  spec.version       = TaoOnRails::VERSION
   spec.authors       = ["Siyuan Liu", "Terry Tai"]
   spec.email         = ["farthinker@mycolorway.com", "t@mycolorway.com"]
 
